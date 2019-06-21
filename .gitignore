@@ -1,0 +1,13 @@
+
+# rspec failure tracking
+.rspec-failures
+
+# default test application
+spec/decidim_dummy_app
+
+# default development application
+development_app
+tmp/
+spec/decidim_dummy_app/
+.rspec-failures
+Gemfile.lock
