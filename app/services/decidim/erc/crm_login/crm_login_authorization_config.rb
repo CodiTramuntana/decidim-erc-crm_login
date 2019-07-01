@@ -10,6 +10,11 @@ module Decidim
           def url
             Rails.application.secrets.erc_crm_login[:erc_crm_login_url]
           end
+
+          # CiviCrm.api_base = "https://dmaster.demo.civicrm.org"
+          # CiviCrm.site_key = "dfdsxgdsx"
+          # CiviCrm.api_key = "Zwyximzw0a3aK7gGVgHSnQNL"
+          
         end
       end
     end

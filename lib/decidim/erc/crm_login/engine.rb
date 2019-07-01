@@ -5,6 +5,20 @@ require 'decidim/core'
 require 'civicrm'
 
 module Decidim
+	module Core
+		class Engine < ::Rails::Engine
+			routes do
+	        devise_scope :user do
+	        	# resources :registrations, only: [:new_step_2]#, controller: "messaging/conversations"
+    				
+					  post 'users/sign_up/new_step_2', controller: "devise/registrations", action: 'new_step_2', as: :registration_step_two
+					end
+	      end
+		end
+	end
+end
+
+module Decidim
   module Erc
     module CrmLogin
       class Engine < ::Rails::Engine
@@ -22,15 +36,13 @@ module Decidim
 	        end
 	      end
 
-	      routes do
-	      	devise_scope :user do
-				    # get "/some/route" => "some_devise_controller"
-	      		resource :crm_session, only: [:new, :create, :destroy], controller: "sessions"
-				  end
-	        # Add engine routes here
-	        # resources :department_admin
-	        # root to: "department_admin#index"
-	      end
+	    #   routes do
+	    #     devise_scope :user do
+	    #     	# resources :registrations, only: [:new_step_2]#, controller: "messaging/conversations"
+    				
+					#   post 'users/sign_up/new_step_2', controller: "devise/registrations", action: 'new_step_2', as: :registration_step_two
+					# end
+	    #   end
 
 	    end
 

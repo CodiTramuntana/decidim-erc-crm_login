@@ -1,0 +1,45 @@
+<% add_decidim_page_title(t(".sign_up")) %>
+
+<main class="wrapper">
+<div class="row collapse">
+  <div class="row collapse">
+    <div class="columns large-8 large-centered text-center page-title">
+      Posa el teu DNI, per comprovar si ets militiant
+      <h1><%= t(".sign_up") %></h1>
+      <p>
+        <%= t(".subtitle") %>
+      </p>
+      <p>
+        <%= t(".already_have_an_account?") %>
+        <%= link_to t(".sign_in"), new_user_session_path %>
+      </p>
+    </div>
+  </div>
+
+  
+  <div class="row">
+    <div class="columns large-6 medium-10 medium-centered">
+      <%= decidim_form_for(@form, as: resource_name, url: registration_step_two_path, method: :post, html: { class: "register-form new_user", id: "register-form-step-1" }) do |f| %>
+        <%= invisible_captcha %>
+        <div class="card">
+          <div class="card__content">
+            <div class="user-person">
+              <div class="field">
+                <%= f.text_field :document_number, help_text: "DOCUMENT NUMBER" %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card__content">
+            <div class="actions">
+              <%= f.submit t("devise.registrations.new.sign_up"), class: "button expanded" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</main>

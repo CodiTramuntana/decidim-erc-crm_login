@@ -22,9 +22,10 @@ bundle
 CrmLogin needs some values to perform requests:
 
 ```yml
-crm_login:
-  crm_login_url: <%= ENV["CRM_LOGIN_URL"] %>
-  
+civicrm:
+  api_base: <%= ENV["CIVICRM_API_BASE"] %>
+  site_key: <%= ENV["CIVICRM_SITE_KEY"] %>
+  api_key: <%= ENV["CIVICRM_API_KEY"] %>
 ```
 
 ## Testing
