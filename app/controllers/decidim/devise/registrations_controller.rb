@@ -25,7 +25,6 @@ module Decidim
       def new_step_2
         @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepOneForm).from_params(params[:user])
         
-        # raise
         if @form.valid?
           @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepTwoForm).from_params(
             user: {
@@ -35,26 +34,12 @@ module Decidim
         else
           render :new
           flash[:alert] = "error"
-          # redirect_to decidim.new_user_registration_path
-          # redirect to new
         end
-        # redirect to validate if ws response success.
-        # emplena els params amb la resposta del WS
-
-        # fem la petició al WS, si es correcte emplenem formulari i m'hi quedo
-        # si no es correcte, render new, amb l'error. 
-
-        # SantBoiCensusAuthorizationService.new(sanitized_document_type, document_number).perform_request
-
-        
-
-        # el submit de l'step 2, fa el create
-        # is the new action filled with response
       end
 
       def create
-        @form = form(RegistrationForm).from_params(params[:user])
-
+        @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepTwoForm).from_params(params[:user])
+        
         CreateRegistration.call(@form) do
           on(:ok) do |user|
             if user.active_for_authentication?

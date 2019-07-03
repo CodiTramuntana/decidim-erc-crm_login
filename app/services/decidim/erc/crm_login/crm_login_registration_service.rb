@@ -10,28 +10,18 @@ module Decidim
         end
 
         # Performs the WS request, which has two methods: login and doOperationTAO.
-        #
-        # The login method returns a token which is needed to invoke doOperationTAO.
-        # In the doOperationTAO method we make the getHabitanteByDNI request.
-        #
         # Returns a Hash with the following key => values.
         #   body   => WS response body, as Nokogiri::XML instance
         #   status => WS response status, as Integer
         def perform_request
-          
           # response = retrieve_member_by_dni_response(perform_member_by_dni_request)
           response = retrieve_member_by_dni_response(temporary_response)
           
+          # de moment no sabem quin status disponible hi ha, quan poguem fer la crida real ho sabrem,  
           {
             status: "response.status",
             body: response
           }
-
-        rescue StandardError => e
-          Rails.logger.error "[#{self.class.name}] Failed to perform request"
-          Rails.logger.error e.message
-          Rails.logger.error e.backtrace.join("\n")
-          {} # To avoid crashing in SantBoiCensusAuthorizationHandler::ws_request_must_succeed
         end
 
         private
@@ -40,18 +30,14 @@ module Decidim
 
         def perform_member_by_dni_request
           # DNI = custom_4, està guardat al camp custom_4 del CRM
-
           CiviCrm::Contact.find_by(custom_4:  @document_number)
+          # La propia GEM CIVICRM fa el control d'errors.
         end
 
         def retrieve_member_by_dni_response(string)
           Nokogiri::XML(string).remove_namespaces!.xpath("//ResultSet//Result")
         end
         
-        # def temporary_response
-        #   nil
-        # end
-
         def temporary_response
           @temporary_response ||= <<~XML
             <?xml version="1.0"?>
@@ -60,7 +46,7 @@ module Decidim
                   <contact_id>1</contact_id>
                   <contact_type>Individual</contact_type>
                   <sort_name>Doe, John</sort_name>
-                  <display_name>John G Doe</display_name>
+                  <display_name>Isaac Massot 1</display_name>
                   <do_not_email>0</do_not_email>
                   <do_not_phone>0</do_not_phone>
                   <do_not_mail>0</do_not_mail>
@@ -72,9 +58,13 @@ module Decidim
                   <middle_name>G</middle_name>
                   <last_name>Doe</last_name>
                   <is_deceased>0</is_deceased>
-                  <email_id>2</email_id>
-                  <email>jdoe2@example.com</email>
+                  <email_id>6</email_id>
+                  <email>imassot1@example.com</email>
                   <on_hold>0</on_hold>
+                  <custom_21>Àrea Local Bcn</custom_21>
+                  <custom_code_21>00002</custom_code_21>
+                  <custom_35>12345678</custom_35>
+                  <custom_96>617529431</custom_96>
                 </Result>
               </ResultSet>
             XML

@@ -58,14 +58,6 @@ module Decidim
           Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(document_number).perform_request
         end
 
-        # Returns true or false depending on whether XML element 'HABITANTE' is found.
-        def membership_found?
-          # es membre?¿
-          return if @response[:body].present?
-          # raise
-          errors.add(:document_number, "Document number error" )
-        end
-
         # # Retrieves the error code.
         # #
         # # Returns a String.
@@ -87,17 +79,14 @@ module Decidim
           {
             name: response_body.xpath("//display_name").text,
             nickname: response_body.xpath("//display_name").text.underscore.parameterize,
-            email: response_body.xpath("//email").text,  
+            email: response_body.xpath("//email").text,
+            phone: response_body.xpath("//custom_96").text,
+            member_of_name: response_body.xpath("//custom_21").text,
+            member_of_code: response_body.xpath("//custom_code_21").text,
+            militant_code: response_body.xpath("//custom_35").text,
+            contact_id: response_body.xpath("//contact_id").text,
           }
         end
-        # Cognoms --> last_name (entitat Contact)
-        # Nom --> first_name (entitat Contact)
-        # correu electrònic --> custom_95 (entitat Membership)
-        # "Es membre de" --> entenem que voleu saber la secció local a la que pertanyen  --> custom_21  (entitat Contact)
-        # Número de militant --> entenem que us referia al Codi Militant --> custom_35 (entitat Contact)
-        # Mòbil --> custom_96 (entitat Membership)
-          
-
       end
     end
   end
