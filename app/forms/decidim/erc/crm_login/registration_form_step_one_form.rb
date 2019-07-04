@@ -55,7 +55,7 @@ module Decidim
         #   body   => WS response body, as Nokogiri::XML instance
         #   status => WS response status, as Integer
         def perform_request
-          Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(document_number).perform_request
+          Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(document_number).perform_register_request
         end
 
         # # Retrieves the error code.
