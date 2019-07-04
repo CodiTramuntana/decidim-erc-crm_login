@@ -1,9 +1,19 @@
 ---
 ca:
+  activemodel:
+    attributes:
+      authorization_handler:
+        document_number: Document d'identitat
   devise:
     failure:
-      not_membership: "No ets militant d'ErC"
+      not_membership: "No tens una afiliació activa"
   decidim:
+    authorization_handlers:
+      crm_login_authorization_handler:
+        explanation: Verifica't com Militant d'Erc
+        fields:
+          membership_type_id: ID Tipus d'afiliació
+        name: Militant d'Erc
     devise:  
       registrations:
         new_step_2:
@@ -21,3 +31,21 @@ ca:
           tos_agreement: By signing up you agree to %{link}.
           tos_title: Terms of Service
           username_help: Public name that appears on your posts. With the aim of guaranteeing the anonymity, can be any name.
+    errors:
+      messages:
+        erc_census_authorization_handler:
+          connection_failed: No es possible connectar amb el cens de Sant Boi. Si us
+            plau, intenti-ho més tard.
+          document_number_not_valid: El document d'identitat no és vàlid
+          duplicate_authorization: Ja hi ha un usuari verificat amb aquestes dades.
+            No se'n pot verificar un altre.
+          too_young: Heu de tenir almenys 16 anys
+          unexpected_error: Alguna cosa ha anat malament. Si us plau, intenti-ho més
+            tard.
+        uppercase_only_letters_numbers: ha d'estar en majúscules i contenir lletres
+          i/o nombres
+    verifications:
+      authorizations:
+        new:
+          authorize_with: Verifica't com %{authorizer}
+  

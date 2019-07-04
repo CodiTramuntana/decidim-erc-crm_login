@@ -3,6 +3,9 @@
 require 'rails'
 require 'decidim/core'
 require 'civicrm'
+require "decidim/verifications"
+require "virtus/multiparams"
+
 
 module Decidim
 	module Core
