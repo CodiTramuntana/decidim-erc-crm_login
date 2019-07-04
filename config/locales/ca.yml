@@ -1,5 +1,8 @@
 ---
 ca:
+  devise:
+    failure:
+      not_membership: "No ets militant d'ErC"
   decidim:
     devise:  
       registrations:
