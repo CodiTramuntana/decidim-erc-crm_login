@@ -8,12 +8,10 @@ module Decidim
 	module Core
 		class Engine < ::Rails::Engine
 			routes do
-	        devise_scope :user do
-	        	# resources :registrations, only: [:new_step_2]#, controller: "messaging/conversations"
-    				
-					  post 'users/sign_up/new_step_2', controller: "devise/registrations", action: 'new_step_2', as: :registration_step_two
-					end
-	      end
+        devise_scope :user do
+      	  post 'users/sign_up/new_step_2', controller: "devise/registrations", action: 'new_step_2', as: :registration_step_two
+				end
+      end
 		end
 	end
 end
@@ -35,17 +33,7 @@ module Decidim
 	          require_dependency(c)
 	        end
 	      end
-
-	    #   routes do
-	    #     devise_scope :user do
-	    #     	# resources :registrations, only: [:new_step_2]#, controller: "messaging/conversations"
-    				
-					#   post 'users/sign_up/new_step_2', controller: "devise/registrations", action: 'new_step_2', as: :registration_step_two
-					# end
-	    #   end
-
-	    end
-
+			end
     end
   end
 end
