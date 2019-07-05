@@ -12,7 +12,8 @@ ca:
       crm_login_authorization_handler:
         explanation: Verifica't com Militant d'Erc
         fields:
-          membership_type_id: ID Tipus d'afiliació
+          membership_type_id: "Tipus d'afiliació. (1 = Militant, 2 = Simpatizant, 3 = Amic)"
+          join_date: "Afiliat abans de"
         name: Militant d'Erc
     devise:  
       registrations:

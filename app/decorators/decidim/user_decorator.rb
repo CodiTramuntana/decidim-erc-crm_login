@@ -2,6 +2,7 @@
 
 require_dependency 'decidim/user'
 Decidim::User.class_eval do
+  include Decidim::Erc::CrmLogin::DataEncryptor
 
   def civicrm_contact_id
     extended_data["contact_id"]
@@ -13,6 +14,10 @@ Decidim::User.class_eval do
 
   def user_phone
     extended_data["phone"]
+  end
+
+  def document_number
+    decipherData(extended_data["document_number"])
   end
 
   # Estem sobreescrivint aquest mètode, 
@@ -33,13 +38,6 @@ Decidim::User.class_eval do
     user_membership? ? super : :not_membership
   end
 
-  # def delete_authorization_if_not_membership
-  #   # return if user_membership?
-  #   Decidim::Authorization.where(decidim_user_id: self.id, name: "crm_login_authorization_handler").destroy_all
-  # end
-
-
-# ---------
   def after_confirmation
     return unless available_crm_login_authorization?
     Decidim::Authorization.create_or_update_from(handler)
@@ -49,10 +47,6 @@ Decidim::User.class_eval do
     after_confirmation
   end
 
-  # def email_changed?
-  #   revoke_members_picker_authorization!
-  # end
-
   private
 
   def available_crm_login_authorization?
@@ -60,7 +54,7 @@ Decidim::User.class_eval do
   end
 
   def handler_params
-    @handler_params ||= { user: self, contact_id: civicrm_contact_id }
+    @handler_params ||= { user: self, document_number: document_number }
   end
 
   def handler_name
@@ -79,6 +73,4 @@ Decidim::User.class_eval do
     return if user_membership?
     granted_crm_login_authorization.destroy! if granted_crm_login_authorization
   end
-
-
 end

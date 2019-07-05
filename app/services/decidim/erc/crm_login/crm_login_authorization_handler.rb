@@ -5,6 +5,7 @@ module Decidim
   module Erc
     module CrmLogin
       class CrmLoginAuthorizationHandler < Decidim::AuthorizationHandler
+      	include Decidim::Erc::CrmLogin::DataEncryptor
 
         attribute :document_number, String
 
@@ -18,7 +19,16 @@ module Decidim
             "#{document_number}-#{Decidim::Erc::CrmLogin::CrmLoginAuthorizationConfig.secret}"
           )
         end
-       
+       	
+       	def map_model(model)
+          self.document_number = decipherData(model.metadata.try(:[], 'document_number'))
+          self.join_date = model.metadata.try(:[], 'join_date')
+          self.start_date = model.metadata.try(:[], 'start_date')
+          self.end_date = model.metadata.try(:[], 'end_date')
+          self.membership_type_id = model.metadata.try(:[], 'membership_type_id')
+          self.membership_name = model.metadata.try(:[], 'membership_name')
+        end
+
         def metadata
         	{
             document_number: cipherData(sanitize_document_number),
@@ -73,26 +83,7 @@ module Decidim
         end
 
         def request_ws
-        	raise
         	Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(document_number: sanitize_document_number, contact_id: user.civicrm_contact_id).perform_verification_request
-        end
-
-        # Creates a Base64 String from a String
-        #
-        # Return a String
-        def cipherData(data)
-          return '' unless data
-
-          Base64.encode64(data)
-        end
-
-        # Creates a String from a Base64 String
-        #
-        # Return a String
-        def decipherData(data)
-          return '' unless data
-
-          Base64.decode64(data)
         end
 
         def sanitize_response
@@ -135,8 +126,7 @@ module Decidim
         #
         # Returns a boolean
         def success_response?
-        	# Status code 200, success request. Otherwise, error
-          response[:is_error] == 0
+        	response[:is_error] == 0
         end
       end
 		end

@@ -16,12 +16,17 @@ module Decidim
         #   status => WS response status, as Integer
         def perform_register_request
           # response = retrieve_member_by_dni_response(perform_member_by_dni_request)
-          response = retrieve_member_by_dni_response(temporary_response)
-          
+          # response = retrieve_member_by_dni_response(temporary_response)
+          response = temporary_response_find_by_dni
+
           # de moment no sabem quin status disponible hi ha, quan poguem fer la crida real ho sabrem,  
+          # {
+          #   status: "response.status",
+          #   body: response
+          # }
           {
-            status: "response.status",
-            body: response
+            is_error: response[:is_error],
+            body: response[:values][0]
           }
         end
 
@@ -81,36 +86,61 @@ module Decidim
           # /sites/all/modules/civicrm/extern/rest.php?entity=Membership&action=get&api_key=userkey&key=sitekey&json={"sequential":1,"contact_id":22830,"active_only":1,"api.Contact.get":{"custom_4":"35032512Q"}}
         end
         
-        def temporary_response
-          @temporary_response ||= <<~XML
-            <?xml version="1.0"?>
-              <ResultSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                <Result>
-                  <contact_id>22830</contact_id>
-                  <contact_type>Individual</contact_type>
-                  <sort_name>Doe, John</sort_name>
-                  <display_name>Isaac Massot 2</display_name>
-                  <do_not_email>0</do_not_email>
-                  <do_not_phone>0</do_not_phone>
-                  <do_not_mail>0</do_not_mail>
-                  <do_not_trade>0</do_not_trade>
-                  <is_opt_out>0</is_opt_out>
-                  <home_URL>[http://www.example.com]</home_URL>
-                  <preferred_mail_format>Both</preferred_mail_format>
-                  <first_name>John</first_name>
-                  <middle_name>G</middle_name>
-                  <last_name>Doe</last_name>
-                  <is_deceased>0</is_deceased>
-                  <email_id>6</email_id>
-                  <email>imassot2@example.com</email>
-                  <on_hold>0</on_hold>
-                  <custom_21>Àrea Local Bcn</custom_21>
-                  <custom_code_21>00002</custom_code_21>
-                  <custom_35>12345678</custom_35>
-                  <custom_96>617529431</custom_96>
-                </Result>
-              </ResultSet>
-            XML
+        # def temporary_response
+        #   @temporary_response ||= <<~XML
+        #     <?xml version="1.0"?>
+        #       <ResultSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        #         <Result>
+        #           <contact_id>22830</contact_id>
+        #           <contact_type>Individual</contact_type>
+        #           <sort_name>Doe, John</sort_name>
+        #           <display_name>Isaac Massot 3</display_name>
+        #           <do_not_email>0</do_not_email>
+        #           <do_not_phone>0</do_not_phone>
+        #           <do_not_mail>0</do_not_mail>
+        #           <do_not_trade>0</do_not_trade>
+        #           <is_opt_out>0</is_opt_out>
+        #           <home_URL>[http://www.example.com]</home_URL>
+        #           <preferred_mail_format>Both</preferred_mail_format>
+        #           <first_name>John</first_name>
+        #           <middle_name>G</middle_name>
+        #           <last_name>Doe</last_name>
+        #           <is_deceased>0</is_deceased>
+        #           <email_id>6</email_id>
+        #           <email>imassot3@example.com</email>
+        #           <on_hold>0</on_hold>
+        #           <custom_21>Àrea Local Bcn</custom_21>
+        #           <custom_code_21>00002</custom_code_21>
+        #           <custom_35>12345678</custom_35>
+        #           <custom_96>617529431</custom_96>
+        #           <custom_4>000000X</custom_4>
+        #         </Result>
+        #       </ResultSet>
+        #     XML
+        # end
+
+        def temporary_response_find_by_dni
+          {
+            "is_error": 0,
+            "version": 3,
+            "count": 1,
+            "id": 22830,
+            "values": [
+              {
+                "contact_id": "22830",
+                "display_name": "Sílvia Lumeras i Medrano",
+                "contact_is_deleted": "0",
+                "email_id": "16132",
+                "email": "silvia.lumeras@gmail.com",
+                "civicrm_value_altres_dades_personals_1_id": "16999",
+                "custom_4": "35032512Q",
+                "civicrm_value_dades_administratives_3_id": "16999",
+                "custom_21": "3966",
+                "custom_35": "43026",
+                "id": "22830"
+              }
+            ]
+          }
         end
 
         def temporary_response_of_user_is_not_membership

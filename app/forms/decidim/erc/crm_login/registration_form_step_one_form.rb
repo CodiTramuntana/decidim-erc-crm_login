@@ -73,18 +73,36 @@ module Decidim
         #   age >= 16
         # end
 
+        # This will be used if response is and XML
+        # def parse_response(response_body)
+        #   return if response_body.blank?
+
+        #   {
+        #     name: response_body.xpath("//display_name").text,
+        #     nickname: response_body.xpath("//display_name").text.underscore.parameterize,
+        #     email: response_body.xpath("//email").text,
+        #     phone: response_body.xpath("//custom_96").text,
+        #     member_of_name: response_body.xpath("//custom_21").text,
+        #     member_of_code: response_body.xpath("//custom_code_21").text,
+        #     militant_code: response_body.xpath("//custom_35").text,
+        #     contact_id: response_body.xpath("//contact_id").text,
+        #     document_number: response_body.xpath("//custom_4").text,
+        #   }
+        # end
+
         def parse_response(response_body)
           return if response_body.blank?
 
           {
-            name: response_body.xpath("//display_name").text,
-            nickname: response_body.xpath("//display_name").text.underscore.parameterize,
-            email: response_body.xpath("//email").text,
-            phone: response_body.xpath("//custom_96").text,
-            member_of_name: response_body.xpath("//custom_21").text,
-            member_of_code: response_body.xpath("//custom_code_21").text,
-            militant_code: response_body.xpath("//custom_35").text,
-            contact_id: response_body.xpath("//contact_id").text,
+            name: response_body[:display_name],
+            nickname:response_body[:display_name].underscore.parameterize,
+            email: response_body[:email],
+            phone: response_body[:phone],
+            member_of_name: response_body[:custom_21],
+            member_of_code: response_body[:custom_21],
+            militant_code: response_body[:custom_35],
+            contact_id: response_body[:contact_id],
+            document_number: response_body[:custom_4],
           }
         end
       end

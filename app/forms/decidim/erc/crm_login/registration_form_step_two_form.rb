@@ -20,6 +20,7 @@ module Decidim
         attribute :member_of_name, String
         attribute :member_of_code, String
         attribute :contact_id, String
+        attribute :document_number, String
 
         validates :name, presence: true
         validates :nickname, presence: true, length: { maximum: Decidim::User.nickname_max_length }

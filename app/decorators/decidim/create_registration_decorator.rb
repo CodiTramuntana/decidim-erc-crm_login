@@ -2,6 +2,8 @@
 
 require_dependency 'decidim/create_registration'
 Decidim::CreateRegistration.class_eval do
+  include Decidim::Erc::CrmLogin::DataEncryptor
+
   private
 
   def create_user
@@ -25,7 +27,8 @@ Decidim::CreateRegistration.class_eval do
       phone: form.phone,
       militant_code: form.militant_code,
       member_of: form.member_of,
-      contact_id: form.contact_id
+      contact_id: form.contact_id,
+      document_number: cipherData(form.document_number)
     }
   end
 end

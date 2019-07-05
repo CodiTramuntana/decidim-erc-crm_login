@@ -2,6 +2,7 @@
 
 require 'decidim/erc/crm_login/engine'
 require "decidim/erc/crm_login/workflow"
+require 'decidim/erc/crm_login/data_encryptor'
 
 module Decidim
   module Erc
