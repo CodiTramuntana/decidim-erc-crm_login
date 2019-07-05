@@ -20,6 +20,7 @@ module Decidim
           )
         end
        	
+
        	def map_model(model)
           self.document_number = decipherData(model.metadata.try(:[], 'document_number'))
           self.join_date = model.metadata.try(:[], 'join_date')
@@ -125,6 +126,7 @@ module Decidim
         # Check if request had been correctly performed
         #
         # Returns a boolean
+        # TODO: Comprovar que retorni, com a mínim també un resultat.
         def success_response?
         	response[:is_error] == 0
         end

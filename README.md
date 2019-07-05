@@ -26,6 +26,8 @@ civicrm:
   api_base: <%= ENV["CIVICRM_API_BASE"] %>
   site_key: <%= ENV["CIVICRM_SITE_KEY"] %>
   api_key: <%= ENV["CIVICRM_API_KEY"] %>
+erc_crm_login:
+  secret_key: <%= ENV["ERC_SECRET_KEY"] %>
 ```
 
 ## Testing
