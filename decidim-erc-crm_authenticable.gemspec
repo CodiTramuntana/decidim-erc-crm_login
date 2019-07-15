@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "decidim-core", DECIDIM_VERSION
   s.add_dependency 'rails', '>= 5.2'
-  s.add_dependency 'civicrm'
   s.add_dependency "decidim-verifications", DECIDIM_VERSION
   s.add_dependency "virtus-multiparams"
 
