@@ -9,7 +9,7 @@ ca:
       not_membership: "No tens una afiliació activa"
   decidim:
     authorization_handlers:
-      crm_login_authorization_handler:
+      crm_authenticable_authorization_handler:
         explanation: Verifica't com Militant d'Erc
         fields:
           membership_type_id: "Tipus d'afiliació. (1 = Militant, 2 = Simpatizant, 3 = Amic)"

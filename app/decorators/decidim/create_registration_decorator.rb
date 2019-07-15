@@ -2,7 +2,7 @@
 
 require_dependency 'decidim/create_registration'
 Decidim::CreateRegistration.class_eval do
-  include Decidim::Erc::CrmLogin::DataEncryptor
+  include Decidim::Erc::CrmAuthenticable::DataEncryptor
 
   private
 

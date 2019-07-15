@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 module Decidim
   module Erc
-    module CrmLogin
-      class CrmLoginActionAuthorizer < Decidim::Verifications::DefaultActionAuthorizer
+    module CrmAuthenticable
+      class CrmAuthenticableActionAuthorizer < Decidim::Verifications::DefaultActionAuthorizer
         protected
 
         # Estem sobreescrivint aquest mètode per tal de poder fer la comprovació correctament amb la data de militància

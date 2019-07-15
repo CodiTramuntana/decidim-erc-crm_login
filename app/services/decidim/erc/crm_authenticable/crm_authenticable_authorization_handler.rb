@@ -3,9 +3,9 @@ require "digest"
 
 module Decidim
   module Erc
-    module CrmLogin
-      class CrmLoginAuthorizationHandler < Decidim::AuthorizationHandler
-      	include Decidim::Erc::CrmLogin::DataEncryptor
+    module CrmAuthenticable
+      class CrmAuthenticableAuthorizationHandler < Decidim::AuthorizationHandler
+      	include Decidim::Erc::CrmAuthenticable::DataEncryptor
 
         attribute :document_number, String
 
@@ -16,7 +16,7 @@ module Decidim
 
         def unique_id
         	Digest::SHA512.hexdigest(
-            "#{document_number}-#{Decidim::Erc::CrmLogin::CrmLoginAuthorizationConfig.secret}"
+            "#{document_number}-#{Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.secret}"
           )
         end
        	
@@ -84,7 +84,7 @@ module Decidim
         end
 
         def request_ws
-        	Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(document_number: sanitize_document_number, contact_id: user.civicrm_contact_id).perform_verification_request
+        	Decidim::Erc::CrmAuthenticable::CrmAuthenticableRegistrationService.new(document_number: sanitize_document_number, contact_id: user.civicrm_contact_id).perform_verification_request
         end
 
         def sanitize_response

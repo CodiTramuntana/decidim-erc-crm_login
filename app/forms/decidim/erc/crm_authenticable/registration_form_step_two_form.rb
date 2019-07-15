@@ -3,7 +3,7 @@
 module Decidim
   # A form object used to handle user registrations
   module Erc
-    module CrmLogin
+    module CrmAuthenticable
       # A form object used to handle user registrations
       class RegistrationFormStepTwoForm < Form
         mimic :user

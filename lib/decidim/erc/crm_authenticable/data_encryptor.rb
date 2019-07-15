@@ -1,6 +1,6 @@
 module Decidim
   module Erc
-    module CrmLogin
+    module CrmAuthenticable
     	module DataEncryptor
     		# Creates a Base64 String from a String
         #

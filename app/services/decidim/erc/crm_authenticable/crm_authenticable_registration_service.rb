@@ -2,8 +2,8 @@
 
 module Decidim
   module Erc
-    module CrmLogin
-      class CrmLoginRegistrationService
+    module CrmAuthenticable
+      class CrmAuthenticableRegistrationService
 
         def initialize(document_number=nil, contact_id=nil)
           @document_number = document_number

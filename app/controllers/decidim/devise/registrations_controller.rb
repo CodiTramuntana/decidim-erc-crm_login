@@ -15,7 +15,7 @@ module Decidim
       invisible_captcha
 
       def new
-        @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepOneForm).from_params(
+        @form = form(Decidim::Erc::CrmAuthenticable::RegistrationFormStepOneForm).from_params(
             user: {
               sign_up_as: "user"
             }
@@ -23,10 +23,10 @@ module Decidim
       end
       
       def new_step_2
-        @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepOneForm).from_params(params[:user])
+        @form = form(Decidim::Erc::CrmAuthenticable::RegistrationFormStepOneForm).from_params(params[:user])
         
         if @form.valid?
-          @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepTwoForm).from_params(
+          @form = form(Decidim::Erc::CrmAuthenticable::RegistrationFormStepTwoForm).from_params(
             user: {
               sign_up_as: "user",
             }.merge(extra_params)
@@ -38,7 +38,7 @@ module Decidim
       end
 
       def create
-        @form = form(Decidim::Erc::CrmLogin::RegistrationFormStepTwoForm).from_params(params[:user])
+        @form = form(Decidim::Erc::CrmAuthenticable::RegistrationFormStepTwoForm).from_params(params[:user])
         
         CreateRegistration.call(@form) do
           on(:ok) do |user|

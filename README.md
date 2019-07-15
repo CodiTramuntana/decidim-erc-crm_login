@@ -1,4 +1,4 @@
-# Decidim::Erc::Crm::Login
+# Decidim::Erc::CrmAuthenticable
 
 Integration with CiviCrm of ERC.
 
@@ -10,7 +10,7 @@ Integration with CiviCrm of ERC.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'decidim-erc-crm_login'
+gem 'decidim-erc-crm_authenticable'
 ```
 
 And then execute:
@@ -19,14 +19,14 @@ And then execute:
 bundle
 ```
 
-CrmLogin needs some values to perform requests:
+CrmAuthenticable needs some values to perform requests:
 
 ```yml
 civicrm:
   api_base: <%= ENV["CIVICRM_API_BASE"] %>
   site_key: <%= ENV["CIVICRM_SITE_KEY"] %>
   api_key: <%= ENV["CIVICRM_API_KEY"] %>
-erc_crm_login:
+erc_crm_authenticable:
   secret_key: <%= ENV["ERC_SECRET_KEY"] %>
 ```
 
@@ -52,7 +52,7 @@ erc_crm_login:
 
 ## Versioning
 
-`Decidim::Erc::CrmLogin` depends directly on `Decidim::Core` in `0.18.0` version.
+`Decidim::Erc::CrmAuthenticable` depends directly on `Decidim::Core` in `0.18.0` version.
 
 ## License
 

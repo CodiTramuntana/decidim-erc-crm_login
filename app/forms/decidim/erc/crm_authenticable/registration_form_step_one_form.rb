@@ -3,7 +3,7 @@
 module Decidim
   # A form object used to handle user registrations
   module Erc
-    module CrmLogin
+    module CrmAuthenticable
       class RegistrationFormStepOneForm < Form
         mimic :user
 
@@ -55,7 +55,7 @@ module Decidim
         #   body   => WS response body, as Nokogiri::XML instance
         #   status => WS response status, as Integer
         def perform_request
-          Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(document_number).perform_register_request
+          Decidim::Erc::CrmAuthenticable::CrmAuthenticableRegistrationService.new(document_number).perform_register_request
         end
 
         # # Retrieves the error code.

@@ -2,7 +2,7 @@
 
 require_dependency 'decidim/user'
 Decidim::User.class_eval do
-  include Decidim::Erc::CrmLogin::DataEncryptor
+  include Decidim::Erc::CrmAuthenticable::DataEncryptor
 
   def civicrm_contact_id
     extended_data["contact_id"]
@@ -24,13 +24,13 @@ Decidim::User.class_eval do
   # per tal de comprovar que l'usuari segueix com militant d'ERC
   # Fem la petició al CRM, i segons el resultat que ens retorna. 
   def active_for_authentication?
-    revoke_crm_login_authorization!
+    revoke_crm_authenticable_authorization!
     super && user_membership?
   end
 
   def user_membership?
     return true if admin?
-    response = Decidim::Erc::CrmLogin::CrmLoginRegistrationService.new(contact_id: self&.civicrm_contact_id).perform_login_request
+    response = Decidim::Erc::CrmAuthenticable::CrmAuthenticableRegistrationService.new(contact_id: self&.civicrm_contact_id).perform_login_request
     (response[:is_error] == 0) && (!response[:body][:end_date].present?)
   end
 
@@ -39,7 +39,7 @@ Decidim::User.class_eval do
   end
 
   def after_confirmation
-    return unless available_crm_login_authorization?
+    return unless available_crm_authenticable_authorization?
     Decidim::Authorization.create_or_update_from(handler)
   end
 
@@ -49,7 +49,7 @@ Decidim::User.class_eval do
 
   private
 
-  def available_crm_login_authorization?
+  def available_crm_authenticable_authorization?
     organization.available_authorizations.member?(handler_name)
   end
 
@@ -58,19 +58,19 @@ Decidim::User.class_eval do
   end
 
   def handler_name
-    @handler_name ||= Decidim::Erc::CrmLogin::CrmLoginAuthorizationHandler.handler_name
+    @handler_name ||= Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationHandler.handler_name
   end
 
   def handler
     @handler ||= Decidim::AuthorizationHandler.handler_for(handler_name, handler_params)
   end
 
-  def granted_crm_login_authorization
+  def granted_crm_authenticable_authorization
     Decidim::Authorization.find_by(decidim_user_id: id, name: handler_name)
   end
 
-  def revoke_crm_login_authorization!
+  def revoke_crm_authenticable_authorization!
     return if user_membership?
-    granted_crm_login_authorization.destroy! if granted_crm_login_authorization
+    granted_crm_authenticable_authorization.destroy! if granted_crm_authenticable_authorization
   end
 end
