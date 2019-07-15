@@ -19,8 +19,7 @@ module Decidim
             "#{document_number}-#{Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.secret}"
           )
         end
-       	
-
+      
        	def map_model(model)
           self.document_number = decipherData(model.metadata.try(:[], 'document_number'))
           self.join_date = model.metadata.try(:[], 'join_date')
@@ -70,9 +69,7 @@ module Decidim
         end
 
         # Prepares and perform WS request.
-        # It rescue failed connections to SalouCensus
-        #
-        # Returns an stringified XML
+        # It rescue failed connections to CrmAuthenticable
         def response
         	return nil if uncomplete_credentials?
         	return @response if already_processed?

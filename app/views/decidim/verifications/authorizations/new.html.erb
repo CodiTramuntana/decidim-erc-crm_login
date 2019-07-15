@@ -13,7 +13,6 @@
             <%= authorization_form_for(handler, url: authorizations_path(redirect_url: params[:redirect_url])) do |form| %>
               <%#  We are overwritting these file to comment the line below %>
               <%#= form.error_for(:base) %>
-
               <% if lookup_context.exists?(handler.to_partial_path, [], true) %>
                 <%= render partial: handler.to_partial_path, locals: { handler: handler, form: form } %>
               <% else %>

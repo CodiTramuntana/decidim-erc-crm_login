@@ -31,9 +31,10 @@ module Decidim
               sign_up_as: "user",
             }.merge(extra_params)
           )
+          flash[:notice] =  "S'ha trobat l'usuari"
         else
           render :new
-          flash[:alert] = "error"
+          flash[:alert] =  "No s'ha pogut processar la solicitud"
         end
       end
 

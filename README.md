@@ -22,11 +22,10 @@ bundle
 CrmAuthenticable needs some values to perform requests:
 
 ```yml
-civicrm:
+erc_crm_authenticable:
   api_base: <%= ENV["CIVICRM_API_BASE"] %>
   site_key: <%= ENV["CIVICRM_SITE_KEY"] %>
   api_key: <%= ENV["CIVICRM_API_KEY"] %>
-erc_crm_authenticable:
   secret_key: <%= ENV["ERC_SECRET_KEY"] %>
 ```
 

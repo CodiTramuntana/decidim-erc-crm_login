@@ -38,9 +38,7 @@ ca:
           connection_failed: No es possible connectar amb el cens de Sant Boi. Si us
             plau, intenti-ho més tard.
           document_number_not_valid: El document d'identitat no és vàlid
-          duplicate_authorization: Ja hi ha un usuari verificat amb aquestes dades.
-            No se'n pot verificar un altre.
-          too_young: Heu de tenir almenys 16 anys
+          duplicate_user: Ja hi ha un usuari registrat amb aquestes dades.
           unexpected_error: Alguna cosa ha anat malament. Si us plau, intenti-ho més
             tard.
         uppercase_only_letters_numbers: ha d'estar en majúscules i contenir lletres

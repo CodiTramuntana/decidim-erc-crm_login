@@ -5,6 +5,7 @@ module Decidim
   module Erc
     module CrmAuthenticable
       class RegistrationFormStepOneForm < Form
+        include Decidim::Erc::CrmAuthenticable::DataEncryptor
         mimic :user
 
         attribute :document_number, String
@@ -15,7 +16,8 @@ module Decidim
                   presence: true
 
         validate :ws_request_must_succeed
-        
+        validate :uniqueness
+
         private
 
         # Validates the request status is: OK 200.
@@ -24,11 +26,21 @@ module Decidim
           
           @response = perform_request
           
-          if @response[:body].present?
-            self.data = parse_response(@response[:body])
-          else
+          unless @response[:is_error] == 0
             errors.add(:document_number, "Document number error" )
-          end
+          else
+            if @response[:count] == 0 # No existe ningun habitante con los datos introducidos.
+              errors.add(:document_number, I18n.t("document_number_not_valid", scope: "errors.messages.sant_boi_census_authorization_handler"))
+            else
+              if @response[:body].present?
+                self.data = parse_response(@response[:body])
+              else
+                raise
+                errors.add(:document_number, "Document number error" )
+              end
+            end  
+          end 
+          
         end
 
         # # Validates the document against the Sant Boi WS.
@@ -43,6 +55,16 @@ module Decidim
         #     errors.add(:base, I18n.t("unexpected_error", scope: "errors.messages.sant_boi_census_authorization_handler"))
         #   end
         # end
+
+        
+        def duplicates
+          Decidim::User.where(organization: current_organization).where('extended_data @> ?', { document_number: cipherData(document_number) }.to_json)
+        end
+
+        def uniqueness
+          return if duplicates.none?
+          errors.add(:base, I18n.t("decidim.errors.messages.erc_census_authorization_handler.duplicate_user"))
+        end
 
         # Validates citizen is over 16 years of age.
         # def citizen_must_be_over_16_years_of_age
@@ -72,37 +94,23 @@ module Decidim
         #   age = ((Time.zone.now - date_of_birth.to_datetime) / 1.year.seconds).floor
         #   age >= 16
         # end
-
-        # This will be used if response is and XML
-        # def parse_response(response_body)
-        #   return if response_body.blank?
-
-        #   {
-        #     name: response_body.xpath("//display_name").text,
-        #     nickname: response_body.xpath("//display_name").text.underscore.parameterize,
-        #     email: response_body.xpath("//email").text,
-        #     phone: response_body.xpath("//custom_96").text,
-        #     member_of_name: response_body.xpath("//custom_21").text,
-        #     member_of_code: response_body.xpath("//custom_code_21").text,
-        #     militant_code: response_body.xpath("//custom_35").text,
-        #     contact_id: response_body.xpath("//contact_id").text,
-        #     document_number: response_body.xpath("//custom_4").text,
-        #   }
-        # end
+        def response_valid?
+          @response['is_error'] == 0
+        end
 
         def parse_response(response_body)
           return if response_body.blank?
 
           {
-            name: response_body[:display_name],
-            nickname:response_body[:display_name].underscore.parameterize,
-            email: response_body[:email],
-            phone: response_body[:phone],
-            member_of_name: response_body[:custom_21],
-            member_of_code: response_body[:custom_21],
-            militant_code: response_body[:custom_35],
-            contact_id: response_body[:contact_id],
-            document_number: response_body[:custom_4],
+            name: response_body['display_name'],
+            nickname:response_body['display_name'].underscore.parameterize,
+            email: response_body['email'],
+            phone: response_body['phone'],
+            member_of_name: response_body['custom_21'],
+            member_of_code: response_body['custom_21'],
+            militant_code: response_body['custom_35'],
+            contact_id: response_body['contact_id'],
+            document_number: response_body['custom_4'],
           }
         end
       end

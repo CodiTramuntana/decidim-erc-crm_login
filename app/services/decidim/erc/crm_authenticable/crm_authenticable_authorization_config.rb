@@ -1,12 +1,21 @@
 module Decidim
   module Erc
     module CrmAuthenticable
-      # This is a handler for SitgesCensus config values.
-      # By now it only search for secret ones, but in future it could
-      # be filled by a config record
+      # This is a handler for Erc::CrmAuthenticable config values.
       class CrmAuthenticableAuthorizationConfig
         class << self
-          # secret value for Sitges Census to encrypt an unique_id
+          def url
+            Rails.application.secrets.erc_crm_authenticable[:api_base] 
+          end
+
+          def site_key
+            Rails.application.secrets.erc_crm_authenticable[:site_key]
+          end
+
+          def api_key
+            Rails.application.secrets.erc_crm_authenticable[:api_key]
+          end
+          
           def secret
             Rails.application.secrets.erc_crm_authenticable[:erc_crm_authenticable_secret]
           end

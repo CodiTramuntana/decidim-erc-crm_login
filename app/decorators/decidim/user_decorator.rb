@@ -30,7 +30,7 @@ Decidim::User.class_eval do
 
   def user_membership?
     return true if admin?
-    response = Decidim::Erc::CrmAuthenticable::CrmAuthenticableRegistrationService.new(contact_id: self&.civicrm_contact_id).perform_login_request
+    response = Decidim::Erc::CrmAuthenticable::CrmAuthenticableRegistrationService.new(self&.document_number, self&.civicrm_contact_id).perform_login_request
     (response[:is_error] == 0) && (!response[:body][:end_date].present?)
   end
 
