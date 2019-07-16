@@ -1,3 +1,8 @@
+# Decidim DOcumentatin
+
+A Decididm:System, s'ha de forçar a que els usuaris han de tenir sessió iniciada.
+S'ha d'activar el verificador també.
+
 # CIVICRM DOCUMENTATION
 
 - Cognoms --> last_name (entitat Contact)

@@ -4,43 +4,48 @@ ca:
     attributes:
       authorization_handler:
         document_number: Document d'identitat
+      user:
+        document_number: Document d'identitat
+        phone: Telèfon
   devise:
+    registrations:
+      new:
+        check: Comprova 
     failure:
       not_membership: "No tens una afiliació activa"
   decidim:
     authorization_handlers:
       crm_authenticable_authorization_handler:
-        explanation: Verifica't com Militant d'Erc
+        explanation: Verifica't com a militància d'ERC
         fields:
           membership_type_id: "Tipus d'afiliació. (1 = Militant, 2 = Simpatizant, 3 = Amic)"
-          join_date: "Afiliat abans de"
-        name: Militant d'Erc
+          join_date: "Antiguitat abans de"
+        name: Militància d'ERC
     devise:  
       registrations:
+        new:
+          subtitle: Posa el teu DNI per comprovar si ets militiant, a continuació podràs fer el registre.
+          document_number_help: Document d'identitat amb el que estàs afiliat a la militància.
         new_step_2:
-          already_have_an_account?: Already have an account?
-          newsletter: Receive an occasional newsletter with relevant information
-          newsletter_title: Contact permission
-          nickname_help: Your alias (@nickname) in %{organization}
-          password_help: "%{minimun_characters} characters minimum, must not be too common (e.g. 123456) and must be different from your nickname and your email."
-          sign_in: Log in
-          sign_up: Sign up
+          already_have_an_account?: Ja tens un compte?
+          newsletter: Vull rebre un butlletí ocasional amb informació rellevant
+          newsletter_title: Permís de contacte
+          nickname_help: El teu àlies (@sobrenom) a %{organization}
+          password_help: "%{minimun_characters} caràcters mínim, no ha de ser massa comú (per exemple 123456) i ha de ser diferent del teu nom d'usuari i la teva adreça de correu electrònic."
+          sign_in: Entra
+          sign_up: Registra't
           sign_up_as:
-            legend: Sign up as
-          subtitle: Sign up to participate in discussions and support proposals.
-          terms: the terms and conditions of use
-          tos_agreement: By signing up you agree to %{link}.
-          tos_title: Terms of Service
-          username_help: Public name that appears on your posts. With the aim of guaranteeing the anonymity, can be any name.
+            legend: Inscriure's com a
+          subtitle: Crea un compte per poder participar en els debats i donar suport a les propostes.
+          terms: els termes i condicions d'ús
+          tos_agreement: En registrar-te acceptes %{link}.
+          tos_title: Termes del servei
+          username_help: Nom públic que apareixerà en les teves publicacions. Amb l'objectiu de garantir l'anonimat pot ser qualsevol nom.
     errors:
       messages:
         erc_census_authorization_handler:
-          connection_failed: No es possible connectar amb el cens de Sant Boi. Si us
-            plau, intenti-ho més tard.
           document_number_not_valid: El document d'identitat no és vàlid
           duplicate_user: Ja hi ha un usuari registrat amb aquestes dades.
-          unexpected_error: Alguna cosa ha anat malament. Si us plau, intenti-ho més
-            tard.
         uppercase_only_letters_numbers: ha d'estar en majúscules i contenir lletres
           i/o nombres
     verifications:

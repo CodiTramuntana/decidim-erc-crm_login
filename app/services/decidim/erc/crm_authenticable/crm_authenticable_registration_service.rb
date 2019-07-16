@@ -46,6 +46,16 @@ module Decidim
           }
         end
         
+        def perform_local_section_request
+          response = sanitize_response(perform_request(local_section_form_data_attributes.map{|k,v| "#{k}=#{v}"}.join('&')))
+          
+          {
+            is_error: response['is_error'],
+            count: response['count'],
+            body: response['values'][0]
+          }
+        end
+        
         private
 
         attr_reader :document_number, :contact_id
@@ -85,6 +95,16 @@ module Decidim
             api_key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.api_key,
             key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.site_key, 
             json: { 'sequential':1, 'contact_id': @contact_id, "status_id": "New","active_only": 1, 'api.Contact.get': {"custom_4": @document_number}}.to_json
+          }
+        end
+
+        def local_section_form_data_attributes
+          {
+            entity: 'Contact',
+            action: 'get',
+            api_key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.api_key,
+            key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.site_key, 
+            json: {'sequential':1, "return": "contact_id,display_name", 'contact_id': @contact_id }.to_json
           }
         end
 
