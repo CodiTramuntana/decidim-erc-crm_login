@@ -59,7 +59,7 @@ module Decidim
             action: 'get',
             api_key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.api_key,
             key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.site_key, 
-            json: {'sequential':1, 'custom_4': @document_number, 'api.Membership.get':{"only_active":"yes"}}.to_json
+            json: {'sequential':1, "return":"custom_21,custom_4,display_name,email,nick_name,custom_35,phone", 'custom_4': @document_number, 'api.Membership.get':{"only_active":"yes"}}.to_json
           }
         end
 
@@ -80,11 +80,11 @@ module Decidim
         # si es fals, s'ha d'eliminar la verificació existent, i no permetre entrar.  
         def verification_form_data_attributes
           {
-            entity: 'Contact',
+            entity: 'Membership',
             action: 'get',
             api_key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.api_key,
             key: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationConfig.site_key, 
-            json: { 'sequential':1, 'custom_4': @document_number, 'api.Membership.get': {"active_only":true,"contact_id": @contact_id}}.to_json
+            json: { 'sequential':1, 'contact_id': @contact_id, "status_id": "New","active_only": 1, 'api.Contact.get': {"custom_4": @document_number}}.to_json
           }
         end
 

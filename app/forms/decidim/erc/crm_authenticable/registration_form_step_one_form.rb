@@ -100,10 +100,9 @@ module Decidim
 
         def parse_response(response_body)
           return if response_body.blank?
-
           {
             name: response_body['display_name'],
-            nickname:response_body['display_name'].underscore.parameterize,
+            nickname: nickname(response_body),
             email: response_body['email'],
             phone: response_body['phone'],
             member_of_name: response_body['custom_21'],
@@ -112,6 +111,12 @@ module Decidim
             contact_id: response_body['contact_id'],
             document_number: response_body['custom_4'],
           }
+        end
+
+        def nickname(response_body)
+          return response_body['nickname'] if response_body['nickname'].present?
+          
+          UserBaseEntity.nicknamize(response_body['display_name'], organization: current_organization)
         end
       end
     end

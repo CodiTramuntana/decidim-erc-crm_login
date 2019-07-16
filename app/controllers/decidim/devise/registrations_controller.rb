@@ -77,7 +77,7 @@ module Decidim
       end
 
       def extra_params
-        return unless @form.data.present?
+        return {} unless @form.data.present?
         @form.data
       end
     end

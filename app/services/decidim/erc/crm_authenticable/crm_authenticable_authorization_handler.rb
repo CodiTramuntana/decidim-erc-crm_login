@@ -86,31 +86,31 @@ module Decidim
 
         def sanitize_response
         	return unless response
-        	@sanitize_response ||= response[:body]
+          @sanitize_response ||= response[:body]
         end
 
         def sanitize_join_date
-        	@sanitize_join_date ||= sanitize_response[:join_date]&.to_date&.strftime('%d/%m/%Y')
+          @sanitize_join_date ||= sanitize_response["join_date"]&.to_date&.strftime('%d/%m/%Y')
         end
 
         def sanitize_end_date
-        	@sanitize_end_date ||= sanitize_response[:end_date]&.to_date&.strftime('%d/%m/%Y')
+        	@sanitize_end_date ||= sanitize_response["end_date"]&.to_date&.strftime('%d/%m/%Y')
         end
 
         def sanitize_start_date
-        	@sanitize_start_date ||= sanitize_response[:start_date]&.to_date&.strftime('%d/%m/%Y')
+        	@sanitize_start_date ||= sanitize_response["start_date"]&.to_date&.strftime('%d/%m/%Y')
         end
 
         def sanitize_membership_type_id
-        	@sanitize_membership_type_id ||= sanitize_response[:membership_type_id]
+        	@sanitize_membership_type_id ||= sanitize_response["membership_type_id"]
         end
 
         def sanitize_membership_name
-        	@sanitize_membership_name ||= sanitize_response[:membership_name]
+        	@sanitize_membership_name ||= sanitize_response["membership_name"]
         end
 
         def sanitize_status_id
-        	@sanitize_status_id ||= sanitize_response[:status_id]
+        	@sanitize_status_id ||= sanitize_response["status_id"]
         end
         
         # Check if request had benn already been processed and saved
