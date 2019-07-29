@@ -7,49 +7,60 @@ ca:
       user:
         document_number: Document d'identitat
         phone: Telèfon
-  devise:
-    registrations:
-      new:
-        check: Comprova 
-    failure:
-      not_membership: "No tens una afiliació activa"
+  crm_authenticable:
+    errors:
+      connection_failed: No ha estat possible conectar amb CiviCRM. Siusplau, intenta-ho
+        més tard.
+      document_number_not_valid: El document d'identitat no correspón a cap militant
+        actiu d'Esquerra Republicana
+      duplicate_user: Ja hi ha un usuari registrat amb aquestes dades.
+    verifications:
+      authorizations:
+        new:
+          authorize_with: Verifica't com %{authorizer}
   decidim:
     authorization_handlers:
       crm_authenticable_authorization_handler:
         explanation: Verifica't com a militància d'ERC
         fields:
-          membership_type_id: "Tipus d'afiliació. (1 = Militant, 2 = Simpatizant, 3 = Amic)"
-          join_date: "Antiguitat abans de"
+          join_date: Antiguitat d'afiliació. (Número de mesos)
+          membership_type_id: Tipus d'afiliació. (1 = Militant, 2 = Simpatizant, 3
+            = Amic)
         name: Militància d'ERC
-    devise:  
+    devise:
       registrations:
         new:
-          subtitle: Posa el teu DNI per comprovar si ets militiant, a continuació podràs fer el registre.
-          document_number_help: Document d'identitat amb el que estàs afiliat a la militància.
+          document_number_help: Document d'identitat (lletra inclosa) amb el que estàs
+            afiliat a la militància.
+          document_number_placeholder: 'Exemple: 123456789A'
+          send: Sol·licita verificació
+          subtitle: Posa el teu DNI per comprovar si ets militiant d'Esquerra Republicana,
+            a continuació podràs fer el registre.
+          title: Verifica el teu document d'identitat
         new_step_2:
           already_have_an_account?: Ja tens un compte?
           newsletter: Vull rebre un butlletí ocasional amb informació rellevant
           newsletter_title: Permís de contacte
           nickname_help: El teu àlies (@sobrenom) a %{organization}
-          password_help: "%{minimun_characters} caràcters mínim, no ha de ser massa comú (per exemple 123456) i ha de ser diferent del teu nom d'usuari i la teva adreça de correu electrònic."
+          password_help: "%{minimun_characters} caràcters mínim, no ha de ser massa
+            comú (per exemple 123456) i ha de ser diferent del teu nom d'usuari i
+            la teva adreça de correu electrònic."
+          phone_number_help: Siusplau, comprova que aquest és el teu telèfon de contacte
+            actual.
           sign_in: Entra
           sign_up: Registra't
           sign_up_as:
             legend: Inscriure's com a
-          subtitle: Crea un compte per poder participar en els debats i donar suport a les propostes.
+          subtitle: Crea un compte per poder participar en els debats i donar suport
+            a les propostes.
           terms: els termes i condicions d'ús
           tos_agreement: En registrar-te acceptes %{link}.
           tos_title: Termes del servei
-          username_help: Nom públic que apareixerà en les teves publicacions. Amb l'objectiu de garantir l'anonimat pot ser qualsevol nom.
-    errors:
-      messages:
-        erc_census_authorization_handler:
-          document_number_not_valid: El document d'identitat no és vàlid
-          duplicate_user: Ja hi ha un usuari registrat amb aquestes dades.
-        uppercase_only_letters_numbers: ha d'estar en majúscules i contenir lletres
-          i/o nombres
-    verifications:
-      authorizations:
-        new:
-          authorize_with: Verifica't com %{authorizer}
-  
+          username_help: Nom públic que apareixerà en les teves publicacions. Amb
+            l'objectiu de garantir l'anonimat pot ser qualsevol nom.
+  devise:
+    failure:
+      not_membership: No tens una afiliació activa
+    registrations:
+      new:
+        check: Comprova

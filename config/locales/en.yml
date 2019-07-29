@@ -1,20 +1,49 @@
 ---
 en:
+  activemodel:
+    attributes:
+      user:
+        document_number: Identity document
+  crm_authenticable:
+    errors:
+      connection_failed: It was not possible to connect with CiviCRM. Please try again
+        later.
+      document_invalid: does not correspond to any dues-paying member of Esquerra
+        Republicana.
+      duplicate_user: There is already a user registered with this data.
   decidim:
-    devise:  
+    authorization_handlers:
+      crm_authenticable_authorization_handler:
+        explanation: Verify yourself as a militant of Esquerra Republicana
+        fields:
+          join_date: Membership seniority. (number of months)
+          membership_type_id: Type of membership. (1 = militant, 2 = sympathizer,
+            3 = friend)
+        name: Militancy of Esquerra Republicana
+    devise:
       registrations:
+        new:
+          document_number_help: The identity document number (letter included) with
+            which you are affiliated to Esquerra Republicana.
+          document_number_placeholder: 'Example: 123456789A'
+          send: Request verification
+          subtitle: Introduce your identity document to verify your membership to
+            Esquerra Republicana, then you will be able to register.
+          title: Verify your identity document
         new_step_2:
           already_have_an_account?: Already have an account?
           newsletter: Receive an occasional newsletter with relevant information
           newsletter_title: Contact permission
           nickname_help: Your alias (@nickname) in %{organization}
-          password_help: "%{minimun_characters} characters minimum, must not be too common (e.g. 123456) and must be different from your nickname and your email."
+          password_help: "%{minimun_characters} characters minimum, must not be too
+            common (e.g. 123456) and must be different from your nickname and your
+            email."
+          phone_number_help: Please, verify that this is your current phone number.
           sign_in: Log in
           sign_up: Sign up
-          sign_up_as:
-            legend: Sign up as
           subtitle: Sign up to participate in discussions and support proposals.
           terms: the terms and conditions of use
           tos_agreement: By signing up you agree to %{link}.
           tos_title: Terms of Service
-          username_help: Public name that appears on your posts. With the aim of guaranteeing the anonymity, can be any name.
+          username_help: Public name that appears on your posts. With the aim of guaranteeing
+            the anonymity, can be any name.
