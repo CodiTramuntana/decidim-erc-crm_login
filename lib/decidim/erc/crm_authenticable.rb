@@ -2,12 +2,13 @@
 
 require 'decidim/erc/crm_authenticable/engine'
 require "decidim/erc/crm_authenticable/workflow"
-require 'decidim/erc/crm_authenticable/data_encryptor'
 
 module Decidim
   module Erc
     module CrmAuthenticable
-    
+      autoload :CiviCrmClient, "decidim/erc/crm_authenticable/civi_crm_client"
+      autoload :UserAuthorizer, "decidim/erc/crm_authenticable/user_authorizer"
+      autoload :Log, "decidim/erc/crm_authenticable/log"
     end
   end
 end
