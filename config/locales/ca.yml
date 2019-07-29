@@ -11,7 +11,7 @@ ca:
     errors:
       connection_failed: No ha estat possible conectar amb CiviCRM. Siusplau, intenta-ho
         més tard.
-      document_number_not_valid: El document d'identitat no correspón a cap militant
+      document_invalid: El document d'identitat no correspón a cap militant
         actiu d'Esquerra Republicana
       duplicate_user: Ja hi ha un usuari registrat amb aquestes dades.
     verifications:
