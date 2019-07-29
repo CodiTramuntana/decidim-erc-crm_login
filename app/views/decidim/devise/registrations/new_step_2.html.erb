@@ -45,7 +45,7 @@
             </div>
 
             <div class="field">
-              <%= f.text_field :phone  %>
+              <%= f.text_field :phone_number, help_text: t(".phone_number_help") %>
             </div>
 
             <div class="field">
@@ -84,10 +84,7 @@
           </div>
         </div>
 
-        <%= f.hidden_field :militant_code %>
-        <%= f.hidden_field :member_of_code %>
-        <%= f.hidden_field :contact_id %>
-        <%= f.hidden_field :document_number %>
+        <%= f.hidden_field :extended_data %>
 
         <div class="card">
           <div class="card__content">
