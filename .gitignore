@@ -1,3 +1,5 @@
+# byebug
+.byebug_history
 
 # rspec failure tracking
 .rspec-failures
@@ -7,7 +9,6 @@ spec/decidim_dummy_app
 
 # default development application
 development_app
+
 tmp/
-spec/decidim_dummy_app/
-.rspec-failures
 Gemfile.lock
