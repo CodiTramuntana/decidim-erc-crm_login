@@ -1,9 +1,25 @@
 # Decidim::Erc::CrmAuthenticable
 
-Integration with CiviCrm of ERC.
+Decidim::Erc::CrmAuthenticable is based on the [Decidim::Verifications](https://github.com/decidim/decidim/tree/master/decidim-verifications#decidimverifications) module and implements a custom verification method against the CiviCrm of Esquerra Republicana.
 
-## Usage
+## How it works
 
+Registration:
+- The DNI is validated against CiviCRM before allowing the user to register.
+- The user is redirected to the registration form prefilled with the personal data found in CiviCRM.
+- The user is created with the following information stored in the extended_data Hash:
+  - phone_number:
+  - member_of_code:
+  - document_number: Base64-encoded version of their identity document number (for further requests)
+
+Login:
+- After loggin in, users are validated against CiviCRM to check if they are dues-paying members of Esquerra Republicana; if not, they are logged out.
+- If they are succesfully validated a Decidim::Authorization is created or updated for the user; else, their authorization is deleted.
+
+Verification options:
+These options can be set in the admin zone to alter the authorization logic related to a component action:
+- Type of membership: militant, sympathizer or friend.
+- membership seniority: number of months.
 
 ## Installation
 
@@ -31,27 +47,24 @@ erc_crm_authenticable:
 
 ## Testing
 
-1. Run `bundle exec rake test_app`. **Execution will fail in an specific migration.**
+1. Run `bundle exec rake test_app`.
 
-2. cd `spec/decidim_dummy_app/` and:
+2. Run tests with `bundle exec rspec`
 
-  2.1. Comment `up` execution in failing migration
+3. Set the configuration values for the test app in `spec/decidim_dummy_app/config/secrets.yml`
 
-  2.2. Execute...
-  ```bash
-  RAILS_ENV=test bundle exec rails db:drop
-  RAILS_ENV=test bundle exec rails db:create
-  RAILS_ENV=test bundle exec rails db:migrate
-  ```
-3. back to root folder `cd ../..`
-
-4. run tests with `bundle exec rspec`
-
-5. Remember to configure this new test App with configuration values.
+```yaml
+# The test stubs are configured to use the following values as to not reveal the real ones.
+erc_crm_authenticable:
+  api_base: https://api.base/?
+  site_key: site_key
+  api_key: api_key
+  secret_key: secret_key
+```
 
 ## Versioning
 
-`Decidim::Erc::CrmAuthenticable` depends directly on `Decidim::Core` in `0.18.0` version.
+`Decidim::Erc::CrmAuthenticable` depends directly on `Decidim::Core` in `0.19.0` version.
 
 ## License
 
