@@ -1,11 +1,24 @@
 # frozen_string_literal: true
 
-require_dependency 'decidim/create_registration'
+# This decorator...
 Decidim::CreateRegistration.class_eval do
-  include Decidim::Erc::CrmAuthenticable::DataEncryptor
+  # Method overrided.
+  #
+  def call
+    return broadcast(:invalid) if form.invalid?
+
+    create_user
+
+    broadcast(:ok, @user)
+  rescue ActiveRecord::RecordInvalid => e
+    Decidim::Erc::CrmAuthenticable::Log.log.error("[#{self.class.name}] #{e.message}\n#{form.extended_data}")
+    broadcast(:invalid)
+  end
 
   private
 
+  # Method overrided.
+  #
   def create_user
     @user = Decidim::User.create!(
       email: form.email,
@@ -18,17 +31,14 @@ Decidim::CreateRegistration.class_eval do
       newsletter_notifications_at: form.newsletter_at,
       email_on_notification: true,
       accepted_tos_version: form.current_organization.tos_version,
-      extended_data: extended_data,
+      extended_data: form.extended_data,
+      scope: find_scope_by_code
     )
   end
 
-  def extended_data
-    {
-      phone: form.phone,
-      militant_code: form.militant_code,
-      member_of: form.member_of,
-      contact_id: form.contact_id,
-      document_number: cipherData(form.document_number)
-    }
+  # Method added.
+  #
+  def find_scope_by_code
+    form.current_organization.scopes.find_by(code: form.extended_data["member_of_code"])
   end
 end
