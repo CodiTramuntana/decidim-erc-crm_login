@@ -65,7 +65,7 @@ module Decidim
         end
 
         def user_data
-          @user_data ||= civi_crm_response[:body].slice(*CiviCrmClient::USER_DATA)
+          @user_data ||= civi_crm_response[:body][0].slice(*CiviCrmClient::USER_DATA)
         end
 
         def nickname

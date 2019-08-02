@@ -40,7 +40,7 @@ module Decidim
         def ws_request_must_succeed
           return if errors.any?
 
-          @response = CiviCrmClient.new(document_number).get_militant
+          @response = CiviCrmClient.new.find_militant(document_number)
 
           errors.add(:base, I18n.t("connection_failed", scope: "crm_authenticable.errors")) if response[:is_error]
         end
@@ -52,7 +52,7 @@ module Decidim
         end
 
         def active_membership?
-          @membership = response.dig(:body, "api.Membership.get", "values", 0) # Hi haura més d'una?
+          @membership = response.dig(:body, 0, "api.Membership.get", "values", 0) # Hi haura més d'una?
           membership.present? && membership["end_date"].blank? # && al corrent de pagament
         end
       end
