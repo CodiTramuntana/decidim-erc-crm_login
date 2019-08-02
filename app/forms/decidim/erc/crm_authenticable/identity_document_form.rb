@@ -16,7 +16,7 @@ module Decidim
         validate :document_number_must_be_valid, :document_number_must_be_unique
 
         def registration_form_params
-          return {} if errors.any? || civi_crm_response.nil?
+          return {} if errors.any? || authorization_handler.response.nil?
 
           {
             name: user_data["display_name"],
@@ -60,12 +60,8 @@ module Decidim
             .where("extended_data @> ?", { document_number: encoded_document_number }.to_json)
         end
 
-        def civi_crm_response
-          @civi_crm_response ||= authorization_handler.instance_variable_get(:@response)
-        end
-
         def user_data
-          @user_data ||= civi_crm_response[:body][0].slice(*CiviCrmClient::USER_DATA)
+          @user_data ||= authorization_handler.response[:body][0].slice(*CiviCrmClient::USER_DATA)
         end
 
         def nickname

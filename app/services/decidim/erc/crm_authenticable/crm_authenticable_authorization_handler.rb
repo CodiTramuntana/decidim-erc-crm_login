@@ -21,7 +21,7 @@ module Decidim
         end
 
         def metadata
-          membership || {}
+          @membership || {}
         end
 
         # Allows to validate the document_number against the CiviCRM WS without a User.
@@ -32,9 +32,9 @@ module Decidim
           errors.empty?
         end
 
-        private
+        attr_reader :response
 
-        attr_reader :response, :membership
+        private
 
         # Validates the request status is: OK 200.
         def ws_request_must_succeed
@@ -53,7 +53,8 @@ module Decidim
 
         def active_membership?
           @membership = response.dig(:body, 0, "api.Membership.get", "values", 0) # Hi haura més d'una?
-          membership.present? && membership["end_date"].blank? # && al corrent de pagament
+
+          @membership.present? && @membership["end_date"].blank? # && al corrent de pagament
         end
       end
     end
