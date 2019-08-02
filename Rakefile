@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'decidim/dev/common_rake'
-load './lib/tasks/decidim_tasks.rake'
 
 desc 'Generates a dummy app for testing'
-task :test_app do
-  Rails.env = "test"
-  Rake::Task['decidim:generate_external_test_app'].invoke
-  Rake::Task['decidim:update_test_app'].invoke
+task test_app: "decidim:generate_external_test_app" do
+  ENV["RAILS_ENV"] = "test"
+  Dir.chdir("spec/decidim_dummy_app") do
+    system("bundle exec rake decidim_erc_crm_authenticable:install:migrations")
+    system("bundle exec rake db:migrate")
+  end
 end

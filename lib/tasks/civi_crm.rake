@@ -3,7 +3,7 @@
 require "rest-client"
 
 namespace :civi_crm do
-  desc ""
+  desc "Run the tasks that create the `Decidim::Scope` and generate the mapping CiviCRM Contact ID-`Decidim::Scope` code."
   task init: ["import:comarcals", "import:local_comarcal_relationships", "create:scopes"]
 
   namespace :import do
@@ -22,7 +22,7 @@ namespace :civi_crm do
       puts "File generated 'config/civi_crm/comarcals.yml'"
     end
 
-    desc "Generates a YAML file with the relation between CiviCRM Contacts of sub_type 'Local' and sub_type 'Comarcal'"
+    desc "Generates a YAML file with the relationship between CiviCRM Contacts of sub_type 'Local' and sub_type 'Comarcal'"
     task :local_comarcal_relationships do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_locals
       raise "Failed to fetch the data!" if response[:is_error]
@@ -45,7 +45,7 @@ namespace :civi_crm do
   end
 
   namespace :create do
-    desc "Creates scopes"
+    desc "Creates `Decidim::Scope`s"
     task scopes: :environment do
       comarcals = YAML.load_file(Rails.root.join("config", "civi_crm", "comarcals.yml"))
 
@@ -61,7 +61,7 @@ namespace :civi_crm do
         )
       end
 
-      puts "Scopes created"
+      puts "All `Decidim::Scope`s are in place"
     end
   end
 end
