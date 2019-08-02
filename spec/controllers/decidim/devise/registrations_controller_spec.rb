@@ -7,7 +7,7 @@ module Decidim
     routes { Decidim::Core::Engine.routes }
 
     let(:organization) { create(:organization) }
-    let!(:scope) { create(:scope, organization: organization) }
+    let!(:scope) { create(:scope, organization: organization, code: "custom_21") }
 
     before do
       request.env["devise.mapping"] = ::Devise.mappings[:user]

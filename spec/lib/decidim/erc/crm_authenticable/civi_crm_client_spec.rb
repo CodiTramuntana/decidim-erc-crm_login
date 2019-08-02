@@ -9,8 +9,8 @@ module Decidim
       describe CiviCrmClient do
         let(:document_number) { "123456789A" }
 
-        describe "get_militant" do
-          subject { described_class.new(document_number).get_militant }
+        describe "find_militant" do
+          subject { described_class.new.find_militant(document_number) }
 
           context "when document_number is valid against CiviCRM" do
             before { stub_valid_request }
@@ -18,8 +18,8 @@ module Decidim
             it { is_expected.to include(is_error: false) }
 
             it "contains information in the body" do
-              expect(subject[:body]).to be_a(Hash)
-              expect(subject[:body]).not_to be_empty
+              expect(subject[:body][0]).to be_a(Hash)
+              expect(subject[:body][0]).not_to be_empty
             end
           end
 
@@ -29,7 +29,7 @@ module Decidim
             it { is_expected.to include(is_error: false) }
 
             it "does NOT contain information in the body" do
-              expect(subject[:body]).to be_nil
+              expect(subject[:body][0]).to be_nil
             end
           end
 
