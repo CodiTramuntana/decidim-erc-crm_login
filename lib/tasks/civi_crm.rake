@@ -8,7 +8,7 @@ namespace :civi_crm do
 
   namespace :import do
     desc "Generates a YAML file with the CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
-    task comarcals: :environment do
+    task :comarcals do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_comarcals
       raise "Failed to fetch the data!" if response[:is_error]
 
@@ -23,7 +23,7 @@ namespace :civi_crm do
     end
 
     desc "Generates a YAML file with the relation between CiviCRM Contacts of sub_type 'Local' and sub_type 'Comarcal'"
-    task local_comarcal_relationships: :environment do
+    task :local_comarcal_relationships do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_locals
       raise "Failed to fetch the data!" if response[:is_error]
 

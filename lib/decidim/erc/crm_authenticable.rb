@@ -6,7 +6,7 @@ require "decidim/erc/crm_authenticable/workflow"
 module Decidim
   module Erc
     module CrmAuthenticable
-      SCOPE_CODES = { "custom_21" => "custom_21" }
+      SCOPE_CODES = { "custom_21" => "custom_21" } if Rails.env.test?
 
       autoload :CiviCrmClient, "decidim/erc/crm_authenticable/civi_crm_client"
       autoload :UserAuthorizer, "decidim/erc/crm_authenticable/user_authorizer"
