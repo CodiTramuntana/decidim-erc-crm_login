@@ -39,6 +39,7 @@ Decidim::CreateRegistration.class_eval do
   # Method added.
   #
   def find_scope_by_code
-    form.current_organization.scopes.find_by(code: form.extended_data["member_of_code"])
+    code = Decidim::Erc::CrmAuthenticable::SCOPE_CODES[form.extended_data["member_of_code"]]
+    form.current_organization.scopes.find_by(code: code)
   end
 end
