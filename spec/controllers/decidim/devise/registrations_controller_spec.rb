@@ -19,7 +19,7 @@ module Decidim
         {
           user: {
             sign_up_as: "user",
-            document_number: "123456789A",
+            document_number: "123456789A"
           }
         }
       end
@@ -76,6 +76,7 @@ module Decidim
         it "renders the new_step_two template" do
           post :create, params: params
           expect(controller).to render_template(:new_step_2)
+          expect(controller.flash.alert).to have_content("There was a problem creating your account.")
         end
       end
     end

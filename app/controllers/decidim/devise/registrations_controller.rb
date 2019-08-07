@@ -16,24 +16,21 @@ module Decidim
 
       def new
         @form = form(Decidim::Erc::CrmAuthenticable::IdentityDocumentForm).from_params(
-            user: {
-              sign_up_as: "user"
-            }
-          )
+          user: {
+            sign_up_as: "user"
+          }
+        )
       end
 
       def new_step_2
         @form = form(Decidim::Erc::CrmAuthenticable::IdentityDocumentForm).from_params(params[:user])
+        return render :new unless @form.valid?
 
-        if @form.valid?
-          @form = form(Decidim::RegistrationForm).from_params(
-            user: {
-              sign_up_as: "user"
-            }.merge(@form.registration_form_params)
-          )
-        else
-          return render :new
-        end
+        @form = form(Decidim::RegistrationForm).from_params(
+          user: {
+            sign_up_as: "user"
+          }.merge(@form.registration_form_params)
+        )
       end
 
       def create
@@ -46,6 +43,7 @@ module Decidim
           end
 
           on(:invalid) do
+            set_flash_message! :alert, :error
             render :new_step_2
           end
         end

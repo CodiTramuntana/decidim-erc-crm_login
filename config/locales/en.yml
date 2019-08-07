@@ -47,3 +47,7 @@ en:
           tos_title: Terms of Service
           username_help: Public name that appears on your posts. With the aim of guaranteeing
             the anonymity, can be any name.
+  devise:
+    registrations:
+      user:
+        error: There was a problem creating your account.

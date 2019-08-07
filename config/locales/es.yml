@@ -8,8 +8,7 @@ es:
     errors:
       connection_failed: No ha sido possible conectar con CiviCRM. Porfavor, prueba
         más tarde.
-      document_invalid: El documento de identidad no corresponse a ningún militante
-        active de Esquerra Republicana.
+      document_invalid: no corresponde a ningún militante activo de Esquerra Republicana.
       duplicate_user: Un usuario ya está registrado con los mismos datos.
   decidim:
     devise:
@@ -42,3 +41,7 @@ es:
           tos_title: Terms of Service
           username_help: Public name that appears on your posts. With the aim of guaranteeing
             the anonymity, can be any name.
+  devise:
+    registrations:
+      user:
+        error: Se ha producido un error al crear tu cuenta.
