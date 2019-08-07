@@ -3,10 +3,11 @@
 require "rest-client"
 
 namespace :civi_crm do
-  desc "Run the tasks that create the `Decidim::Scope` and generate the mapping CiviCRM Contact ID-`Decidim::Scope` code."
-  task init: ["import:comarcals", "import:local_comarcal_relationships", "create:scopes"]
+  task init: ["import:all", "create:scopes"]
 
   namespace :import do
+    task all: [:comarcals, :local_comarcal_relationships]
+
     desc "Generates a YAML file with the CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
     task :comarcals do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_comarcals
