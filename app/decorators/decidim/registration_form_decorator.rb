@@ -12,12 +12,19 @@ Decidim::RegistrationForm.class_eval do
   # Method added.
   #
   def before_validation
-    self.extended_data = JSON.parse(extended_data).try(:merge, { phone_number: encoded_phone_number })
-  rescue JSON::ParserError => e
-    Decidim::Erc::CrmAuthenticable::Log.log.error("[#{self.class.name}] #{e.message}")
+    self.extended_data = parsed_extended_data if extended_data.is_a?(String)
   end
 
   private
+
+  # Method added.
+  #
+  def parsed_extended_data
+    JSON.parse(extended_data.gsub("=>", ":")).try(:merge, "phone_number" => encoded_phone_number)
+  rescue JSON::ParserError => e
+    Decidim::Erc::CrmAuthenticable::Log.log.error("[#{self.class.name}] #{e.message}")
+    extended_data
+  end
 
   # Method added.
   #

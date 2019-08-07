@@ -15,9 +15,6 @@ Decidim::User.class_eval do
   # Method added.
   #
   def crm_authorized?
-    Decidim::Authorization.exists?(
-      user: self,
-      name: Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationHandler.handler_name
-    )
+    Decidim::Authorization.exists?(user: self, name: "crm_authenticable_authorization_handler")
   end
 end
