@@ -9,7 +9,8 @@ module Decidim
     let(:handler_name) { Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationHandler.handler_name }
     let(:organization) { create(:organization, available_authorizations: [handler_name]) }
     let(:scope) { create(:scope, organization: organization) }
-    let(:user) { create(:user, scope: scope, organization: organization, extended_data: extended_data) }
+    let(:user) { create(:user, admin: admin, scope: scope, organization: organization, extended_data: extended_data) }
+    let(:admin) { false }
     let(:extended_data) { { "document_number" => Base64.encode64("123456789A") } }
 
     it { is_expected.to be_valid }
@@ -28,8 +29,16 @@ module Decidim
       context "without scope" do
         let(:scope) { nil }
 
-        it "raises an error" do
-          expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+        context "when user is admin" do
+          let(:admin) { true }
+
+          it { is_expected.to eq(true) }
+        end
+
+        context "when user is NOT admin (default)" do
+          it "raises an error" do
+            expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+          end
         end
       end
     end

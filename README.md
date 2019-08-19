@@ -5,7 +5,7 @@ The gem has been developed by [CodiTramuntana](https://coditramuntana.com).
 `Decidim::Erc::CrmAuthenticable` is a [Decidim](https://github.com/decidim/decidim) module that does mainly three things:
 - Customizes the login and signup process of the application.
 - Implements a custom verification method against the CiviCrm of Esquerra Republicana (based on the [Decidim::Verifications](https://github.com/decidim/decidim/tree/master/decidim-verifications#decidimverifications) module) that is used in both login and signup.
-- Adds a non-optional `belongs_to` association between the `Decidim::User` and `Decidim::Scope` models and a scope is assigned to each user during registration.
+- Adds a `belongs_to` association between the `Decidim::User` and `Decidim::Scope` models and a scope is assigned to each user during registration.
 
 ## Installation
 

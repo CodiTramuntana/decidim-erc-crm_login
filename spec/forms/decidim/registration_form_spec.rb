@@ -56,13 +56,13 @@ module Decidim
         it { is_expected.to include(extended_data) }
 
         context "and phone_number is present" do
-          it { is_expected.to include(phone_number: Base64.encode64(phone_number)) }
+          it { is_expected.to include("phone_number" => Base64.encode64(phone_number)) }
         end
 
         context "and phone_number is NOT present" do
           let(:phone_number) { nil }
 
-          it { is_expected.to include(phone_number: "") }
+          it { is_expected.to include("phone_number" => "") }
         end
       end
     end

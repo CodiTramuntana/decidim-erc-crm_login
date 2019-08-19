@@ -10,7 +10,7 @@ module Decidim
 
       # Overwritting this method
       def create
-        result = current_user&.crm_authorize!
+        result = current_user&.crm_authorize! unless current_user&.admin?
 
         if (result.nil? || result[:authorized])
           super

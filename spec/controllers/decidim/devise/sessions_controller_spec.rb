@@ -34,6 +34,16 @@ module Decidim
           }
         end
 
+        context "when the user is an admin" do
+          before { user.update(admin: true) }
+
+          it "does not try to authorizer the user against CiviCRM" do
+            expect(Decidim::Erc::CrmAuthenticable::UserAuthorizer).not_to receive(:new).with(user)
+            post :create, params: params
+            expect(controller.flash.notice).to have_content("Signed in successfully.")
+          end
+        end
+
         context "when the params are invalid" do
           let(:params)  { {} }
 

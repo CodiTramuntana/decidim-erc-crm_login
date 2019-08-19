@@ -46,7 +46,7 @@ module Decidim
               email_on_notification: true,
               organization: organization,
               accepted_tos_version: organization.tos_version,
-              extended_data: extended_data.merge(phone_number: Base64.encode64(phone_number)),
+              extended_data: extended_data.merge("phone_number" => Base64.encode64(phone_number)),
               scope: scope
             ).and_call_original
 

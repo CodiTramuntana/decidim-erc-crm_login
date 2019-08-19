@@ -4,7 +4,10 @@
 # in the `extended_data` Hash, that are unique to the ERC app.
 Decidim::User.class_eval do
   # Association added.
-  belongs_to :scope, foreign_key: "decidim_scope_id", class_name: "Decidim::Scope"
+  belongs_to :scope, foreign_key: "decidim_scope_id", class_name: "Decidim::Scope", optional: true
+
+  # Validation added.
+  validates_presence_of :scope, unless: :admin?
 
   # Method added.
   #

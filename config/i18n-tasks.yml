@@ -8,3 +8,4 @@ ignore_missing:
 
 ignore_unused:
   - "activemodel.attributes.user.document_number"
+  - "devise.registrations.user.error"
