@@ -16,7 +16,7 @@ namespace :civi_crm do
       result = response[:body].each_with_object({}) do |element, memo|
         next unless element["contact_is_deleted"].to_i.zero?
 
-        memo[element["contact_id"].to_i] = element["display_name"]
+        memo[element["contact_id"]] = element["display_name"]
       end
 
       File.write(filepath("comarcals"), result.to_yaml)
@@ -25,14 +25,16 @@ namespace :civi_crm do
 
     desc "Generates a YAML file with the relationship between CiviCRM Contacts of sub_type 'Local' and sub_type 'Comarcal'"
     task :local_comarcal_relationships do
-      response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_locals
+      response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_local_comarcal_relationships
       raise "Failed to fetch the data!" if response[:is_error]
 
+      comarcal_ids = YAML.load_file(Rails.root.join("config", "civi_crm", "comarcals.yml")).keys
       result = response[:body].each_with_object({}) do |element, memo|
         next unless element["contact_is_deleted"].to_i.zero?
-        next unless (relationship = element["api.Relationship.get"]["values"][0])
+        next unless (relationships = element["api.Relationship.get"]["values"]).any?
+        next unless (comarcal_relationship = relationships.find { |r| r["contact_id_b"].in?(comarcal_ids) })
 
-        memo[element["contact_id"]] = relationship["contact_id_b"]
+        memo[element["contact_id"]] = comarcal_relationship["contact_id_b"]
       end
 
       File.write(filepath("local_comarcal_relationships"), result.to_yaml)
@@ -46,7 +48,7 @@ namespace :civi_crm do
   end
 
   namespace :create do
-    desc "Creates `Decidim::Scope`s"
+    desc "Creates `Decidim::Scope`s from the CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
     task scopes: :environment do
       comarcals = YAML.load_file(Rails.root.join("config", "civi_crm", "comarcals.yml"))
 
@@ -54,10 +56,10 @@ namespace :civi_crm do
         next if display_name[/\d/]
 
         organization = Decidim::Organization.first
-        scope_name = display_name.remove(" (comarcal)")
+        scope_name = display_name.remove("(comarcal)").strip
         Decidim::Scope.find_or_create_by!(
           organization: organization,
-          name: {"ca"=> scope_name, "en"=> scope_name, "es"=> scope_name},
+          name: { "ca" => scope_name, "en" => scope_name, "es" => scope_name },
           code: contact_id
         )
       end
