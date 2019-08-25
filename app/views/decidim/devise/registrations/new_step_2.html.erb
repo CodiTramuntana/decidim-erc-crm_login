@@ -44,9 +44,13 @@
               <%= f.email_field :email %>
             </div>
 
+            <!-- New fields -->
             <div class="field">
               <%= f.text_field :phone_number, help_text: t(".phone_number_help") %>
             </div>
+            <%= f.hidden_field :document_number %>
+            <%= f.hidden_field :member_of_code %>
+            <!-- /New fields -->
 
             <div class="field">
               <%= f.password_field :password, help_text: t(".password_help", minimun_characters: NOBSPW.configuration.min_password_length), autocomplete: "off" %>
@@ -83,8 +87,6 @@
             </fieldset>
           </div>
         </div>
-
-        <%= f.hidden_field :extended_data %>
 
         <div class="card">
           <div class="card__content">

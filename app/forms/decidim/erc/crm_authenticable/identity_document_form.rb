@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Decidim
-  # A form object used to handle user registrations
   module Erc
     module CrmAuthenticable
+      # A form object used to validate ID numbers with CrmAuthenticableAuthorizationHandler.
       class IdentityDocumentForm < Form
         mimic :user
 
@@ -23,16 +23,13 @@ module Decidim
             nickname: nickname,
             email: user_data["email"],
             phone_number: user_data["phone"],
-            extended_data: {
-              document_number: encoded_document_number,
-              member_of_code: user_data["custom_21"]
-            }.to_json
+            document_number: encoded_document_number,
+            member_of_code: user_data["custom_21"]
           }
         end
 
         private
 
-        # Validates...
         def document_number_must_be_valid
           return if errors.any? || authorization_handler.document_valid?
 
@@ -43,7 +40,6 @@ module Decidim
           end
         end
 
-        # Validates...
         def document_number_must_be_unique
           return if errors.any? || duplicates.none?
 

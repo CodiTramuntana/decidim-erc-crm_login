@@ -4,8 +4,13 @@ require "spec_helper"
 
 module Decidim
   describe RegistrationForm do
+    subject { form }
+
     let(:form) do
-      described_class.from_params(
+      described_class.from_params(params).with_context(current_organization: create(:organization))
+    end
+    let(:params) do
+      {
         name: "User",
         nickname: "justme",
         email: "user@example.org",
@@ -13,57 +18,45 @@ module Decidim
         password_confirmation: "S4CGQ9AM4ttJdPKS",
         tos_agreement: "1",
         phone_number: phone_number,
-        extended_data: extended_data.to_json
-      ).with_context(
-        current_organization: create(:organization)
-      )
-    end
-
-    let(:extended_data) do
-      {
-        "document_number" => "document_number",
-        "member_of_code" => "member_of_code"
+        document_number: Base64.encode64("123456789A"),
+        member_of_code: "custom_21"
       }
     end
     let(:phone_number) { "666-666-666" }
 
-    describe "valid?" do
-      subject { form.valid? }
+    it { is_expected.to be_valid }
 
-      context "when extended_data is present" do
-        it { is_expected.to eq(true) }
+    describe "validations" do
+      context "without phone_number" do
+        before { form.phone_number = nil }
+
+        it { is_expected.to be_valid }
       end
 
-      context "when extended_data NOT present" do
-        let(:extended_data) { nil }
+      context "without document_number" do
+        before { form.document_number = nil }
 
-        it { is_expected.to eq(false) }
+        it { is_expected.to be_invalid }
+      end
+
+      context "without member_of_code" do
+        before { form.member_of_code = nil }
+
+        it { is_expected.to be_invalid }
       end
     end
 
     describe "extended_data" do
       subject { form.extended_data }
 
-      context "when form has not been validated yet" do
-        it { is_expected.to be_a(String) }
-      end
+      it { is_expected.to be_a(Hash) }
+      it { is_expected.to include(params.slice(:document_number, :member_of_code)) }
+      it { is_expected.to include(phone_number: Base64.encode64(phone_number)) }
 
-      context "when form is validated" do
-        before { form.valid? }
+      context "without phone_number" do
+        before { form.phone_number = nil }
 
-        it { is_expected.to be_a(Hash) }
-
-        it { is_expected.to include(extended_data) }
-
-        context "and phone_number is present" do
-          it { is_expected.to include("phone_number" => Base64.encode64(phone_number)) }
-        end
-
-        context "and phone_number is NOT present" do
-          let(:phone_number) { nil }
-
-          it { is_expected.to include("phone_number" => "") }
-        end
+        it { is_expected.to include(phone_number: "") }
       end
     end
   end

@@ -51,12 +51,13 @@ module Decidim
             name: "User",
             nickname: "nickname",
             email: email,
-            phone_number: "666-666-666",
             password: "rPYWYKQJrXm97b4ytswc",
             password_confirmation: "rPYWYKQJrXm97b4ytswc",
             tos_agreement: "1",
             newsletter: "0",
-            extended_data: { member_of_code: scope.code }.to_json
+            phone_number: Base64.encode64("666-666-666"),
+            document_number: Base64.encode64("123456789A"),
+            member_of_code: "custom_21"
           }
         }
       end

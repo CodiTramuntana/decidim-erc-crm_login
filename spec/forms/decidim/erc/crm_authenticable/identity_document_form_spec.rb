@@ -44,7 +44,6 @@ module Decidim
           subject { form.registration_form_params }
 
           context "when form has not been validated yet" do
-
             it { is_expected.to be_empty }
           end
 
@@ -55,7 +54,8 @@ module Decidim
                 nickname: a_kind_of(String),
                 email: a_kind_of(String),
                 phone_number: a_kind_of(String),
-                extended_data: a_kind_of(String)
+                document_number: Base64.encode64(document_number),
+                member_of_code: a_kind_of(String)
               }
             end
 

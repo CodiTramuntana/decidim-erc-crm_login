@@ -7,13 +7,13 @@ module Decidim
     describe CreateRegistration do
       describe "call" do
         let(:organization) { create(:organization) }
-        let!(:scope) { create(:scope, organization: organization, code: scope_code) }
-        let(:scope_code) { "custom_21" }
-        let(:extended_data) { { "member_of_code" => "custom_21" } }
-        let(:phone_number) { "666-666-666" }
+        let!(:scope) { create(:scope, organization: organization, code: "custom_21") }
 
         let(:form) do
-          RegistrationForm.from_params(
+          RegistrationForm.from_params(params).with_context(current_organization: organization)
+        end
+        let(:params) do
+          {
             user: {
               name: "Username",
               nickname: "nickname",
@@ -21,12 +21,18 @@ module Decidim
               password: "Y1fERVzL2F",
               password_confirmation: "Y1fERVzL2F",
               tos_agreement: "1",
-              newsletter_at: "1",
-              phone_number: phone_number,
-              extended_data: extended_data.to_json
-            }
-          ).with_context(current_organization: organization)
+              newsletter_at: "1"
+            }.merge(extended_data)
+          }
         end
+        let(:extended_data) do
+          {
+            phone_number: phone_number,
+            document_number: Base64.encode64("123456789A"),
+            member_of_code: scope.code
+          }
+        end
+        let(:phone_number) { "666-666-666" }
         let(:command) { described_class.new(form) }
 
         describe "when the form is valid" do
@@ -46,7 +52,7 @@ module Decidim
               email_on_notification: true,
               organization: organization,
               accepted_tos_version: organization.tos_version,
-              extended_data: extended_data.merge("phone_number" => Base64.encode64(phone_number)),
+              extended_data: extended_data.merge(phone_number: Base64.encode64(phone_number)),
               scope: scope
             ).and_call_original
 
@@ -55,7 +61,7 @@ module Decidim
         end
 
         describe "when the command fails to find the scope by code" do
-          let(:scope_code) { "different_code" }
+          before { extended_data[:member_of_code] = "different_code" }
 
           it "broadcasts invalid" do
             expect { command.call }.to broadcast(:invalid)
