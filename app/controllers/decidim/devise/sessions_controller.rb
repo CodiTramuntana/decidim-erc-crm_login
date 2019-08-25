@@ -8,7 +8,10 @@ module Decidim
 
       before_action :check_sign_in_enabled, only: :create
 
-      # Overwritting this method
+      # Method overrided.
+      # Authorize the user against CiviCRM (not admins).
+      # Sign in the user only if authorized or is an admin.
+      # Otherwise, sign out the user and show error.
       def create
         result = current_user&.crm_authorize! unless current_user&.admin?
 

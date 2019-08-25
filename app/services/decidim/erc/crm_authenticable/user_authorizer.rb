@@ -3,6 +3,7 @@
 module Decidim
   module Erc
     module CrmAuthenticable
+      # This class holds the logic to authorize users using CrmAuthenticableAuthorizationHandler.
       class UserAuthorizer
         def initialize(user)
           @user = user
@@ -31,11 +32,11 @@ module Decidim
         end
 
         def create_or_update_crm_authorization!
-          Decidim::Authorization.create_or_update_from(authorization_handler)
+          Authorization.create_or_update_from(authorization_handler)
         end
 
         def revoke_crm_authorization!
-          Decidim::Authorization.find_by(user: user, name: authorization_handler.handler_name)&.destroy!
+          Authorization.find_by(user: user, name: authorization_handler.handler_name)&.destroy!
         end
       end
     end

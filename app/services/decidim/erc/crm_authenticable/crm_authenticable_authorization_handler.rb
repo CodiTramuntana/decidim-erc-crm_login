@@ -5,6 +5,7 @@ require "digest"
 module Decidim
   module Erc
     module CrmAuthenticable
+      # A form object used to handle ID number validations against CiviCRM.
       class CrmAuthenticableAuthorizationHandler < Decidim::AuthorizationHandler
         attribute :document_number, String
 

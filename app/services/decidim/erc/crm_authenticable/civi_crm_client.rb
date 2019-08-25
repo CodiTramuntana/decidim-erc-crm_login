@@ -25,7 +25,7 @@ module Decidim
           )
         end
 
-        def find_all_locals
+        def find_local_comarcal_relationships
           sanitize_response(
             perform_request(locals_json_params)
           )
@@ -79,7 +79,7 @@ module Decidim
         end
 
         # Returns a String
-        def locals_json_params
+        def local_comarcal_relationships_json_params
           {
             sequential: 1,
             options: { limit: 0 },

@@ -14,6 +14,8 @@ module Decidim
 
       invisible_captcha
 
+      # Method overrided.
+      # Use `Erc::CrmAuthenticable::IdentityDocumentForm` instead of `RegistrationForm`.
       def new
         @form = form(Decidim::Erc::CrmAuthenticable::IdentityDocumentForm).from_params(
           user: {
@@ -22,9 +24,11 @@ module Decidim
         )
       end
 
+      # Method added.
+      # Build `RegistrationForm` with the data from `Erc::CrmAuthenticable::IdentityDocumentForm`.
       def new_step_2
         @form = form(Decidim::Erc::CrmAuthenticable::IdentityDocumentForm).from_params(params[:user])
-        return render :new unless @form.valid?
+        return render(:new) unless @form.valid?
 
         @form = form(Decidim::RegistrationForm).from_params(
           user: {
@@ -33,6 +37,8 @@ module Decidim
         )
       end
 
+      # Method overrided.
+      # Don't sign_in the user automatically after registration.
       def create
         @form = form(Decidim::RegistrationForm).from_params(params[:user])
 
