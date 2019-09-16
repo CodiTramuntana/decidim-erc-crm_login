@@ -78,21 +78,6 @@ describe "Erc::CrmAuthenticable", type: :system do
 
     context "when the user is NOT a paying member of ERC" do
       before do
-        stub_invalid_request_not_paying
-        within "#new_user" do
-          fill_in :user_email, with: "john.doe@example.org"
-          fill_in :user_password, with: "ppasswordd"
-        end
-        click_button "Log in"
-      end
-
-      xit "does NOT allow to sign in" do
-        expect(page).to have_css(".callout.alert", text: "Document number does not correspond to any dues-paying member of Esquerra Republicana.")
-      end
-    end
-
-    context "when the user is NOT a member of ERC" do
-      before do
         stub_invalid_request_was_member
         within "#new_user" do
           fill_in :user_email, with: "john.doe@example.org"

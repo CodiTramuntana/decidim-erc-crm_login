@@ -126,7 +126,7 @@ describe "Registration", type: :system do
         end
       end
 
-      context "and the user was a member of ERC" do
+      context "and the user is not a paying member of ERC" do
         before do
           stub_invalid_request_was_member
           within "#register-form-step-1" do
@@ -136,23 +136,6 @@ describe "Registration", type: :system do
         end
 
         it "does NOT redirect to the decidim 'Registration' page" do
-          expect(page).not_to have_css("h1", text: "Sign up")
-          within "label[for='user_document_number']" do
-            expect(page).to have_css(".form-error", text: "does not correspond to any dues-paying member of Esquerra Republicana.")
-          end
-        end
-      end
-
-      context "and the user is not a paying member of ERC" do
-        before do
-          stub_invalid_request_not_paying
-          within "#register-form-step-1" do
-            fill_in :user_document_number, with: "123456789A"
-          end
-          click_button "Request verification"
-        end
-
-        xit "does NOT redirect to the decidim 'Registration' page" do
           expect(page).not_to have_css("h1", text: "Sign up")
           within "label[for='user_document_number']" do
             expect(page).to have_css(".form-error", text: "does not correspond to any dues-paying member of Esquerra Republicana.")
