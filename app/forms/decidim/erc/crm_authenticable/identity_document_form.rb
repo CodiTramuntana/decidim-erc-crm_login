@@ -15,6 +15,8 @@ module Decidim
 
         validate :document_number_must_be_valid, :document_number_must_be_unique
 
+        # Returns a Hash to be used as params to build a RegistrationForm.
+        # Returns an empty hash if document_number is invalid or it hasn't been validated yet.
         def registration_form_params
           return {} if errors.any? || authorization_handler.response.nil?
 
@@ -30,6 +32,9 @@ module Decidim
 
         private
 
+        # Validates the document_number against CiviCRM.
+        # Does not proceed if document_number format is invalid or
+        # the CrmAuthenticableAuthorizationHandler validation fails.
         def document_number_must_be_valid
           return if errors.any? || authorization_handler.document_valid?
 
@@ -40,26 +45,32 @@ module Decidim
           end
         end
 
+        # Validates the document_number against CiviCRM.
+        # Does not proceed if document_number is invalid.
         def document_number_must_be_unique
-          return if errors.any? || duplicates.none?
+          return if errors.any?
 
-          errors.add(:document_number, I18n.t("duplicate_user", scope: "crm_authenticable.errors"))
+          errors.add(:document_number, I18n.t("duplicate_user", scope: "crm_authenticable.errors")) if duplicates.any?
         end
 
+        # Caches a CrmAuthenticableAuthorizationHandler instance.
         def authorization_handler
           @authorization_handler ||= CrmAuthenticableAuthorizationHandler.from_params(document_number: document_number)
         end
 
+        # Searches User's with the same document_number (encoded) in the metadata attribute.
         def duplicates
           Decidim::User
             .where(organization: current_organization)
             .where("extended_data @> ?", { document_number: encoded_document_number }.to_json)
         end
 
+        # Returns a Hash with specific user data from CiviCRM.
         def user_data
           @user_data ||= authorization_handler.response[:body][0].slice(*CiviCrmClient::USER_DATA)
         end
 
+        # Returns a unique nickname scoped to the organization.
         def nickname
           UserBaseEntity.nicknamize(user_data["display_name"], organization: current_organization)
         end
