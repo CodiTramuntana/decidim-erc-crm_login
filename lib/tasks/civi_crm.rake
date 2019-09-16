@@ -11,7 +11,7 @@ namespace :civi_crm do
     desc "Generates a YAML file with the CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
     task :comarcals do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_comarcals
-      raise "Failed to fetch the data!" if response[:is_error]
+      raise "Failed to fetch the data!" if response[:error]
 
       result = response[:body].each_with_object({}) do |element, memo|
         next unless element["contact_is_deleted"].to_i.zero?
@@ -26,7 +26,7 @@ namespace :civi_crm do
     desc "Generates a YAML file with the relationship between CiviCRM Contacts of sub_type 'Local' and sub_type 'Comarcal'"
     task :local_comarcal_relationships do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_local_comarcal_relationships
-      raise "Failed to fetch the data!" if response[:is_error]
+      raise "Failed to fetch the data!" if response[:error]
 
       comarcal_ids = YAML.load_file(Rails.root.join("config", "civi_crm", "comarcals.yml")).keys
       result = response[:body].each_with_object({}) do |element, memo|
@@ -43,7 +43,7 @@ namespace :civi_crm do
 
     def filepath(filename)
       Dir.mkdir("config/civi_crm") unless File.directory?("config/civi_crm")
-      Rails.root.join("config", "civi_crm", "#{filename}.yml")
+      Rails.root.join("config", "civi_crm", "#{filename}.yml").to_s
     end
   end
 

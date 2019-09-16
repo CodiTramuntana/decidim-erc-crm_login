@@ -45,11 +45,11 @@ module Decidim
 
         # Returns a Hash
         def sanitize_response(response)
-          return { is_error: true } unless response.is_a?(RestClient::Response)
+          return { error: true } unless response.is_a?(RestClient::Response)
 
           hsh = JSON.parse(response)
           {
-            is_error: hsh["is_error"].positive? ? true : false,
+            error: hsh["is_error"].positive? ? true : false,
             body: hsh["values"]
           }
         end
@@ -72,8 +72,7 @@ module Decidim
             return: USER_DATA.join(","),
             custom_4: document_number,
             'api.Membership.get': {
-              only_active: "yes",
-              status_id: "New"
+              only_active: "yes"
             }
           }.to_json
         end
@@ -100,7 +99,7 @@ module Decidim
             options: { limit: 0 },
             contact_type: "Organization",
             contact_sub_type: "Comarcal",
-            return: "contact_id,display_name",
+            return: "contact_id,display_name"
           }.to_json
         end
       end
