@@ -53,7 +53,6 @@ module Decidim
           end
 
           context "when handler has not been validated yet" do
-
             it { is_expected.to be_empty }
           end
         end

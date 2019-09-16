@@ -19,7 +19,7 @@ describe "Action Authorization", type: :system do
   let!(:survey) { create(:survey, component: component) }
   let!(:question) { create(:questionnaire_question, questionnaire: survey.questionnaire, position: 0) }
   let(:user) { create :user, :confirmed, scope: scope, organization: organization }
-  let!(:authorization) {  create(:authorization, name: handler_name, user: user, metadata: metadata) }
+  let!(:authorization) { create(:authorization, name: handler_name, user: user, metadata: metadata) }
   let(:metadata) { { membership_type_id: "1", join_date: join_date } }
   let(:join_date) { "" }
 

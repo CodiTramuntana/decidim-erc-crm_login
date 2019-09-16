@@ -45,7 +45,7 @@ module Decidim
         end
 
         context "when the params are invalid" do
-          let(:params)  { {} }
+          let(:params) { {} }
 
           it "does NOT log in the user" do
             post :create, params: params

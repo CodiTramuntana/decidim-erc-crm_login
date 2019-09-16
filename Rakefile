@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'decidim/dev/common_rake'
+require "decidim/dev/common_rake"
 
-desc 'Generates a dummy app for testing'
+desc "Generates a dummy app for testing"
 task test_app: "decidim:generate_external_test_app" do
   ENV["RAILS_ENV"] = "test"
   Dir.chdir("spec/decidim_dummy_app") do

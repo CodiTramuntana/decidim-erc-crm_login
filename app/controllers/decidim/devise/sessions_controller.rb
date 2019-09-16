@@ -15,7 +15,7 @@ module Decidim
       def create
         result = current_user&.crm_authorize! unless current_user&.admin?
 
-        if (result.nil? || result[:authorized])
+        if result.nil? || result[:authorized]
           super
         else
           sign_out

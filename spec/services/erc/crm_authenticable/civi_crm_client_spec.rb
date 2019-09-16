@@ -15,7 +15,7 @@ module Decidim
           context "when document_number is valid against CiviCRM" do
             before { stub_valid_request }
 
-            it { is_expected.to include(is_error: false) }
+            it { is_expected.to include(error: false) }
 
             it "contains information in the body" do
               expect(subject[:body][0]).to be_a(Hash)
@@ -26,7 +26,7 @@ module Decidim
           context "when document_number NOT is valid against CiviCRM" do
             before { stub_invalid_request_not_member }
 
-            it { is_expected.to include(is_error: false) }
+            it { is_expected.to include(error: false) }
 
             it "does NOT contain information in the body" do
               expect(subject[:body][0]).to be_nil
@@ -38,7 +38,7 @@ module Decidim
               expect(RestClient).to receive(:get).and_return(RestClient::ImATeapot)
             end
 
-            it { is_expected.to include(is_error: true) }
+            it { is_expected.to include(error: true) }
           end
         end
       end
