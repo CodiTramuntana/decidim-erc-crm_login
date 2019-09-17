@@ -50,12 +50,12 @@ namespace :civi_crm do
   namespace :create do
     desc "Creates `Decidim::Scope`s from the CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
     task scopes: :environment do
-      comarcals = YAML.load_file(Rails.root.join("config", "civi_crm", "comarcals.yml"))
+      next unless (organization = Decidim::Organization.first)
 
+      comarcals = YAML.load_file(Rails.root.join("config", "civi_crm", "comarcals.yml"))
       comarcals.each do |contact_id, display_name|
         next if display_name[/\d/]
 
-        organization = Decidim::Organization.first
         scope_name = display_name.remove("(comarcal)").strip
         Decidim::Scope.find_or_create_by!(
           organization: organization,

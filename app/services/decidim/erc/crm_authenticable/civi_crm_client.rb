@@ -27,7 +27,7 @@ module Decidim
 
         def find_local_comarcal_relationships
           sanitize_response(
-            perform_request(locals_json_params)
+            perform_request(local_comarcal_relationships_json_params)
           )
         end
 

@@ -84,7 +84,7 @@ Note that the test stubs are configured to use the above values as to not reveal
 Finally to run the tests execute:
 
 ```bash
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rspec
+$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> RAILS_ENV=test bundle exec rspec
 ```
 
 ## Versioning
