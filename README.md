@@ -1,9 +1,11 @@
 # Decidim::Erc::CrmAuthenticable
 
-Integration with CiviCrm of ERC.
+The gem has been developed by [CodiTramuntana](https://coditramuntana.com).
 
-## Usage
-
+`Decidim::Erc::CrmAuthenticable` is a [Decidim](https://github.com/decidim/decidim) module that does mainly three things:
+- Customizes the login and signup process of the application.
+- Implements a custom verification method against the CiviCrm of Esquerra Republicana (based on the [Decidim::Verifications](https://github.com/decidim/decidim/tree/master/decidim-verifications#decidimverifications) module) that is used in both login and signup.
+- Adds a `belongs_to` association between the `Decidim::User` and `Decidim::Scope` models and assigns a scope to each user during registration representing their comarcal Esquerra Republicana organization.
 
 ## Installation
 
@@ -16,10 +18,12 @@ gem 'decidim-erc-crm_authenticable'
 And then execute:
 
 ```bash
-bundle
+$ bundle
+$ bundle exec rails decidim_erc_crm_authenticable:install:migrations
+$ bundle exec rails db:migrate
 ```
 
-CrmAuthenticable needs some values to perform requests:
+And then set the configuration values needed to perform requests to CiviCRM in `config/secrets.yml`:
 
 ```yml
 erc_crm_authenticable:
@@ -29,29 +33,63 @@ erc_crm_authenticable:
   secret_key: <%= ENV["ERC_SECRET_KEY"] %>
 ```
 
+Finally run the following rake task:
+
+```bash
+$ bundle exec rake civi_crm:init
+```
+This task generates the mapping that makes possible to find a `Decidim::Scope` by their `#code` using the information that is returned by CiviCRM.
+
+## How it works
+
+### Registration
+- The user needs to validate their DNI against CiviCRM to be able to register to the application.
+- The user is then redirected to the registration form prefilled with their personal data found in CiviCRM.
+- The user is created with the following information stored in the `extended_data` `Hash`:
+  - `phone_number`: Base64-encoded version of their phone number (if leaved filled during registration).
+  - `member_of_code`: CiviCRM Contact ID of their local Esquerra Republicana organization.
+  - `document_number`: Base64-encoded version of their identity document number (for further requests).
+- The user is assigned a scope based on their `member_of_code` (See [Installation](#installation)).
+
+### Login
+- After every login, users are validated against CiviCRM to check if they are dues-paying members of Esquerra Republicana; if not, they are logged out.
+- If they are succesfully validated a `Decidim::Authorization` is created or updated for the user; else, their authorization is deleted.
+
+### Verification options
+These options can be set in the admin zone to alter the authorization logic related to a component action:
+- Type of membership: (1) militant, (2) sympathizer, (3) friend.
+- membership seniority: number of months.
+
 ## Testing
 
-1. Run `bundle exec rake test_app`. **Execution will fail in an specific migration.**
+Run the following in the gem development path to create the test app:
 
-2. cd `spec/decidim_dummy_app/` and:
+```bash
+$ bundle
+$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
+```
+Note that the database user has to have rights to create and drop a database in order to create the dummy test app database.
 
-  2.1. Comment `up` execution in failing migration
+And then set the configuration values for the test app in `spec/decidim_dummy_app/config/secrets.yml`:
 
-  2.2. Execute...
-  ```bash
-  RAILS_ENV=test bundle exec rails db:drop
-  RAILS_ENV=test bundle exec rails db:create
-  RAILS_ENV=test bundle exec rails db:migrate
-  ```
-3. back to root folder `cd ../..`
+```yaml
+erc_crm_authenticable:
+  api_base: https://api.base/?
+  site_key: site_key
+  api_key: api_key
+  secret_key: secret_key
+```
+Note that the test stubs are configured to use the above values as to not reveal the real ones.
 
-4. run tests with `bundle exec rspec`
+Finally to run the tests execute:
 
-5. Remember to configure this new test App with configuration values.
+```bash
+$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> RAILS_ENV=test bundle exec rspec
+```
 
 ## Versioning
 
-`Decidim::Erc::CrmAuthenticable` depends directly on `Decidim::Core` in `0.18.0` version.
+`Decidim::Erc::CrmAuthenticable` depends directly on `Decidim::Core` in `0.19.0` version.
 
 ## License
 
