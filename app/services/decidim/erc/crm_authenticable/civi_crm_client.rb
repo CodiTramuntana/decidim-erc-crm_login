@@ -69,7 +69,7 @@ module Decidim
         def militant_json_params(document_number)
           {
             sequential: 1,
-            return: USER_DATA.join(","),
+            return: [*USER_DATA, CrmAuthenticableAuthorizationHandler::CTC_CURRENT_ON_PAYMENT].join(","),
             custom_4: document_number,
             'api.Membership.get': {
               only_active: "yes"

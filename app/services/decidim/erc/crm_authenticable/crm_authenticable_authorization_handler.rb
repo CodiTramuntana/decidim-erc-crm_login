@@ -7,7 +7,8 @@ module Decidim
     module CrmAuthenticable
       # A form object used to handle ID number validations against CiviCRM.
       class CrmAuthenticableAuthorizationHandler < Decidim::AuthorizationHandler
-        VALID_MEMBERSHIP_STATUS_IDS = %(1 2)
+        CTC_CURRENT_ON_PAYMENT = "custom_53"
+        VALID_MBSP_STATUS_IDS = %(1 2)
 
         attribute :document_number, String
 
@@ -57,11 +58,15 @@ module Decidim
           errors.add(:document_number, I18n.t("document_invalid", scope: "crm_authenticable.errors")) unless valid_membership?
         end
 
-        # Searches the body of the response for a valid CiviCRM membership.
+        # Searches the body of the WS response for a valid CiviCRM Contact and Memberbership.
         def valid_membership?
-          @membership = response
-                        .dig(:body, 0, "api.Membership.get", "values")
-                        &.find { |membership| membership["status_id"].in?(VALID_MEMBERSHIP_STATUS_IDS) }
+          @membership = begin
+            contact = response.dig(:body, 0)
+            return unless contact && contact[CTC_CURRENT_ON_PAYMENT].to_i.positive?
+
+            memberships = contact.dig("api.Membership.get", "values")
+            memberships.find { |mbsp| mbsp["status_id"].in?(VALID_MBSP_STATUS_IDS) }
+          end
         end
       end
     end
