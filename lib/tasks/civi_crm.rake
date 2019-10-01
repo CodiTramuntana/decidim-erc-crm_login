@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rest-client"
-
 namespace :civi_crm do
   task init: ["import:all", "create:scopes"]
 
@@ -9,7 +7,7 @@ namespace :civi_crm do
     task all: [:comarcals, :local_comarcal_relationships]
 
     desc "Generates a YAML file with the CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
-    task :comarcals do
+    task comarcals: :environment do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_all_comarcals
       raise "Failed to fetch the data!" if response[:error]
 
@@ -24,7 +22,7 @@ namespace :civi_crm do
     end
 
     desc "Generates a YAML file with the relationship between CiviCRM Contacts of sub_type 'Local' and sub_type 'Comarcal'"
-    task :local_comarcal_relationships do
+    task local_comarcal_relationships: :environment do
       response = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new.find_local_comarcal_relationships
       raise "Failed to fetch the data!" if response[:error]
 
