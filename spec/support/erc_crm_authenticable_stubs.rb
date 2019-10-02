@@ -63,7 +63,7 @@ module ErcCrmAuthenticableStubs
       "Accept" => "*/*",
       "Accept-Encoding" => "gzip, deflate",
       "Host" => "api.base",
-      "User-Agent" => "rest-client/2.0.2 (linux-gnu x86_64) ruby/2.5.3p105"
+      "User-Agent" => "rest-client/2.0.2 (linux-gnu x86_64) ruby/2.6.3p62"
     }
   end
 end
