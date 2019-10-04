@@ -7,9 +7,11 @@ module Decidim
     module CrmAuthenticable
       describe IdentityDocumentForm do
         let(:form) do
-          described_class.from_params(document_number: document_number)
+          described_class.from_params(document_number: document_number).with_context(context)
         end
 
+        let(:organization) { create(:organization) }
+        let(:context) { { current_organization: organization } }
         let(:document_number) { "123456789A" }
 
         describe "valid?" do
@@ -38,6 +40,18 @@ module Decidim
 
             it { is_expected.to eq(false) }
           end
+
+          context "when a user is already registered with a document_number" do
+            before do
+              create(:user,
+                     organization: organization,
+                     scope: create(:scope, organization: organization),
+                     extended_data: { document_number: Base64.strict_encode64("123456789A") })
+              stub_valid_request
+            end
+
+            it { is_expected.to eq(false) }
+          end
         end
 
         describe "registration_form_params" do
@@ -54,7 +68,7 @@ module Decidim
                 nickname: a_kind_of(String),
                 email: a_kind_of(String),
                 phone_number: a_kind_of(String),
-                document_number: Base64.encode64(document_number),
+                document_number: Base64.strict_encode64(document_number),
                 member_of_code: a_kind_of(String)
               }
             end

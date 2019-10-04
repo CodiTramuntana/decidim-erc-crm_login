@@ -9,7 +9,7 @@ module Decidim
         let!(:organization) { create(:organization) }
         let!(:scope) { create(:scope, code: "custom_21", organization: organization) }
         let(:user) { create(:user, scope: scope, organization: organization, extended_data: extended_data) }
-        let(:extended_data) { { "document_number" => Base64.encode64("123456789A") } }
+        let(:extended_data) { { "document_number" => Base64.strict_encode64("123456789A") } }
         let(:handler_name) { Decidim::Erc::CrmAuthenticable::CrmAuthenticableAuthorizationHandler.handler_name }
 
         shared_examples_for "deleting an authorization" do

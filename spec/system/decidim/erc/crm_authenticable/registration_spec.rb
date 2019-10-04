@@ -62,31 +62,23 @@ describe "Registration", type: :system do
         it "registers the user" do
           expect(page).to have_css(".callout.warning", text: "Please, login with your account before access")
         end
-      end
-    end
 
-    context "when the 'Identity document form' is filled with used data" do
-      let!(:user) do
-        create(
-          :user,
-          organization: organization,
-          scope: scope,
-          extended_data: { document_number: Base64.encode64("123456789A") }
-        )
-      end
+        context "when the 'Identity document form' is filled with USED data" do
+          before do
+            visit decidim.new_user_registration_path
+            stub_valid_request
+            within "#register-form-step-1" do
+              fill_in :user_document_number, with: "123456789A"
+            end
+            click_button "Request verification"
+          end
 
-      before do
-        stub_valid_request
-        within "#register-form-step-1" do
-          fill_in :user_document_number, with: "123456789A"
-        end
-        click_button "Request verification"
-      end
-
-      it "does NOT redirect to the decidim 'Registration' page" do
-        expect(page).not_to have_css("h1", text: "Sign up")
-        within "label[for='user_document_number']" do
-          expect(page).to have_css(".form-error", text: "There is already a user registered with this data.")
+          it "does NOT redirect to the decidim 'Registration' page" do
+            expect(page).not_to have_css("h1", text: "Sign up")
+            within "label[for='user_document_number']" do
+              expect(page).to have_css(".form-error", text: "There is already a user registered with this data.")
+            end
+          end
         end
       end
     end

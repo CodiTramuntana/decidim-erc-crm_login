@@ -76,7 +76,7 @@ module Decidim
         end
 
         def encoded_document_number
-          Base64.encode64(document_number)
+          Base64.strict_encode64(document_number)
         end
       end
     end

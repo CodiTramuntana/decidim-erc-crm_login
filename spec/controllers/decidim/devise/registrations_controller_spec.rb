@@ -55,8 +55,8 @@ module Decidim
             password_confirmation: "rPYWYKQJrXm97b4ytswc",
             tos_agreement: "1",
             newsletter: "0",
-            phone_number: Base64.encode64("666-666-666"),
-            document_number: Base64.encode64("123456789A"),
+            phone_number: Base64.strict_encode64("666-666-666"),
+            document_number: Base64.strict_encode64("123456789A"),
             member_of_code: "custom_21"
           }
         }

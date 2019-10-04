@@ -38,7 +38,7 @@ describe "Erc::CrmAuthenticable", type: :system do
         password: "ppasswordd",
         password_confirmation: "ppasswordd",
         scope: create(:scope, organization: organization),
-        extended_data: { document_number: Base64.encode64("123456789A") }
+        extended_data: { document_number: Base64.strict_encode64("123456789A") }
       )
     end
 

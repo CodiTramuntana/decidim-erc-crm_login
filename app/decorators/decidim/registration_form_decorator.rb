@@ -15,7 +15,7 @@ module Decidim
     # Returns a Hash with the new attributes; the phone_number encoded.
     def extended_data
       {
-        phone_number: Base64.encode64(phone_number || ""),
+        phone_number: Base64.strict_encode64(phone_number || ""),
         document_number: document_number,
         member_of_code: member_of_code
       }

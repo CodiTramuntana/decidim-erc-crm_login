@@ -28,7 +28,7 @@ module Decidim
         let(:extended_data) do
           {
             phone_number: phone_number,
-            document_number: Base64.encode64("123456789A"),
+            document_number: Base64.strict_encode64("123456789A"),
             member_of_code: scope.code
           }
         end
@@ -52,7 +52,7 @@ module Decidim
               email_on_notification: true,
               organization: organization,
               accepted_tos_version: organization.tos_version,
-              extended_data: extended_data.merge(phone_number: Base64.encode64(phone_number)),
+              extended_data: extended_data.merge(phone_number: Base64.strict_encode64(phone_number)),
               scope: scope
             ).and_call_original
 

@@ -11,7 +11,7 @@ module Decidim
     let(:scope) { create(:scope, organization: organization) }
     let(:user) { create(:user, admin: admin, scope: scope, organization: organization, extended_data: extended_data) }
     let(:admin) { false }
-    let(:extended_data) { { "document_number" => Base64.encode64("123456789A") } }
+    let(:extended_data) { { "document_number" => Base64.strict_encode64("123456789A") } }
 
     it { is_expected.to be_valid }
 

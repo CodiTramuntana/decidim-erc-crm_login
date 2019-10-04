@@ -18,7 +18,7 @@ module Decidim
         password_confirmation: "S4CGQ9AM4ttJdPKS",
         tos_agreement: "1",
         phone_number: phone_number,
-        document_number: Base64.encode64("123456789A"),
+        document_number: Base64.strict_encode64("123456789A"),
         member_of_code: "custom_21"
       }
     end
@@ -51,7 +51,7 @@ module Decidim
 
       it { is_expected.to be_a(Hash) }
       it { is_expected.to include(params.slice(:document_number, :member_of_code)) }
-      it { is_expected.to include(phone_number: Base64.encode64(phone_number)) }
+      it { is_expected.to include(phone_number: Base64.strict_encode64(phone_number)) }
 
       context "without phone_number" do
         before { form.phone_number = nil }

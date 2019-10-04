@@ -27,7 +27,7 @@ module Decidim
         def authorization_handler
           @authorization_handler ||= CrmAuthenticableAuthorizationHandler.from_params(
             user: user,
-            document_number: Base64.decode64(document_number)
+            document_number: Base64.strict_decode64(document_number)
           )
         end
 

@@ -18,7 +18,7 @@ module Decidim
           password_confirmation: "ppasswordd",
           organization: organization,
           scope: scope,
-          extended_data: { document_number: Base64.encode64("123456789A") }
+          extended_data: { document_number: Base64.strict_encode64("123456789A") }
         )
       end
 
