@@ -25,9 +25,15 @@ module Decidim
           )
         end
 
-        def find_local_comarcal_relationships
+        def find_all_regionals
           sanitize_response(
-            perform_request(local_comarcal_relationships_json_params)
+            perform_request(regionals_json_params)
+          )
+        end
+
+        def find_local_organization_relationships
+          sanitize_response(
+            perform_request(local_organization_relationships_json_params)
           )
         end
 
@@ -78,7 +84,7 @@ module Decidim
         end
 
         # Returns a String
-        def local_comarcal_relationships_json_params
+        def local_organization_relationships_json_params
           {
             sequential: 1,
             options: { limit: 0 },
@@ -99,6 +105,17 @@ module Decidim
             options: { limit: 0 },
             contact_type: "Organization",
             contact_sub_type: "Comarcal",
+            return: "contact_id,display_name"
+          }.to_json
+        end
+
+        # Returns a String
+        def regionals_json_params
+          {
+            sequential: 1,
+            options: { limit: 0 },
+            contact_type: "Organization",
+            contact_sub_type: "Regional",
             return: "contact_id,display_name"
           }.to_json
         end
