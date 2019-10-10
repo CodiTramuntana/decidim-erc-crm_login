@@ -29,18 +29,18 @@ module ErcCrmAuthenticableStubs
         headers: headers
       ).to_return(
         status: 200,
-        body: file_fixture("invalid_response_was_member.txt").read,
+        body: file_fixture("invalid_response_mbsp_status_id.txt").read,
         headers: {}
       )
   end
 
-  def stub_invalid_request_not_paying
+  def stub_invalid_request_not_enough_seniority
     stub_request(:get, file_fixture("request.txt").read)
       .with(
         headers: headers
       ).to_return(
         status: 200,
-        body: file_fixture("invalid_response_not_paying.txt").read,
+        body: file_fixture("invalid_response_mbsp_join_date.txt").read,
         headers: {}
       )
   end
