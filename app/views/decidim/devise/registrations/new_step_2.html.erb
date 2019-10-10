@@ -23,6 +23,7 @@
 
   <div class="row">
     <div class="columns large-6 medium-10 medium-centered">
+      <%= cell("decidim/announcement", {announcement: t(".update_user_data_help"), callout_class: "warning"}) %>
 
       <%= decidim_form_for(@form, as: resource_name, url: registration_path(resource_name), html: { class: "register-form new_user", id: "register-form" }) do |f| %>
         <%= invisible_captcha %>
@@ -30,23 +31,23 @@
           <div class="card__content">
             <div class="user-person">
               <div class="field">
-                <%= f.text_field :name, help_text: t(".username_help") %>
+                <%= f.text_field :name, help_text: t(".username_help"), readonly: true %>
               </div>
             </div>
 
             <div class="user-person">
               <div class="field">
-                <%= f.text_field :nickname, help_text: t(".nickname_help", organization: current_organization.name) %>
+                <%= f.text_field :nickname, help_text: t(".nickname_help", organization: current_organization.name), readonly: true %>
               </div>
             </div>
 
             <div class="field">
-              <%= f.email_field :email %>
+              <%= f.email_field :email, readonly: true %>
             </div>
 
             <!-- New fields -->
             <div class="field">
-              <%= f.text_field :phone_number, help_text: t(".phone_number_help") %>
+              <%= f.text_field :phone_number, help_text: t(".phone_number_help"), readonly: true %>
             </div>
             <%= f.hidden_field :document_number %>
             <%= f.hidden_field :member_of_code %>
