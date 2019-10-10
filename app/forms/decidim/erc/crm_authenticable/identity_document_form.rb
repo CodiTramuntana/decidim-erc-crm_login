@@ -72,7 +72,8 @@ module Decidim
 
         # Returns a unique nickname scoped to the organization.
         def nickname
-          UserBaseEntity.nicknamize(user_data["display_name"], organization: current_organization)
+          initials = user_data["display_name"].split.map { |w| w.chars.first }.join
+          UserBaseEntity.nicknamize(initials, organization: current_organization).upcase
         end
 
         def encoded_document_number
