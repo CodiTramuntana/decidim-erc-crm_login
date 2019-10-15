@@ -7,9 +7,6 @@ module Decidim
     module CrmAuthenticable
       # A form object used to handle ID number validations against CiviCRM.
       class CrmAuthenticableAuthorizationHandler < Decidim::AuthorizationHandler
-        CTC_CURRENT_ON_PAYMENT = "custom_53"
-        VALID_MBSP_STATUS_IDS = %(1 2)
-
         attribute :document_number, String
 
         validates :document_number,
@@ -62,10 +59,13 @@ module Decidim
         def valid_membership?
           @membership = begin
             contact = response.dig(:body, 0)
-            return unless contact && contact[CTC_CURRENT_ON_PAYMENT].to_i.positive?
+            return unless contact.present?
 
             memberships = contact.dig("api.Membership.get", "values")
-            memberships.find { |mbsp| mbsp["status_id"].in?(VALID_MBSP_STATUS_IDS) }
+            memberships.find do |mbsp|
+              mbsp["status_id"].in?(VALID_MBSP_STATUS_IDS) &&
+              Date.parse(mbsp["join_date"]) <= VALID_MBSP_JOIN_DATE
+            end
           end
         end
       end
