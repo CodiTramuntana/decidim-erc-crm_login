@@ -41,6 +41,12 @@ module Decidim
           end
         end
       end
+
+      context "with a nickname made of initials" do
+        before { user.nickname = user.name.split.map { |w| w.chars.first }.join }
+
+        it { is_expected.to eq(true) }
+      end
     end
 
     describe "crm_authorized?" do

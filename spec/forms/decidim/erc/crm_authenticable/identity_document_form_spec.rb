@@ -64,8 +64,8 @@ module Decidim
           context "when document_number is valid against CiviCRM" do
             let(:user_data) do
               {
-                name: a_kind_of(String),
-                nickname: a_kind_of(String),
+                name: "John Doe",
+                nickname: "JD",
                 email: a_kind_of(String),
                 phone_number: a_kind_of(String),
                 document_number: Base64.strict_encode64(document_number),
