@@ -169,7 +169,7 @@ describe "civi_crm" do
       end
 
       before do
-        Decidim::Erc::CrmAuthenticable::CiviCrmClient::CIVICRM_COMARCAL_EXCEPTIONS = comarcal_exception_names
+        Decidim::Erc::CrmAuthenticable::CIVICRM_COMARCAL_EXCEPTIONS = comarcal_exception_names
         allow(YAML).to receive(:load_file).and_return(comarcals)
       end
 

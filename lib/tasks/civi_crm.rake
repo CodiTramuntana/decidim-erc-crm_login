@@ -93,7 +93,7 @@ namespace :civi_crm do
     end
 
     def comarcal_exception_names
-      Decidim::Erc::CrmAuthenticable::CiviCrmClient::CIVICRM_COMARCAL_EXCEPTIONS
+      Decidim::Erc::CrmAuthenticable::CIVICRM_COMARCAL_EXCEPTIONS
     end
   end
 
