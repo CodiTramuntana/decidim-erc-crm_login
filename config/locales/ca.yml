@@ -55,6 +55,10 @@ ca:
           terms: els termes i condicions d'ús
           tos_agreement: En registrar-te acceptes %{link}.
           tos_title: Termes del servei
+          update_user_data_help: Si les teves dades personals són incorrectes, posa't
+            en contacte amb <strong>administracio@erc.cat</strong>.<br />La plataforma
+            no permet modificar les dades personals, siusplau, no creïs un compte
+            amb dades incorrectes.
           username_help: Nom públic que apareixerà en les teves publicacions. Amb
             l'objectiu de garantir l'anonimat pot ser qualsevol nom.
   devise:

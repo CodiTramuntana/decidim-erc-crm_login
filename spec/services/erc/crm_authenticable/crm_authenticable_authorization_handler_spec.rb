@@ -57,6 +57,46 @@ module Decidim
           end
         end
 
+        shared_context "validate document_number against CiviCRM" do
+          context "when document_number format is not valid" do
+            let(:document_number) { "(╯°□°）╯︵ ┻━┻" }
+
+            it { is_expected.to eq(false) }
+          end
+
+          context "when document_number is NOT valid against CiviCRM" do
+            context "and does not find a contact" do
+              before { stub_invalid_request_not_member }
+
+              it { is_expected.to eq(false) }
+            end
+
+            context "and contact has invalid membership status_id" do
+              before { stub_invalid_request_was_member }
+
+              it { is_expected.to eq(false) }
+            end
+
+            context "and contact has invalid membership join_date" do
+              before { stub_invalid_request_not_enough_seniority }
+
+              it { is_expected.to eq(false) }
+            end
+          end
+
+          context "when document_number is valid against CiviCRM" do
+            before { stub_valid_request }
+
+            it { is_expected.to eq(true) }
+          end
+
+          context "when it fails to connect to CiviCRM" do
+            before { stub_invalid_request_connection_error }
+
+            it { is_expected.to eq(false) }
+          end
+        end
+
         describe "valid?" do
           subject { handler.valid? }
 
@@ -74,29 +114,7 @@ module Decidim
             it { is_expected.to eq(false) }
           end
 
-          context "when document_number format is not valid" do
-            let(:document_number) { "(╯°□°）╯︵ ┻━┻" }
-
-            it { is_expected.to eq(false) }
-          end
-
-          context "when document_number NOT is valid against CiviCRM" do
-            before { stub_invalid_request_not_member }
-
-            it { is_expected.to eq(false) }
-          end
-
-          context "when document_number is valid against CiviCRM" do
-            before { stub_valid_request }
-
-            it { is_expected.to eq(true) }
-          end
-
-          context "when it fails to connect to CiviCRM" do
-            before { stub_invalid_request_connection_error }
-
-            it { is_expected.to eq(false) }
-          end
+          it_behaves_like "validate document_number against CiviCRM"
         end
 
         describe "document_valid?" do
@@ -112,23 +130,7 @@ module Decidim
             end
           end
 
-          context "when document_number NOT is valid against CiviCRM" do
-            before { stub_invalid_request_not_member }
-
-            it { is_expected.to eq(false) }
-          end
-
-          context "when document_number is valid against CiviCRM" do
-            before { stub_valid_request }
-
-            it { is_expected.to eq(true) }
-          end
-
-          context "when it fails to connect to CiviCRM" do
-            before { stub_invalid_request_connection_error }
-
-            it { is_expected.to eq(false) }
-          end
+          it_behaves_like "validate document_number against CiviCRM"
         end
       end
     end
