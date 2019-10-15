@@ -45,6 +45,8 @@ en:
           terms: the terms and conditions of use
           tos_agreement: By signing up you agree to %{link}.
           tos_title: Terms of Service
+          update_user_data_help: Please, contact administracio@erc.cat if your data
+            is not up to date.
           username_help: Public name that appears on your posts. With the aim of guaranteeing
             the anonymity, can be any name.
   devise:

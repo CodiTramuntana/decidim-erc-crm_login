@@ -39,10 +39,12 @@ describe "Registration", type: :system do
 
       it "prefilles the 'Registration form' with data from CiviCRM" do
         within "#register-form" do
-          expect(page).to have_field("user_name", with: "John Doe")
-          expect(page).to have_field("user_nickname", with: "john_doe")
-          expect(page).to have_field("user_email", with: "john.doe@example.org")
-          expect(page).to have_field("user_phone_number", with: "666-666-666")
+          # Data returned from CiviCRM should be readonly and users must be informed.
+          expect(page).to have_tag("div.callout.warning", text: /administracio@erc.cat/)
+          expect(page).to have_field("user_name", with: "John Doe", readonly: true)
+          expect(page).to have_field("user_nickname", with: "john_doe", readonly: true)
+          expect(page).to have_field("user_email", with: "john.doe@example.org", readonly: true)
+          expect(page).to have_field("user_phone_number", with: "666-666-666", readonly: true)
           expect(page).to have_field("user_password", with: "")
           expect(page).to have_field("user_password_confirmation", with: "")
         end
