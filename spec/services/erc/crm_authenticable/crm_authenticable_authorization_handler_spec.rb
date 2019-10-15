@@ -57,7 +57,7 @@ module Decidim
           end
         end
 
-        shared_context "validate document_number against CiviCRM" do
+        shared_examples "validate document_number against CiviCRM" do
           context "when document_number format is not valid" do
             let(:document_number) { "(╯°□°）╯︵ ┻━┻" }
 

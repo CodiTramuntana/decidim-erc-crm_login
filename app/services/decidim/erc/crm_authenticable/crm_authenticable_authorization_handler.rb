@@ -59,12 +59,12 @@ module Decidim
         def valid_membership?
           @membership = begin
             contact = response.dig(:body, 0)
-            return unless contact.present?
+            return if contact.blank?
 
             memberships = contact.dig("api.Membership.get", "values")
             memberships.find do |mbsp|
               mbsp["status_id"].in?(VALID_MBSP_STATUS_IDS) &&
-              Date.parse(mbsp["join_date"]) <= VALID_MBSP_JOIN_DATE
+                Date.parse(mbsp["join_date"]) <= VALID_MBSP_JOIN_DATE
             end
           end
         end

@@ -190,7 +190,7 @@ describe "civi_crm" do
         let(:comarcal_exception_names) do
           [
             "Vallès Oriental (comarcal)",
-            "This will not be found",
+            "This will not be found"
           ]
         end
 
@@ -206,12 +206,12 @@ describe "civi_crm" do
         { "4" => "Vallès Oriental (comarcal)" }
       end
       let(:local_comarcal_rel) do
-        {  '1' => '4' }
+        { "1" => "4" }
       end
       let(:local_regional_rel) do
         {
-          '1' => '5827',
-          '2' => '3'
+          "1" => "5827",
+          "2" => "3"
         }
       end
 

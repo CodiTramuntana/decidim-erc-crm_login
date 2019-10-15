@@ -15,10 +15,6 @@ module Decidim
 
     it { is_expected.to be_valid }
 
-    it "belongs to a scope" do
-      expect(Decidim::User.reflect_on_all_associations(:belongs_to).map(&:name)).to include(:scope)
-    end
-
     describe "validations" do
       subject { user.valid? }
 
