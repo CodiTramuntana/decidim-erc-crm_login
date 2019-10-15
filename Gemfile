@@ -12,8 +12,8 @@ gem "decidim", DECIDIM_VERSION
 
 group :development, :test do
   gem "bootsnap", require: true
-  gem "byebug", "~> 10.0", platform: :mri
-  gem "faker", "~> 1.8"
+  gem "byebug", platform: :mri
+  gem "faker"
   gem "listen"
 end
 

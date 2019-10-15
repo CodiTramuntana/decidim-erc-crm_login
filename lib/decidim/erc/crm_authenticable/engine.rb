@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require "rails"
 require "decidim/core"
 require "decidim/verifications"
-require "virtus/multiparams"
 
 module Decidim
   module Core

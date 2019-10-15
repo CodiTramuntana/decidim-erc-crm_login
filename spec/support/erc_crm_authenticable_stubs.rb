@@ -58,12 +58,13 @@ module ErcCrmAuthenticableStubs
 
   private
 
+  # This will change depending on your gems versions.
   def headers
     {
       "Accept" => "*/*",
-      "Accept-Encoding" => "gzip, deflate",
+      "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
       "Host" => "api.base",
-      "User-Agent" => "rest-client/2.0.2 (linux-gnu x86_64) ruby/2.6.3p62"
+      "User-Agent" => "rest-client/2.1.0 (linux-gnu x86_64) ruby/2.6.3p62"
     }
   end
 end
