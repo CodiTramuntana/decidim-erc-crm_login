@@ -16,8 +16,8 @@ en:
       crm_authenticable_authorization_handler:
         explanation: Verify yourself as a militant of Esquerra Republicana
         fields:
-          join_date: Membership seniority. (number of months)
-          membership_type_id: Type of membership. (1 = militant, 2 = sympathizer,
+          join_date: Required membership seniority (dd/mm/yyyy)
+          membership_type_id: Type of membership (1 = militant, 2 = sympathizer,
             3 = friend)
         name: Militancy of Esquerra Republicana
     devise:

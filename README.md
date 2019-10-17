@@ -57,8 +57,8 @@ This task generates the mapping that makes possible to find a `Decidim::Scope` b
 
 ### Verification options
 These options can be set in the admin zone to alter the authorization logic related to a component action:
-- Type of membership: (1) militant, (2) sympathizer, (3) friend.
-- membership seniority: number of months.
+- Type of membership: (1) militant, (2) sympathizer, (3) friend
+- Required membership seniority: dd/mm/yyy
 
 ## Testing
 

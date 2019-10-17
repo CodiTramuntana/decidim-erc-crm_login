@@ -32,6 +32,10 @@ describe "Action Authorization", type: :system do
     page.driver.browser.switch_to.alert.accept
   end
 
+  def to_strftime(date)
+    date.strftime("%d/%m/%Y")
+  end
+
   before do
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -54,7 +58,7 @@ describe "Action Authorization", type: :system do
     end
 
     context "and the component action is authorized with custom action authorizer options" do
-      let(:required_join_date) { 3 }
+      let(:required_join_date) { to_strftime(Date.yesterday) }
       let(:permissions) do
         {
           answer: {
@@ -73,22 +77,22 @@ describe "Action Authorization", type: :system do
         it "prompts user to reauthorize" do
           expect(page).to have_content("Authorization required")
           expect(page).to have_content("we need you to reauthorize because we lack the following data:")
-          expect(page).to have_content("Membership seniority. (number of months)")
+          expect(page).to have_content("Required membership seniority (dd/mm/yyyy)")
         end
       end
 
       context "when the authorization metadata is invalid" do
-        let(:join_date) { (required_join_date - 1).months.ago }
+        let(:join_date) { to_strftime(Date.today) }
 
         it "does NOT authorize the user" do
           expect(page).to have_content("Not authorized")
           expect(page).to have_content("Sorry, you can't perform this action as some of your authorization data doesn't match.")
-          expect(page).to have_content("Membership seniority. (number of months) value (#{required_join_date.months.ago.strftime("%d/%m/%Y")}) isn't valid.")
+          expect(page).to have_content("Required membership seniority (dd/mm/yyyy) value (#{required_join_date}) isn't valid.")
         end
       end
 
       context "when the authorization metadata is valid" do
-        let(:join_date) { (required_join_date + 1).months.ago }
+        let(:join_date) { to_strftime(2.days.ago) }
 
         it "authorizes the user" do
           answer_survey
