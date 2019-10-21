@@ -39,7 +39,7 @@ namespace :civi_crm do
     def get_civi_crm_data(method_name, parameters_array = [])
       client = Decidim::Erc::CrmAuthenticable::CiviCrmClient.new
       response = client.send(method_name, *parameters_array)
-      raise "Failed to fetch the data" if response[:error]
+      raise "Failed to get the data from CiviCRM!" if response[:error]
 
       response[:body]
     end
@@ -69,8 +69,8 @@ namespace :civi_crm do
     desc "Generates a YAML file with filtered CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'"
     task comarcal_exceptions: :environment do
       comarcals = load_config_yaml("comarcals")
-      result = comarcals.select { |_id, name| comarcal_exception_names.include?(name) }
-      raise "Comarcals not found" unless result.size == comarcal_exception_names.size
+      result = comarcals.select { |id, _name| comarcal_exception_ids.include?(id) }
+      raise "Comarcal exceptions not found!" unless result.size == comarcal_exception_ids.size
 
       write_config_yaml!("comarcal_exceptions", result)
     end
@@ -92,7 +92,7 @@ namespace :civi_crm do
       write_config_yaml!("decidim_scopes_mapping", result)
     end
 
-    def comarcal_exception_names
+    def comarcal_exception_ids
       Decidim::Erc::CrmAuthenticable::CIVICRM_COMARCAL_EXCEPTIONS
     end
   end

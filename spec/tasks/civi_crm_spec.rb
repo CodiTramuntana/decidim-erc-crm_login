@@ -38,7 +38,7 @@ describe "civi_crm" do
       end
 
       it "raises an error when does not find the data in CiviCRM" do
-        expect { invoke_task }.to raise_error(RuntimeError, "Failed to fetch the data")
+        expect { invoke_task }.to raise_error(RuntimeError, "Failed to get the data from CiviCRM!")
       end
     end
 
@@ -169,12 +169,12 @@ describe "civi_crm" do
       end
 
       before do
-        Decidim::Erc::CrmAuthenticable::CIVICRM_COMARCAL_EXCEPTIONS = comarcal_exception_names
+        Decidim::Erc::CrmAuthenticable::CIVICRM_COMARCAL_EXCEPTIONS = comarcal_exception_ids
         allow(YAML).to receive(:load_file).and_return(comarcals)
       end
 
       context "when it finds all exceptions to filter" do
-        let(:comarcal_exception_names) { ["Vallès Oriental (comarcal)"] }
+        let(:comarcal_exception_ids) { ["4"] }
 
         it "creates a YAML file with comarcal_exceptions in it" do
           expect(File).to receive(:write).with(
@@ -187,15 +187,10 @@ describe "civi_crm" do
       end
 
       context "when it does NOT find all exceptions to filter" do
-        let(:comarcal_exception_names) do
-          [
-            "Vallès Oriental (comarcal)",
-            "This will not be found"
-          ]
-        end
+        let(:comarcal_exception_ids) { %w(4 12345679) }
 
         it "raises an error" do
-          expect { invoke_task }.to raise_error(RuntimeError, "Comarcals not found")
+          expect { invoke_task }.to raise_error(RuntimeError, "Comarcal exceptions not found!")
         end
       end
     end

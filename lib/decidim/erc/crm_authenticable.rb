@@ -6,7 +6,7 @@ require "decidim/erc/crm_authenticable/workflow"
 module Decidim
   module Erc
     module CrmAuthenticable
-      # Names to filter CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'
+      # IDs to filter CiviCRM Contacts of type 'Organization' and sub_type 'Comarcal'
       # Used to generate the scopes mapping that is assigned to SCOPE_CODES.
       # See lib/tasks/civi_crm.rake
       # Must be set up via initializer.
