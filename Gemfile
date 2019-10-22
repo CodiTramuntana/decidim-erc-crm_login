@@ -6,9 +6,9 @@ ruby RUBY_VERSION
 
 gemspec
 
-DECIDIM_VERSION = { git: "https://github.com/decidim/decidim.git" }.freeze
+require_relative "lib/decidim/erc/crm_authenticable/version"
 
-gem "decidim", DECIDIM_VERSION
+gem "decidim", Decidim::Erc::CrmAuthenticable.decidim_version
 
 group :development, :test do
   gem "bootsnap", require: true
