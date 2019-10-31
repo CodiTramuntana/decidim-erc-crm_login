@@ -66,14 +66,48 @@
         <div class="card" id="card__tos">
           <div class="card__content">
             <legend><%= t(".tos_title") %></legend>
-
-            <p class="tos-text">
-              <%= strip_tags(translated_attribute(terms_and_conditions_page.content)) %>
-            </p>
+           
+            <table class="tos-text" style="width:100%">
+                <tbody>
+                  <tr>
+                    <th colspan="2">Informació bàsica sobre Protecció de dades</th>
+                  </tr>
+                  <tr>
+                    <th>Responsable</th>
+                    <td>Esquerra Republicana de Catalunya.</td>
+                  </tr>
+                  <tr>
+                    <th>Contacte DPO</th>
+                    <td>Pots contactar amb la persona Delegada de Protecció de Dades al correu-e: delegatpd@esquerra.cat.</td>
+                  </tr>
+                  <tr>
+                    <th>Finalitat</th>
+                    <td>Gestió administrativa, organitzativa i d’enviament d’informació relacionada amb el Plenari del Congrés Nacional.</td>
+                  </tr>
+                  <tr>
+                    <th>Legitimació</th>
+                    <td>Consentiment de la persona interessada, al marcar la casella d’acceptació de la Política de protecció de dades.</td>
+                  </tr>
+                  <tr>
+                    <th>Cessió a tercers</th>
+                    <td>No es cediran dades a tercers, excepte per obligació legal.</td>
+                  </tr>
+                  <tr>
+                    <th>Drets</th>
+                    <td>Accedir, rectificar i suprimir les dades, així com, altres drets que s’expliquen a la informació addicional.</td>
+                  </tr>
+                  <tr>
+                    <th>Informació addicional</th>
+                    <td>Pots consultar la informació addicional i detallada sobre protecció de dades a la pàgina web d’Esquerra Republicana: https://www.esquerra.cat/ca/politicaprotecciodades</td>
+                  </tr>
+                </tbody>
+              </table>
 
             <div class="field">
               <%= f.check_box :tos_agreement, label: t(".tos_agreement", link: link_to(t(".terms"), page_path("terms-and-conditions"))) %>
             </div>
+
+            <p>Rebràs un correu electrònic de confirmació un cop premis el botó de Registra’t</p>
           </div>
         </div>
 

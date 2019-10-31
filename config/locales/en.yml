@@ -23,8 +23,6 @@ en:
     devise:
       registrations:
         new:
-          document_number_help: The identity document number (letter included) with
-            which you are affiliated to Esquerra Republicana.
           document_number_placeholder: 'Example: 123456789A'
           send: Request verification
           subtitle: Introduce your identity document to verify your membership to
