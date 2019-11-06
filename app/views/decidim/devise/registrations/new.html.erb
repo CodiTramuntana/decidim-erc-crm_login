@@ -4,7 +4,7 @@
     <div class="columns large-8 large-centered text-center page-title">
       <h1><%= t(".title") %></h1>
       <p>
-        <%= t(".subtitle") %>
+        <%== t(".subtitle") %>
       </p>
       <p>
         <%= t(".already_have_an_account?") %>
@@ -21,12 +21,11 @@
           <div class="card__content">
             <div class="user-person">
               <div class="field">
-                <%= f.text_field :document_number, placeholder: t(".document_number_placeholder"), help_text: t(".document_number_help") %>
+                <%= f.text_field :document_number, placeholder: t(".document_number_placeholder") %>
               </div>
             </div>
           </div>
         </div>
-
         <div class="card">
           <div class="card__content">
             <div class="actions">
