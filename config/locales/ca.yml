@@ -9,9 +9,10 @@ ca:
         phone: Telèfon
   crm_authenticable:
     errors:
-      connection_failed: No ha estat possible comprovar les teves dades. Siusplau, intenta-ho
-        més tard.
-      document_invalid: El teu número de document d’identitat no és correcte. Si et plau, revisa que l’hagis escrit bé.
+      connection_failed: No ha estat possible comprovar les teves dades. Siusplau,
+        intenta-ho més tard.
+      document_invalid: El teu número de document d’identitat no és correcte. Si et
+        plau, revisa que l’hagis escrit bé.
       duplicate_user: Ja hi ha un usuari registrat amb aquestes dades.
     verifications:
       authorizations:
@@ -32,30 +33,35 @@ ca:
           already_have_an_account?: Ja t’has enregistrat?
           document_number_placeholder: 'Exemple: 123456789A'
           send: Sol·licita verificació
-          subtitle: "Benvingut/da a Decidim Esquerra Republicana, la plataforma que et permetrà participar 
-                      del debat d’esmenes en relació al Plenari del 28è Congrés Nacional d’Esquerra Republicana. 
-                      <br/><br/> Abans de registrar-te a Decidim Esquerra Republicana, verifica el número del teu
-                      document d’identitat amb la lletra en majúscules (00000000A). Recorda que només les
-                      persones militants hi poden participar." 
+          subtitle: Benvingut/da a Decidim Esquerra Republicana, la plataforma que
+            et permetrà participar del debat d’esmenes en relació al Plenari del 28è
+            Congrés Nacional d’Esquerra Republicana. <br/><br/> Abans de registrar-te
+            a Decidim Esquerra Republicana, verifica el número del teu document d’identitat
+            amb la lletra en majúscules (00000000A). Recorda que només les persones
+            militants hi poden participar.
           title: Participa al 28è Congrés Nacional
         new_step_2:
           already_have_an_account?: Ja t’has enregistrat?
           newsletter: Vull rebre un butlletí ocasional amb informació rellevant
           newsletter_title: Permís de contacte
-          nickname_help: El teu àlies és el nom públic que veurà tothom a la plataforma, i són les teves inicials.
-          password_help: "La contrasenya ha de ser robusta (mínim %{minimun_characters} caràcters, amb majúscules, minúscules, números i símbols)."
+          nickname_help: El teu àlies és el nom públic que veurà tothom a la plataforma,
+            i són les teves inicials.
+          password_help: La contrasenya ha de ser robusta (mínim %{minimun_characters}
+            caràcters, amb majúscules, minúscules, números i símbols).
+          phone_number: El teu telèfon
           phone_number_help: Siusplau, comprova que aquest és el teu telèfon de contacte
             actual.
           sign_in: Entra
           sign_up: Registra't
           sign_up_as:
             legend: Inscriure's com a
-          subtitle: Registra’t per poder participar al debat d’esmenes en relació al Plenari del 28è Congrés Nacional d’Esquerra Republicana.
-          terms: els termes i condicions d'ús
-          tos_agreement: En registrar-te acceptes %{link}.
+          subtitle: Registra’t per poder participar al debat d’esmenes en relació
+            al Plenari del 28è Congrés Nacional d’Esquerra Republicana.
+          terms: Política de protecció de dades
+          tos_agreement: He llegit i accepto la %{link}.
           tos_title: Termes del servei
           update_user_data_help: Si les teves dades personals són incorrectes, posa't
-            en contacte amb <strong>administracio@erc.cat</strong>.<br />La plataforma
+            en contacte amb <strong>administracio@esquerra.cat</strong>.<br />La plataforma
             no permet modificar les dades personals, siusplau, no creïs un compte
             amb dades incorrectes.
           username_help: Nom públic que apareixerà en les teves publicacions. Amb
@@ -64,5 +70,8 @@ ca:
     registrations:
       new:
         check: Comprova
+      signed_up: Has estat registrat/da correctament.<br>Ara ja pots entrar al teu
+        compte i participar del debat d’esmenes en relació al plenari del 28è Congrés
+        Nacional d’Esquerra Republicana.
       user:
         error: S'ha produït un error en crear el teu compte.
