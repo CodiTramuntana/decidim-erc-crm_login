@@ -45,8 +45,6 @@ en:
           tos_title: Terms of Service
           update_user_data_help: Please, contact administracio@esquerra.cat if your
             data is not up to date.
-          username_help: Public name that appears on your posts. With the aim of guaranteeing
-            the anonymity, can be any name.
   devise:
     registrations:
       user:

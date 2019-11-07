@@ -43,9 +43,9 @@ module Decidim
         @form = form(Decidim::RegistrationForm).from_params(params[:user])
 
         CreateRegistration.call(@form) do
-          on(:ok) do |user|
-            set_flash_message! :notice, :signed_up
-            respond_with user, location: after_sign_up_path_for(user)
+          on(:ok) do
+            flash[:notice] = t(".sign_up")
+            redirect_to new_user_session_path
           end
 
           on(:invalid) do

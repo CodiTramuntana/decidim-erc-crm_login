@@ -29,6 +29,8 @@ ca:
         name: Militància d'ERC
     devise:
       registrations:
+        create:
+          sign_up: Rebràs un correu electrònic per confirmar el teu compte.
         new:
           already_have_an_account?: Ja t’has enregistrat?
           document_number_placeholder: 'Exemple: 123456789A'
@@ -64,14 +66,13 @@ ca:
             en contacte amb <strong>administracio@esquerra.cat</strong>.<br />La plataforma
             no permet modificar les dades personals, siusplau, no creïs un compte
             amb dades incorrectes.
-          username_help: Nom públic que apareixerà en les teves publicacions. Amb
-            l'objectiu de garantir l'anonimat pot ser qualsevol nom.
   devise:
+    confirmations:
+      confirmed: Has estat registrat/da correctament. Ara ja pots entrar al teu compte
+        i participar del debat d’esmenes en relació al plenari del 28è Congrés Nacional
+        d’Esquerra Republicana.
     registrations:
       new:
         check: Comprova
-      signed_up: Has estat registrat/da correctament.<br>Ara ja pots entrar al teu
-        compte i participar del debat d’esmenes en relació al plenari del 28è Congrés
-        Nacional d’Esquerra Republicana.
       user:
         error: S'ha produït un error en crear el teu compte.
