@@ -71,6 +71,12 @@ module Decidim
               it { is_expected.to eq(false) }
             end
 
+            context "and contact has invalid membership name" do
+              before { stub_invalid_request_not_militant }
+
+              it { is_expected.to eq(false) }
+            end
+
             context "and contact has invalid membership status_id" do
               before { stub_invalid_request_was_member }
 

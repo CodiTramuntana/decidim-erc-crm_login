@@ -63,7 +63,8 @@ module Decidim
 
             memberships = contact.dig("api.Membership.get", "values")
             memberships.find do |mbsp|
-              mbsp["status_id"].in?(VALID_MBSP_STATUS_IDS) &&
+              mbsp["membership_name"].in?(VALID_MBSP_NAMES) &&
+                mbsp["status_id"].in?(VALID_MBSP_STATUS_IDS) &&
                 Date.parse(mbsp["join_date"]) <= VALID_MBSP_JOIN_DATE
             end
           end
