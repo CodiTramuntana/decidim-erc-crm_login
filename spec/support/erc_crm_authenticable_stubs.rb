@@ -23,6 +23,17 @@ module ErcCrmAuthenticableStubs
       )
   end
 
+  def stub_invalid_request_not_militant
+    stub_request(:get, file_fixture("request.txt").read)
+      .with(
+        headers: headers
+      ).to_return(
+        status: 200,
+        body: file_fixture("invalid_response_mbsp_name.txt").read,
+        headers: {}
+      )
+  end
+
   def stub_invalid_request_was_member
     stub_request(:get, file_fixture("request.txt").read)
       .with(

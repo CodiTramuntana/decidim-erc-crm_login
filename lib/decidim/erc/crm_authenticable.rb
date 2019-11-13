@@ -18,6 +18,7 @@ module Decidim
       # Used to validate the data returned by CiviCRM.
       # See app/services/decidim/erc/crm_authenticable/crm_authenticable_authorization_handler.rb
       # Must be set up via initializer.
+      VALID_MBSP_NAMES = [].freeze
       VALID_MBSP_STATUS_IDS = [].freeze
       VALID_MBSP_JOIN_DATE = Date.new
 
