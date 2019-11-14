@@ -81,6 +81,19 @@ module Decidim
             it { is_expected.to include(user_data) }
           end
 
+          context "when a user is already registered with the same nickname" do
+            before do
+              create(:user,
+                     nickname: "JD",
+                     organization: organization,
+                     scope: create(:scope, organization: organization))
+              stub_valid_request
+              form.validate
+            end
+
+            it { is_expected.to include(nickname: "JD_2") }
+          end
+
           context "when document_number NOT is valid against CiviCRM" do
             before do
               stub_invalid_request_not_member

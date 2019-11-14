@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
+require "decidim/nicknamizable_extension"
+
 # This decorator associates the model with a Decidim::Scope (optional for admins).
 # and adds public methods related to crm_authenticable_authorization_handler.
 module Decidim
   User.class_eval do
+    # Mixin added.
+    include NicknamizableExtension
+
     # Association added.
     belongs_to :scope, foreign_key: "decidim_scope_id", class_name: "Decidim::Scope", optional: true
 
