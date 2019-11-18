@@ -94,6 +94,20 @@ module Decidim
             it { is_expected.to include(nickname: "JD_2") }
           end
 
+          context "when a user's initials has accents" do
+            let(:user_data) { { "display_name" => "Name with Áccents" } }
+
+            before do
+              stub_valid_request
+              form.validate
+              # rubocop:disable RSpec/AnyInstance
+              allow_any_instance_of(described_class).to receive(:user_data).and_return(user_data)
+              # rubocop:enable RSpec/AnyInstance
+            end
+
+            it { is_expected.to include(nickname: "NwA") }
+          end
+
           context "when document_number NOT is valid against CiviCRM" do
             before do
               stub_invalid_request_not_member
