@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "digest"
+require "csv"
 
 module Decidim
   module Erc
@@ -30,9 +31,14 @@ module Decidim
         # Allows to validate the document_number against the CiviCRM WS without a User.
         # See Decidim::Erc::CrmAuthenticable::IdentityDocumentForm#document_number_must_be_valid
         def document_valid?
-          ws_request_must_succeed
-          ws_response_must_return_valid_membership
-          errors.empty?
+          if Rails.env.preprod?
+            csv_request_must_succeed
+            errors.empty?
+          else
+            ws_request_must_succeed
+            ws_response_must_return_valid_membership
+            errors.empty?
+          end
         end
 
         attr_reader :response
@@ -48,6 +54,33 @@ module Decidim
           errors.add(:base, I18n.t("connection_failed", scope: "crm_authenticable.errors")) if response[:error]
         end
 
+        def csv_request_must_succeed
+          return if errors.any?
+
+          file = Rails.application.secrets.csv_users_pre[:path]
+          @response = nil
+
+          CSV.foreach(file) do |row|
+            doc_number = row.first
+
+            if doc_number.present? && doc_number.match?(document_number)
+                @response = {
+                  body: 
+                  [
+                    { 
+                      "display_name": row[1],
+                      "email": row[2],
+                      "phone": row[3],
+                      "custom_21": row[4]
+                    }.transform_keys(&:to_s)
+                  ]
+                }
+            else
+              errors.add(:base, I18n.t("user_not_found", scope: "census"))
+            end
+          end
+        end
+        
         # Validates the document_number against CiviCRM. Does not proceed if the WS request fails.
         def ws_response_must_return_valid_membership
           return if errors.any?

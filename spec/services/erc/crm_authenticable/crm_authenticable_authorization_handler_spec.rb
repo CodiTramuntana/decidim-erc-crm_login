@@ -57,6 +57,24 @@ module Decidim
           end
         end
 
+        describe "metadata on PRE environment" do
+          subject { handler.document_valid? }
+          
+          before do
+            allow(Rails).to receive(:env) { "preprod".inquiry }
+          end
+
+          context "when document_number is valid against CSV" do
+            it { is_expected.to eq(true) }
+          end
+
+          context "when document_number NOT is valid against CSV" do
+            let(:document_number) { "444444444M" }
+
+            it { is_expected.to eq(false) }
+          end
+        end
+
         shared_examples "validate document_number against CiviCRM" do
           context "when document_number format is not valid" do
             let(:document_number) { "(╯°□°）╯︵ ┻━┻" }

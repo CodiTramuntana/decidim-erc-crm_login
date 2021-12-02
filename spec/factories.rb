@@ -2,3 +2,10 @@
 
 require "decidim/core/test/factories"
 require "decidim/surveys/test/factories"
+
+FactoryBot.modify do
+  factory :user, class: "Decidim::User" do
+    scope { create(:scope, organization: organization) } # Adding this.
+    nickname { "Nickname" }
+  end
+end
