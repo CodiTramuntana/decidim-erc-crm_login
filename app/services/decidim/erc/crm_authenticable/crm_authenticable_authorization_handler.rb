@@ -76,7 +76,7 @@ module Decidim
                   ]
                 }
             else
-              errors.add(:base, I18n.t("connection_failed", scope: "crm_authenticable.errors"))
+              errors.add(:base, I18n.t("user_not_found", scope: "census"))
             end
           end
         end

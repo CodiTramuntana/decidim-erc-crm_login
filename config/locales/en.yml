@@ -4,6 +4,8 @@ en:
     attributes:
       user:
         document_number: Identity document
+  census:
+    user_not_found: The user is not in the census.
   crm_authenticable:
     errors:
       connection_failed: It was not possible to connect with CiviCRM. Please try again
