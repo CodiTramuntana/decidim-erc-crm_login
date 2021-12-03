@@ -56,28 +56,26 @@ module Decidim
 
         def csv_request_must_succeed
           return if errors.any?
-
-          file = Rails.application.secrets.csv_users_pre[:path]
           @response = nil
 
-          CSV.foreach(file) do |row|
-            doc_number = row.first
+          csv = CSV.read(Rails.application.secrets.csv_users_pre[:path])
 
-            if doc_number.present? && doc_number.match?(document_number)
-                @response = {
-                  body: 
-                  [
-                    { 
-                      "display_name": row[1],
-                      "email": row[2],
-                      "phone": row[3],
-                      "custom_21": row[4]
-                    }.transform_keys(&:to_s)
-                  ]
-                }
-            else
-              errors.add(:base, I18n.t("user_not_found", scope: "census"))
-            end
+          user = csv.find { |row| row.first == document_number }
+
+          if user.present?
+            @response = {
+              body:
+              [
+                { 
+                  "display_name": user[1],
+                  "email": user[2],
+                  "phone": user[3],
+                  "custom_21": user[4]
+                }.transform_keys(&:to_s)
+              ]
+            }
+          else
+            errors.add(:base, I18n.t("user_not_found", scope: "census"))
           end
         end
         

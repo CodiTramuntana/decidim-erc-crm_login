@@ -40,6 +40,8 @@ module Decidim
 
           if authorization_handler.errors.keys.include?(:document_number)
             errors.add(:document_number, I18n.t("document_invalid", scope: "crm_authenticable.errors"))
+          elsif authorization_handler.errors.keys.include?(:base)
+            errors.add(:base, I18n.t("user_not_found", scope: "census"))
           else
             errors.add(:base, I18n.t("connection_failed", scope: "crm_authenticable.errors"))
           end
