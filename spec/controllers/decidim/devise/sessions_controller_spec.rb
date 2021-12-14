@@ -44,6 +44,19 @@ module Decidim
           end
         end
 
+        context "when the user is an admin and environment is PRE" do
+          before do
+            user.update(admin: true)
+            allow(Rails).to receive(:env) { "preprod".inquiry }
+          end
+
+          it "does not try to authorizer the user against CSV" do
+            expect(Decidim::Erc::CrmAuthenticable::UserAuthorizer).not_to receive(:new).with(user)
+            post :create, params: params
+            expect(controller.flash.notice).to have_content("Signed in successfully.")
+          end
+        end
+
         context "when the params are invalid" do
           let(:params) { {} }
 
