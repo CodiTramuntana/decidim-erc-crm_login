@@ -6,3 +6,5 @@
 - Refactor sign up against CSV.
 ### Version 1.1.2
 - Add condition in sign in when it is a preproduction environment.
+### Version 1.1.3
+- Add condition for validations in authorization handler.
