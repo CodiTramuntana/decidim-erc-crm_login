@@ -82,7 +82,7 @@ describe "Action Authorization", type: :system do
       end
 
       context "when the authorization metadata is invalid" do
-        let(:join_date) { to_strftime(Date.today) }
+        let(:join_date) { to_strftime(Time.zone.today) }
 
         it "does NOT authorize the user" do
           expect(page).to have_content("Not authorized")

@@ -76,6 +76,13 @@ Rails/ScopeArgs:
 Rails/SkipsModelValidations:
   Enabled: true
 
+Rails/UnknownEnv:
+  Enabled: false
+  Environments:
+    - development
+    - test
+    - production
+    - preprod
 Rails/Validation:
   Include:
     - decidim-*/app/models/**/*.rb

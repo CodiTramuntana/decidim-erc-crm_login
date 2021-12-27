@@ -59,7 +59,7 @@ module Decidim
 
         describe "metadata on PRE environment" do
           subject { handler.document_valid? }
-          
+
           before do
             allow(Rails).to receive(:env) { "preprod".inquiry }
           end

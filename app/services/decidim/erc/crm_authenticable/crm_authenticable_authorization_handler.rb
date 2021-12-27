@@ -14,7 +14,7 @@ module Decidim
                   format: { with: /\A[A-Z0-9]*\z/, message: I18n.t("errors.messages.uppercase_only_letters_numbers") },
                   presence: true
 
-        validate :ws_request_must_succeed, :ws_response_must_return_valid_membership, if: lambda{ Rails.env.production? }
+        validate :ws_request_must_succeed, :ws_response_must_return_valid_membership, if: -> { Rails.env.production? }
 
         def unique_id
           Digest::SHA512.hexdigest(
@@ -33,12 +33,11 @@ module Decidim
         def document_valid?
           if Rails.env.preprod?
             csv_request_must_succeed
-            errors.empty?
           else
             ws_request_must_succeed
             ws_response_must_return_valid_membership
-            errors.empty?
           end
+          errors.empty?
         end
 
         attr_reader :response
@@ -56,6 +55,7 @@ module Decidim
 
         def csv_request_must_succeed
           return if errors.any?
+
           @response = nil
 
           csv = CSV.read(Rails.application.secrets.csv_users_pre[:path])
@@ -66,7 +66,7 @@ module Decidim
             @response = {
               body:
               [
-                { 
+                {
                   "display_name": user[1],
                   "email": user[2],
                   "phone": user[3],
@@ -78,7 +78,7 @@ module Decidim
             errors.add(:base, I18n.t("user_not_found", scope: "census"))
           end
         end
-        
+
         # Validates the document_number against CiviCRM. Does not proceed if the WS request fails.
         def ws_response_must_return_valid_membership
           return if errors.any?
