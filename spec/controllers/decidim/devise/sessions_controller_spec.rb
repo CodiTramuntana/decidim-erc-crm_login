@@ -37,20 +37,23 @@ module Decidim
         context "when the user is an admin" do
           before { user.update(admin: true) }
 
-          it "does not try to authorizer the user against CiviCRM" do
+          it "does not try to authorize the user against CiviCRM" do
             expect(Decidim::Erc::CrmAuthenticable::UserAuthorizer).not_to receive(:new).with(user)
             post :create, params: params
             expect(controller.flash.notice).to have_content("Signed in successfully.")
           end
         end
 
-        context "when the user is an admin and environment is PRE" do
+        context "when the user is an admin and mode is csv_mode" do
           before do
             user.update(admin: true)
-            allow(Rails).to receive(:env) { "preprod".inquiry }
+            Rails.application.secrets.erc_crm_authenticable[:users_csv_path]= "users_csv_path"
+          end
+          after do
+            Rails.application.secrets.erc_crm_authenticable[:users_csv_path]= nil
           end
 
-          it "does not try to authorizer the user against CSV" do
+          it "does not try to authorize the user against CSV" do
             expect(Decidim::Erc::CrmAuthenticable::UserAuthorizer).not_to receive(:new).with(user)
             post :create, params: params
             expect(controller.flash.notice).to have_content("Signed in successfully.")

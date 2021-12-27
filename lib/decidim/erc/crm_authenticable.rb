@@ -23,6 +23,23 @@ module Decidim
       VALID_MBSP_JOIN_DATE = Date.new
 
       autoload :Log, "decidim/erc/crm_authenticable/log"
+
+      # This method has been built for testing purposes.
+      def self.reset_mode!
+        @csv_mode= nil
+        csv_mode?
+      end
+
+      def self.crm_mode?
+        !csv_mode?
+      end
+
+      def self.csv_mode?
+        @csv_mode||= begin
+          path= Rails.application.secrets.erc_crm_authenticable[:users_csv_path]
+          File.exists?(path) if path.present?          
+        end
+      end
     end
   end
 end

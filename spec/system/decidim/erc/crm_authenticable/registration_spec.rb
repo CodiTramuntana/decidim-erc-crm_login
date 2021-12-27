@@ -38,7 +38,7 @@ describe "Registration", type: :system do
       end
 
       it "prefilles the 'Registration form' with data from CiviCRM" do
-        within "#register-form" do
+        within "#register-form-step-2" do
           # Data returned from CiviCRM should be readonly and users must be informed.
           expect(page).to have_tag("div.callout.warning", text: /administracio@esquerra.cat/)
           expect(page).to have_field("user_name", with: "John Doe", readonly: true)
@@ -52,7 +52,7 @@ describe "Registration", type: :system do
 
       context "when the 'Registration form' is filled with valid data" do
         before do
-          within "#register-form" do
+          within "#register-form-step-2" do
             fill_in :user_password, with: "rPYWYKQJrXm97b4ytswc"
             fill_in :user_password_confirmation, with: "rPYWYKQJrXm97b4ytswc"
             check :user_tos_agreement
@@ -62,7 +62,7 @@ describe "Registration", type: :system do
         end
 
         it "registers the user" do
-          expect(page).to have_css(".callout.warning", text: "Please, login with your account before access")
+          expect(page).to have_css(".callout.success", text: "You have signed up successfully.")
         end
 
         context "when the 'Identity document form' is filled with USED data" do

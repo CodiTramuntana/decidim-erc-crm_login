@@ -19,9 +19,9 @@ describe "Erc::CrmAuthenticable", type: :system do
         expect(page).to have_content("Please, login with your account before access")
       end
 
-      within "#new_user" do
-        expect(page).to have_field("user_email", with: "")
-        expect(page).to have_field("user_password", with: "")
+      within "#session_new_user" do
+        expect(page).to have_field("session_user_email", with: "")
+        expect(page).to have_field("session_user_password", with: "")
         expect(page).to have_button("Log in")
       end
       expect(page).to have_link("Sign up")
@@ -49,9 +49,9 @@ describe "Erc::CrmAuthenticable", type: :system do
     context "when it fails to connect the CiviCRM" do
       before do
         stub_invalid_request_connection_error
-        within "#new_user" do
-          fill_in :user_email, with: "john.doe@example.org"
-          fill_in :user_password, with: "ppasswordd"
+        within "#session_new_user" do
+          fill_in :session_user_email, with: "john.doe@example.org"
+          fill_in :session_user_password, with: "ppasswordd"
         end
         click_button "Log in"
       end
@@ -64,9 +64,9 @@ describe "Erc::CrmAuthenticable", type: :system do
     context "when the user IS a paying member of ERC" do
       before do
         stub_valid_request
-        within "#new_user" do
-          fill_in :user_email, with: "john.doe@example.org"
-          fill_in :user_password, with: "ppasswordd"
+        within "#session_new_user" do
+          fill_in :session_user_email, with: "john.doe@example.org"
+          fill_in :session_user_password, with: "ppasswordd"
         end
         click_button "Log in"
       end
@@ -79,9 +79,9 @@ describe "Erc::CrmAuthenticable", type: :system do
     context "when the user is NOT a paying member of ERC" do
       before do
         stub_invalid_request_was_member
-        within "#new_user" do
-          fill_in :user_email, with: "john.doe@example.org"
-          fill_in :user_password, with: "ppasswordd"
+        within "#session_new_user" do
+          fill_in :session_user_email, with: "john.doe@example.org"
+          fill_in :session_user_password, with: "ppasswordd"
         end
         click_button "Log in"
       end

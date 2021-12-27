@@ -14,7 +14,7 @@ module Decidim
                   format: { with: /\A[A-Z0-9]*\z/, message: I18n.t("errors.messages.uppercase_only_letters_numbers") },
                   presence: true
 
-        validate :ws_request_must_succeed, :ws_response_must_return_valid_membership, if: -> { Rails.env.production? }
+        validate :ws_request_must_succeed, :ws_response_must_return_valid_membership, if: lambda{ ::Decidim::Erc::CrmAuthenticable.crm_mode? }
 
         def unique_id
           Digest::SHA512.hexdigest(
@@ -31,8 +31,8 @@ module Decidim
         # Allows to validate the document_number against the CiviCRM WS without a User.
         # See Decidim::Erc::CrmAuthenticable::IdentityDocumentForm#document_number_must_be_valid
         def document_valid?
-          if Rails.env.preprod?
-            csv_request_must_succeed
+          if ::Decidim::Erc::CrmAuthenticable.csv_mode?
+            authentication_against_csv_must_succeed
           else
             ws_request_must_succeed
             ws_response_must_return_valid_membership
@@ -53,12 +53,12 @@ module Decidim
           errors.add(:base, I18n.t("connection_failed", scope: "crm_authenticable.errors")) if response[:error]
         end
 
-        def csv_request_must_succeed
+        def authentication_against_csv_must_succeed
           return if errors.any?
 
           @response = nil
 
-          csv = CSV.read(Rails.application.secrets.csv_users_pre[:path])
+          csv = CSV.read(Rails.application.secrets.erc_crm_authenticable[:users_csv_path])
 
           user = csv.find { |row| row.first == document_number }
 

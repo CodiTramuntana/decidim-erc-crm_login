@@ -85,7 +85,6 @@ erc_crm_authenticable:
   site_key: site_key
   api_key: api_key
   secret_key: secret_key
-  users_csv_path: 'spec/fixtures/files/csv_users_pre.csv'
 ```
 Note that the test stubs are configured to use the above values as to not reveal the real ones.
 
