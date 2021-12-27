@@ -26,7 +26,7 @@ module Decidim
 
       # This method has been built for testing purposes.
       def self.reset_mode!
-        @csv_mode= nil
+        @csv_mode = nil
         csv_mode?
       end
 
@@ -35,9 +35,9 @@ module Decidim
       end
 
       def self.csv_mode?
-        @csv_mode||= begin
-          path= Rails.application.secrets.erc_crm_authenticable[:users_csv_path]
-          File.exists?(path) if path.present?          
+        @csv_mode ||= begin
+          path = Rails.application.secrets.erc_crm_authenticable[:users_csv_path]
+          File.exist?(path) if path.present?
         end
       end
     end

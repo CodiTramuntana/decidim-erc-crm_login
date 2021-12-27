@@ -47,10 +47,11 @@ module Decidim
         context "when the user is an admin and mode is csv_mode" do
           before do
             user.update(admin: true)
-            Rails.application.secrets.erc_crm_authenticable[:users_csv_path]= "users_csv_path"
+            Rails.application.secrets.erc_crm_authenticable[:users_csv_path] = "users_csv_path"
           end
+
           after do
-            Rails.application.secrets.erc_crm_authenticable[:users_csv_path]= nil
+            Rails.application.secrets.erc_crm_authenticable[:users_csv_path] = nil
           end
 
           it "does not try to authorize the user against CSV" do

@@ -14,7 +14,7 @@ module Decidim
                   format: { with: /\A[A-Z0-9]*\z/, message: I18n.t("errors.messages.uppercase_only_letters_numbers") },
                   presence: true
 
-        validate :ws_request_must_succeed, :ws_response_must_return_valid_membership, if: lambda{ ::Decidim::Erc::CrmAuthenticable.crm_mode? }
+        validate :ws_request_must_succeed, :ws_response_must_return_valid_membership, if: -> { ::Decidim::Erc::CrmAuthenticable.crm_mode? }
 
         def unique_id
           Digest::SHA512.hexdigest(
