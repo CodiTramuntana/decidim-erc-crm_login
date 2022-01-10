@@ -1,5 +1,9 @@
 # Changelog
 
+- Change how the signup against CSV is enabled (#26)
+- Upgrade to Ruby 2.7.2 (#26)
+- Update test suite (#26)
+
 ### Version 1.1.4
 - Hide newsletter modal in sign up (#25)
 

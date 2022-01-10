@@ -4,7 +4,7 @@ module Decidim
   module Erc
     module CrmAuthenticable
       def self.version
-        "1.1.4"
+        "1.1.5"
       end
 
       def self.decidim_version

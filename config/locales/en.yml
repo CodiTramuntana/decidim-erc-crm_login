@@ -24,6 +24,8 @@ en:
         name: Militancy of Esquerra Republicana
     devise:
       registrations:
+        create:
+          sign_up: You have signed up successfully.
         new:
           document_number_placeholder: 'Example: 123456789A'
           send: Request verification

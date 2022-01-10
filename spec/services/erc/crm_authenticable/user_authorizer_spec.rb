@@ -37,7 +37,7 @@ module Decidim
             it "updates an existing `CrmAuthenticable` authorization for the user" do
               authorization = create(:authorization, name: handler_name, user: user, granted_at: 1.day.ago)
 
-              expect { subject }.to change { authorization.reload.granted_at }
+              expect { subject }.to(change { authorization.reload.granted_at })
             end
           end
 

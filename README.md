@@ -42,6 +42,13 @@ This task generates the mapping that makes possible to find a `Decidim::Scope` b
 
 ## How it works
 
+This module has been initially designed to perform authentication against CiviCRM but it also supports authentication against a CSV file as an alternative. To enable this second option (instead of authenticating against the CRM) set the path to the file in `config/secrets.yml`:
+
+```yml
+erc_crm_authenticable:
+  users_csv_path: <%= ENV["ERC_USERS_CSV_PATH"] %>
+```
+
 ### Registration
 - The user needs to validate their DNI against CiviCRM to be able to register to the application.
 - The user is then redirected to the registration form prefilled with their personal data found in CiviCRM.
@@ -66,7 +73,7 @@ Run the following in the gem development path to create the test app:
 
 ```bash
 $ bundle
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
+$ bundle exec rake test_app
 ```
 Note that the database user has to have rights to create and drop a database in order to create the dummy test app database.
 
@@ -78,15 +85,13 @@ erc_crm_authenticable:
   site_key: site_key
   api_key: api_key
   secret_key: secret_key
-csv_users_pre:
-  path: 'spec/fixtures/files/csv_users_pre.csv'
 ```
 Note that the test stubs are configured to use the above values as to not reveal the real ones.
 
 Finally to run the tests execute:
 
 ```bash
-$ DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> RAILS_ENV=test bundle exec rspec
+$ bundle exec rspec
 ```
 
 ## Versioning
