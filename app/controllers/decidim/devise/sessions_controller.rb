@@ -13,7 +13,7 @@ module Decidim
       # Sign in the user only if authorized or is an admin.
       # Otherwise, sign out the user and show error.
       def create
-        result = current_user&.crm_authorize! unless current_user&.admin? && Rails.env.preprod?
+        result = current_user&.crm_authorize! unless current_user&.admin? || ::Decidim::Erc::CrmAuthenticable.csv_mode?
 
         if result.nil? || result[:authorized]
           super

@@ -24,7 +24,7 @@ describe "Action Authorization", type: :system do
   let(:join_date) { "" }
 
   def answer_survey
-    within "#edit_questionnaire_#{survey.id}" do
+    within "#edit_questionnaire_#{survey.questionnaire.id}" do
       fill_in :questionnaire_answers_0, with: "NS/NC"
       check :questionnaire_tos_agreement
       click_button "Submit"
