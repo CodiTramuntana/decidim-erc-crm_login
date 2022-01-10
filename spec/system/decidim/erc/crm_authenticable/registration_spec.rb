@@ -8,6 +8,15 @@ describe "Registration", type: :system do
 
   before do
     switch_to_host(organization.host)
+
+    secrets = Rails.application.secrets
+    allow(Rails.application).to receive(:secrets).and_return(
+      secrets.merge(
+        erc_crm_authenticable: {
+          users_csv_path: "spec/fixtures/files/csv_users.csv"
+        }
+      )
+    )
   end
 
   context "when the user signs up" do
@@ -50,15 +59,58 @@ describe "Registration", type: :system do
         end
       end
 
-      context "when the 'Registration form' is filled with valid data" do
+      context "when the 'Registration form' is filled with valid data and show newsletter modal" do
         before do
           within "#register-form-step-2" do
             fill_in :user_password, with: "rPYWYKQJrXm97b4ytswc"
             fill_in :user_password_confirmation, with: "rPYWYKQJrXm97b4ytswc"
             check :user_tos_agreement
-            check :user_newsletter
           end
           click_button "Sign up"
+        end
+
+        it "newsletter modal show" do
+          expect(page).to have_css("#sign-up-newsletter-modal")
+          within "#register-form-step-2" do
+            check :user_newsleter
+          end
+        end
+
+        it "registers the user" do
+          expect(page).to have_css(".callout.success", text: "You have signed up successfully.")
+        end
+
+        context "when the 'Identity document form' is filled with USED data" do
+          before do
+            visit decidim.new_user_registration_path
+            stub_valid_request
+            within "#register-form-step-1" do
+              fill_in :user_document_number, with: "123456789A"
+            end
+            click_button "Request verification"
+          end
+
+          it "does NOT redirect to the decidim 'Registration' page" do
+            expect(page).not_to have_css("h1", text: "Sign up")
+            within "label[for='user_document_number']" do
+              expect(page).to have_css(".form-error", text: "There is already a user registered with this data.")
+            end
+          end
+        end
+      end
+
+      context "when the 'Registration form' is filled with valid data and not show newsletter modal" do
+        before do
+          within "#register-form-step-2" do
+            fill_in :user_password, with: "rPYWYKQJrXm97b4ytswc"
+            fill_in :user_password_confirmation, with: "rPYWYKQJrXm97b4ytswc"
+            check :user_tos_agreement
+          end
+          click_button "Sign up"
+        end
+
+        it "newsletter modal not show" do
+          expect(page).not_to have_css("#sign-up-newsletter-modal")
         end
 
         it "registers the user" do
