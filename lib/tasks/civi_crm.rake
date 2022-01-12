@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require "csv"
+require "file_manager"
 
 namespace :civi_crm do
+  include FileManager
+
   task init: ["import:all", "generate:all", "create:scopes"]
 
   namespace :import do
@@ -61,79 +63,6 @@ namespace :civi_crm do
         next unless (relationship = relationships.find { |r| r["contact_id_b"].in?(filter_ids) })
 
         memo[element["contact_id"]] = relationship["contact_id_b"]
-      end
-    end
-  end
-
-  namespace :import_by_csv do
-    task all: [:comarcals, :regionals, :locals, :local_comarcal_relationships, :local_regional_relationships]
-
-    desc "Generates a YAML file with the CSV with 'Comarcal' tag"
-    task comarcals: :environment do
-      csv_text = File.read("tmp/scopes_codes.csv")
-      csv = CSV.parse(csv_text, headers: true)
-
-      csv = csv.select { |row| row["type"] == "FC" }
-      csv = csv.map(&:to_h)
-
-      result = get_code_and_display_name(csv)
-      write_config_yaml!("comarcals", result)
-    end
-
-    desc "Generates a YAML file with the CSV with 'Regional' tag"
-    task regionals: :environment do
-      csv_text = File.read("tmp/scopes_codes.csv")
-      csv = CSV.parse(csv_text, headers: true)
-
-      csv = csv.select { |row| row["type"] == "FR" }
-      csv = csv.map(&:to_h)
-
-      result = get_code_and_display_name(csv)
-      write_config_yaml!("regionals", result)
-    end
-
-    desc "Generates a YAML file with the CSV with 'Locals' tag"
-    task locals: :environment do
-      csv_text = File.read("tmp/scopes_codes.csv")
-      csv = CSV.parse(csv_text, headers: true)
-
-      csv = csv.select { |row| row["type"] == "SL" }
-      csv = csv.map(&:to_h)
-
-      result = get_code_and_display_name(csv)
-      write_config_yaml!("locals", result)
-    end
-
-    desc "Generates a YAML file with the relationship between CSV 'Local' and 'Comarcal'"
-    task local_comarcal_relationships: :environment do
-      local_ids = load_config_yaml("locals").keys
-      comarcal_ids = load_config_yaml("comarcals").keys
-      result = get_code_relationships(local_ids, comarcal_ids, "comarcal")
-      write_config_yaml!("local_comarcal_relationships", result)
-    end
-
-    desc "Generates a YAML file with the relationship between CSV 'Local' and 'Regional'"
-    task local_regional_relationships: :environment do
-      local_ids = load_config_yaml("locals").keys
-      regional_ids = load_config_yaml("regionals").keys
-      result = get_code_relationships(local_ids, regional_ids, "regional")
-      write_config_yaml!("local_regional_relationships", result)
-    end
-
-    def get_code_and_display_name(body)
-      body.map! { |element| { element["code"] => element["name"] } }.reduce({}, :merge)
-    end
-
-    def get_code_relationships(local_ids, _filter_ids, scope_type)
-      local_ids.each_with_object({}) do |element, memo|
-        csv_text = File.read("tmp/scopes_hierarchy.csv")
-        csv = CSV.parse(csv_text, headers: true)
-
-        csv = csv.select { |row| row["SL"] == element }.first.to_h
-        next if csv.blank?
-
-        memo[csv["SL"]] = csv["FC"] if scope_type == "comarcal"
-        memo[csv["SL"]] = csv["FR"] if scope_type == "regional"
       end
     end
   end
@@ -197,19 +126,5 @@ namespace :civi_crm do
         scope.save!
       end
     end
-  end
-
-  def write_config_yaml!(filename, content)
-    File.write(filepath(filename), content.to_yaml)
-    puts "File generated 'config/civi_crm/#{filename}.yml'"
-  end
-
-  def filepath(filename)
-    Dir.mkdir("config/civi_crm") unless File.directory?("config/civi_crm")
-    Rails.root.join("config", "civi_crm", "#{filename}.yml").to_s
-  end
-
-  def load_config_yaml(filename)
-    YAML.load_file(filepath(filename))
   end
 end
