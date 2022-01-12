@@ -1,5 +1,7 @@
 # Changelog
 
+### Version 1.1.6
+- Update rake tasks with csv scopes (#28)
 ### Version 1.1.5
 - Change how the signup against CSV is enabled (#26)
 - Upgrade to Ruby 2.7.2 (#26)
