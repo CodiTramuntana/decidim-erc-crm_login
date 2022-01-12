@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require "file_manager"
+
 namespace :civi_crm do
+  include FileManager
+
   task init: ["import:all", "generate:all", "create:scopes"]
 
   namespace :import do
@@ -114,26 +118,13 @@ namespace :civi_crm do
         next if display_name[/\d/]
 
         scope_name = display_name.strip
-        Decidim::Scope.find_or_create_by!(
+        scope = Decidim::Scope.find_or_initialize_by(
           organization: organization,
-          name: { "ca" => scope_name, "en" => scope_name, "es" => scope_name },
           code: contact_id
         )
+        scope.name = { "ca" => scope_name, "en" => scope_name, "es" => scope_name }
+        scope.save!
       end
     end
-  end
-
-  def write_config_yaml!(filename, content)
-    File.write(filepath(filename), content.to_yaml)
-    puts "File generated 'config/civi_crm/#{filename}.yml'"
-  end
-
-  def filepath(filename)
-    Dir.mkdir("config/civi_crm") unless File.directory?("config/civi_crm")
-    Rails.root.join("config", "civi_crm", "#{filename}.yml").to_s
-  end
-
-  def load_config_yaml(filename)
-    YAML.load_file(filepath(filename))
   end
 end
