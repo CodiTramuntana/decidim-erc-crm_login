@@ -188,11 +188,11 @@ namespace :civi_crm do
         next if display_name[/\d/]
 
         scope_name = display_name.strip
-        scope= Decidim::Scope.find_or_initialize_by(
+        scope = Decidim::Scope.find_or_initialize_by(
           organization: organization,
           code: contact_id
         )
-        scope.name= { "ca" => scope_name, "en" => scope_name, "es" => scope_name }
+        scope.name = { "ca" => scope_name, "en" => scope_name, "es" => scope_name }
         scope.save!
       end
     end
