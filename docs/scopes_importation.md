@@ -34,7 +34,7 @@ FR,FC,SL
 ```
 In this example, we have relation between Girona's code and their local and comarcal codes. In this case, 5100 is the relate comarcal code and 5117 is the relate local code.
 
-Caption:
+Legend:
 
 **FR**: regional code
 **FC**: comarcal code
@@ -42,7 +42,7 @@ Caption:
 
 ## Rake tasks for run
 
-Next step after have the files is execute rake tasks in order to generate required yml files.
+Next step after having the files is executing the following rake tasks in order to generate required yml files.
 
 The tasks must be run in this order:
 ```
@@ -171,11 +171,11 @@ This codes are comarcal codes 'acting' like locals. The relationship is make bet
 
 This task generate the file `decidim_scopes_mapping.yml` from files `comarcal_exceptions.yml`, `local_comarcal_relationships.yml` and `local_regional_relationships.yml`.
 
-This file is used for register users. For that, the code on the left in file is the local scope code in the csv users. The code on the right is a code field in a scope in Decidim.
+This file is used on user registration. For that, the code on the left in file is the local scope code in the csv users. The code on the right is a code field in a scope in Decidim.
 
 Use case:
 
-An user has 0103 code in csv users -> this code is relate with 0010 in this file -> this code is relate with a code field of scope in Decidim -> user registered successfully!
+An user has 0103 code in csv users -> this code is associated with 0010 in file `decidim_scopes_mapping.yml` -> so 0010 should belong to the `code` field of scope in Decidim -> user registered successfully!
 
 `decidim_scopes_mapping.yml` contains:
 
