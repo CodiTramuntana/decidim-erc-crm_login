@@ -58,9 +58,9 @@ rake civi_crm:create:scopes
 
 ## 1. rake erc_auth:csv_import:comarcals
 
-This tasks generate the file `comarcals.yml` from `scopes_codes.csv`.
+This tasks generates the file `comarcals.yml` from `scopes_codes.csv`.
 
-Check the rows it has FC code and add to yml.
+Checks the rows in `scopes_codes.csv` that have FC code and adds them to `comarcals.yml`.
 
 `comarcals.yml` contain:
 
@@ -76,9 +76,9 @@ Check the rows it has FC code and add to yml.
 
 ## 2. rake erc_auth:csv_import:locals
 
-This task generate the file `locals.yml` from `scopes_codes.csv`.
+This task generates the file `locals.yml` from `scopes_codes.csv`.
 
-Check the rows it has SL code and add to yml.
+Checks the rows in `scopes_codes.csv` that have SL code and adds them to `locals.yml`.
 
 `locals.yml` contains:
 
@@ -94,9 +94,9 @@ Check the rows it has SL code and add to yml.
 
 ## 3. rake erc_auth:csv_import:regionals 
 
-This task generate the file `regionals.yml` from `scopes_codes.csv`.
+This tasks generates the file `regionals.yml` from `scopes_codes.csv`.
 
-Check it the rows it has FR code and add to yml.
+Checks the rows in `scopes_codes.csv` that have FR code and adds them to `regionals.yml`.
 
 `regionals.yml` contains:
 
@@ -110,9 +110,11 @@ Check it the rows it has FR code and add to yml.
 
 ## 4. rake erc_auth:csv_import:local_comarcal_relationships
 
-This task generate the file `local_comarcal_relationships.yml` from the files `locals.yml`, `comarcals.yml` and `scopes_hierarchy.csv`.
+This task generates the file `local_comarcal_relationships.yml` from the files `locals.yml`, `comarcals.yml` and `scopes_hierarchy.csv`.
 
-Search local code and in the same row, get FC (comarcal) code.
+`comarcals.yml` is loaded but it seems that it is not being used.
+
+The task iterates `locals.yml` and, for each row, it searches for the SL code in `scopes_hierarchy.csv` and takes the  FC (comarcal) code. Once the correspondence is resolved it is saved in the output `local_comarcal_relationships.yml` file.
 
 `local_comarcal_relationships.yml` contains:
 
@@ -125,11 +127,13 @@ Search local code and in the same row, get FC (comarcal) code.
 '0301': '0300'
 ```
 
-## 5. rake erc_auth:csv_import:local_regional_relationships 
+## 5. rake erc_auth:csv_import:local_regional_relationships
 
-This rake generate the file `local_regional_relationships.yml` from files `locals.yml`, `regionals.yml` and `scopes_hierarchy.csv`.
+This rake generates the file `local_regional_relationships.yml` from files `locals.yml`, `regionals.yml` and `scopes_hierarchy.csv`.
 
-Search local code and in the same row, get FR (regional) code.
+`regionals.yml` is loaded but it seems that it is not being used.
+
+The task iterates `locals.yml` and, for each row, it searches for the SL code in `scopes_hierarchy.csv` and takes the  FR (regional) code. Once the correspondence is resolved it is saved in the output `local_regional_relationships.yml` file.
 
 `local_regional_relationships.yml` contains:
 
