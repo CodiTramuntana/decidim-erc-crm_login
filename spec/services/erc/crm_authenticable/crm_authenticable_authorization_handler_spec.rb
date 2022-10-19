@@ -62,7 +62,7 @@ module Decidim
 
           before do
             allow(::Decidim::Erc::CrmAuthenticable).to receive(:csv_mode?).and_return(true)
-            Rails.application.secrets.erc_crm_authenticable[:users_csv_path] = "spec/fixtures/files/csv_users_pre.csv"
+            Rails.application.secrets.erc_crm_authenticable[:users_csv_path] = "spec/fixtures/files/csv_users.csv"
           end
 
           after do
