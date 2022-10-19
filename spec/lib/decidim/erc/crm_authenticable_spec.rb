@@ -7,7 +7,7 @@ module Decidim
     describe CrmAuthenticable do
       context "when the `users_csv_path` is set" do
         before do
-          Rails.application.secrets.erc_crm_authenticable[:users_csv_path] = "spec/fixtures/files/csv_users_pre.csv"
+          Rails.application.secrets.erc_crm_authenticable[:users_csv_path] = "spec/fixtures/files/csv_users.csv"
         end
 
         after do

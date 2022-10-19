@@ -29,7 +29,7 @@ describe "Registration", type: :system do
       within "#register-form-step-1" do
         expect(page).to have_field("user_document_number")
       end
-      expect(page).to have_button("Request verification")
+      expect(page).to have_button("Request verification", visible: :all)
     end
 
     context "when the 'Identity document form' is filled with valid data" do
@@ -38,7 +38,7 @@ describe "Registration", type: :system do
         within "#register-form-step-1" do
           fill_in :user_document_number, with: "123456789A"
         end
-        click_button "Request verification"
+        click_button "Request verification", visible: :all
       end
 
       it "redirects to the 'Registration' page" do
@@ -87,7 +87,7 @@ describe "Registration", type: :system do
             within "#register-form-step-1" do
               fill_in :user_document_number, with: "123456789A"
             end
-            click_button "Request verification"
+            click_button "Request verification", visible: :all
           end
 
           it "does NOT redirect to the decidim 'Registration' page" do
@@ -124,7 +124,7 @@ describe "Registration", type: :system do
             within "#register-form-step-1" do
               fill_in :user_document_number, with: "123456789A"
             end
-            click_button "Request verification"
+            click_button "Request verification", visible: :all
           end
 
           it "does NOT redirect to the decidim 'Registration' page" do
@@ -144,7 +144,7 @@ describe "Registration", type: :system do
           within "#register-form-step-1" do
             fill_in :user_document_number, with: "(╯°□°）╯︵ ┻━┻"
           end
-          click_button "Request verification"
+          click_button "Request verification", visible: :all
         end
 
         it "does NOT redirect to the 'Registration' page" do
@@ -161,7 +161,7 @@ describe "Registration", type: :system do
           within "#register-form-step-1" do
             fill_in :user_document_number, with: "123456789A"
           end
-          click_button "Request verification"
+          click_button "Request verification", visible: :all
         end
 
         it "does NOT redirect to the decidim 'Registration' page" do
@@ -178,7 +178,7 @@ describe "Registration", type: :system do
           within "#register-form-step-1" do
             fill_in :user_document_number, with: "123456789A"
           end
-          click_button "Request verification"
+          click_button "Request verification", visible: :all
         end
 
         it "does NOT redirect to the decidim 'Registration' page" do
@@ -196,7 +196,7 @@ describe "Registration", type: :system do
         within "#register-form-step-1" do
           fill_in :user_document_number, with: "123456789A"
         end
-        click_button "Request verification"
+        click_button "Request verification", visible: :all
       end
 
       it "does NOT redirect to the decidim 'Registration' page" do
