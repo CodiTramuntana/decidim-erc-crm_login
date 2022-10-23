@@ -10,13 +10,6 @@ describe "Registration", type: :system do
     switch_to_host(organization.host)
 
     secrets = Rails.application.secrets
-    allow(Rails.application).to receive(:secrets).and_return(
-      secrets.merge(
-        erc_crm_authenticable: {
-          users_csv_path: "spec/fixtures/files/csv_users.csv"
-        }
-      )
-    )
   end
 
   context "when the user signs up" do
@@ -49,7 +42,7 @@ describe "Registration", type: :system do
       it "prefilles the 'Registration form' with data from CiviCRM" do
         within "#register-form-step-2" do
           # Data returned from CiviCRM should be readonly and users must be informed.
-          expect(page).to have_tag("div.callout.warning", text: /administracio@esquerra.cat/)
+          expect(page).to have_tag("div.callout.announcement", text: /administracio@esquerra.cat/)
           expect(page).to have_field("user_name", with: "John Doe", readonly: true)
           expect(page).to have_field("user_nickname", with: "JD", readonly: true)
           expect(page).to have_field("user_email", with: "john.doe@example.org", readonly: true)
@@ -67,13 +60,6 @@ describe "Registration", type: :system do
             check :user_tos_agreement
           end
           click_button "Sign up"
-        end
-
-        it "newsletter modal show" do
-          expect(page).to have_css("#sign-up-newsletter-modal")
-          within "#register-form-step-2" do
-            check :user_newsleter
-          end
         end
 
         it "registers the user" do
