@@ -35,7 +35,7 @@ module Decidim
 
           context "when it fails to connect to CiviCRM" do
             before do
-              expect(RestClient).to receive(:get).and_return(RestClient::ImATeapot)
+              allow(RestClient).to receive(:get).and_return(RestClient::ImATeapot)
             end
 
             it { is_expected.to include(error: true) }

@@ -24,10 +24,6 @@ module Decidim
         end
       end
 
-      def after_sign_in_path_for(user)
-        super
-      end
-
       def pending_redirect?(user)
         store_location_for(user, stored_location_for(user))
       end

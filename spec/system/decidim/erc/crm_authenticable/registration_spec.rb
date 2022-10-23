@@ -9,7 +9,7 @@ describe "Registration", type: :system do
   before do
     switch_to_host(organization.host)
 
-    secrets = Rails.application.secrets
+    Rails.application.secrets
   end
 
   context "when the user signs up" do
