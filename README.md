@@ -74,10 +74,11 @@ Run the following in the gem development path to create the test app:
 ```bash
 $ bundle
 $ bundle exec rake test_app
+$ bundle exec rake civi_crm:configure_secrets
 ```
 Note that the database user has to have rights to create and drop a database in order to create the dummy test app database.
 
-And then set the configuration values for the test app in `spec/decidim_dummy_app/config/secrets.yml`:
+And the `civi_crm:configure_secrets` taks set the configuration values for the test app in `spec/decidim_dummy_app/config/secrets.yml` as:
 
 ```yaml
 erc_crm_authenticable:

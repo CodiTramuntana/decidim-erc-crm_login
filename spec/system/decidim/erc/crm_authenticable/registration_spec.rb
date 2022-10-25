@@ -9,14 +9,7 @@ describe "Registration", type: :system do
   before do
     switch_to_host(organization.host)
 
-    secrets = Rails.application.secrets
-    allow(Rails.application).to receive(:secrets).and_return(
-      secrets.merge(
-        erc_crm_authenticable: {
-          users_csv_path: "spec/fixtures/files/csv_users.csv"
-        }
-      )
-    )
+    Rails.application.secrets
   end
 
   context "when the user signs up" do
@@ -29,7 +22,7 @@ describe "Registration", type: :system do
       within "#register-form-step-1" do
         expect(page).to have_field("user_document_number")
       end
-      expect(page).to have_button("Request verification")
+      expect(page).to have_button("Request verification", visible: :all)
     end
 
     context "when the 'Identity document form' is filled with valid data" do
@@ -38,7 +31,7 @@ describe "Registration", type: :system do
         within "#register-form-step-1" do
           fill_in :user_document_number, with: "123456789A"
         end
-        click_button "Request verification"
+        click_button "Request verification", visible: :all
       end
 
       it "redirects to the 'Registration' page" do
@@ -49,7 +42,7 @@ describe "Registration", type: :system do
       it "prefilles the 'Registration form' with data from CiviCRM" do
         within "#register-form-step-2" do
           # Data returned from CiviCRM should be readonly and users must be informed.
-          expect(page).to have_tag("div.callout.warning", text: /administracio@esquerra.cat/)
+          expect(page).to have_tag("div.callout.announcement", text: /administracio@esquerra.cat/)
           expect(page).to have_field("user_name", with: "John Doe", readonly: true)
           expect(page).to have_field("user_nickname", with: "JD", readonly: true)
           expect(page).to have_field("user_email", with: "john.doe@example.org", readonly: true)
@@ -69,13 +62,6 @@ describe "Registration", type: :system do
           click_button "Sign up"
         end
 
-        it "newsletter modal show" do
-          expect(page).to have_css("#sign-up-newsletter-modal")
-          within "#register-form-step-2" do
-            check :user_newsleter
-          end
-        end
-
         it "registers the user" do
           expect(page).to have_css(".callout.success", text: "You have signed up successfully.")
         end
@@ -87,7 +73,7 @@ describe "Registration", type: :system do
             within "#register-form-step-1" do
               fill_in :user_document_number, with: "123456789A"
             end
-            click_button "Request verification"
+            click_button "Request verification", visible: :all
           end
 
           it "does NOT redirect to the decidim 'Registration' page" do
@@ -124,7 +110,7 @@ describe "Registration", type: :system do
             within "#register-form-step-1" do
               fill_in :user_document_number, with: "123456789A"
             end
-            click_button "Request verification"
+            click_button "Request verification", visible: :all
           end
 
           it "does NOT redirect to the decidim 'Registration' page" do
@@ -144,7 +130,7 @@ describe "Registration", type: :system do
           within "#register-form-step-1" do
             fill_in :user_document_number, with: "(╯°□°）╯︵ ┻━┻"
           end
-          click_button "Request verification"
+          click_button "Request verification", visible: :all
         end
 
         it "does NOT redirect to the 'Registration' page" do
@@ -161,7 +147,7 @@ describe "Registration", type: :system do
           within "#register-form-step-1" do
             fill_in :user_document_number, with: "123456789A"
           end
-          click_button "Request verification"
+          click_button "Request verification", visible: :all
         end
 
         it "does NOT redirect to the decidim 'Registration' page" do
@@ -178,7 +164,7 @@ describe "Registration", type: :system do
           within "#register-form-step-1" do
             fill_in :user_document_number, with: "123456789A"
           end
-          click_button "Request verification"
+          click_button "Request verification", visible: :all
         end
 
         it "does NOT redirect to the decidim 'Registration' page" do
@@ -196,7 +182,7 @@ describe "Registration", type: :system do
         within "#register-form-step-1" do
           fill_in :user_document_number, with: "123456789A"
         end
-        click_button "Request verification"
+        click_button "Request verification", visible: :all
       end
 
       it "does NOT redirect to the decidim 'Registration' page" do

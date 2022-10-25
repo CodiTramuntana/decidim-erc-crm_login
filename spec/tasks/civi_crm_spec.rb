@@ -12,7 +12,7 @@ describe "civi_crm" do
   before do
     Rake.application.rake_require "tasks/civi_crm"
     Rake::Task.define_task(:environment)
-    allow(STDOUT).to receive(:puts)
+    allow($stdout).to receive(:puts)
     allow(File).to receive(:write)
   end
 
@@ -60,8 +60,8 @@ describe "civi_crm" do
 
       it "creates a YAML file with comarcals in it" do
         expect(File).to receive(:write).with(
-          %r{config\/civi_crm\/comarcals.yml},
-          /'4'\: Vallès Oriental \(comarcal\)/
+          %r{config/civi_crm/comarcals.yml},
+          /'4': Vallès Oriental \(comarcal\)/
         )
 
         invoke_task
@@ -88,8 +88,8 @@ describe "civi_crm" do
 
       it "creates a YAML file with regionals in it" do
         expect(File).to receive(:write).with(
-          %r{config\/civi_crm\/regionals.yml},
-          /'5827'\: Barcelona \(regional\)/
+          %r{config/civi_crm/regionals.yml},
+          /'5827': Barcelona \(regional\)/
         )
 
         invoke_task
@@ -117,8 +117,8 @@ describe "civi_crm" do
 
       it "creates a YAML file with local_comarcal_relationships in it" do
         expect(File).to receive(:write).with(
-          %r{config\/civi_crm\/local_comarcal_relationships.yml},
-          /'1'\: '4'/
+          %r{config/civi_crm/local_comarcal_relationships.yml},
+          /'1': '4'/
         )
 
         invoke_task
@@ -146,8 +146,8 @@ describe "civi_crm" do
 
       it "creates a YAML file with local_comarcal_relationships in it" do
         expect(File).to receive(:write).with(
-          %r{config\/civi_crm\/local_regional_relationships.yml},
-          /'1'\: '5827'/
+          %r{config/civi_crm/local_regional_relationships.yml},
+          /'1': '5827'/
         )
 
         invoke_task
@@ -178,7 +178,7 @@ describe "civi_crm" do
 
         it "creates a YAML file with comarcal_exceptions in it" do
           expect(File).to receive(:write).with(
-            %r{config\/civi_crm\/comarcal_exceptions.yml},
+            %r{config/civi_crm/comarcal_exceptions.yml},
             "---\n'4': Vallès Oriental (comarcal)\n" # Exact match
           )
 
@@ -211,14 +211,14 @@ describe "civi_crm" do
       end
 
       before do
-        allow(YAML).to receive(:load_file).with(%r{config\/civi_crm\/comarcal_exceptions.yml}).and_return(comarcal_exceptions)
-        allow(YAML).to receive(:load_file).with(%r{config\/civi_crm\/local_comarcal_relationships.yml}).and_return(local_comarcal_rel)
-        allow(YAML).to receive(:load_file).with(%r{config\/civi_crm\/local_regional_relationships.yml}).and_return(local_regional_rel)
+        allow(YAML).to receive(:load_file).with(%r{config/civi_crm/comarcal_exceptions.yml}).and_return(comarcal_exceptions)
+        allow(YAML).to receive(:load_file).with(%r{config/civi_crm/local_comarcal_relationships.yml}).and_return(local_comarcal_rel)
+        allow(YAML).to receive(:load_file).with(%r{config/civi_crm/local_regional_relationships.yml}).and_return(local_regional_rel)
       end
 
       it "creates a YAML file with decidim_scopes_mapping in it" do
         expect(File).to receive(:write).with(
-          %r{config\/civi_crm\/decidim_scopes_mapping.yml},
+          %r{config/civi_crm/decidim_scopes_mapping.yml},
           "---\n'1': '4'\n'2': '3'\n" # Exact match
         )
 
