@@ -25,11 +25,13 @@ describe "Action Authorization", type: :system do
 
   def answer_survey
     within "#edit_questionnaire_#{survey.questionnaire.id}" do
-      fill_in :questionnaire_answers_0, with: "NS/NC"
+      fill_in :questionnaire_responses_0, with: "NS/NC"
       check :questionnaire_tos_agreement
       click_button "Submit"
     end
-    page.driver.browser.switch_to.alert.accept
+    within ".confirm-modal-footer" do
+      click_on "OK"
+    end
   end
 
   def to_strftime(date)
