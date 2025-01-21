@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["isaac.mg@coditramuntana.com"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/CodiTramuntana/decidim-erc-crm_authenticable/"
-  s.required_ruby_version = ">= 2.7.2"
+  s.required_ruby_version = ">= 3.2.2"
 
   s.name = "decidim-erc-crm_authenticable"
   s.summary = "A decidim Erc::CrmAuthenticable module"
