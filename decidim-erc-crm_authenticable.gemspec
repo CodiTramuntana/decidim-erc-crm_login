@@ -4,6 +4,8 @@ $LOAD_PATH.push File.expand_path("lib", __dir__)
 
 require "decidim/erc/crm_authenticable/version"
 
+DECIDIM_VERSION = ">= 0#{Decidim::Erc::CrmAuthenticable.decidim_version}".freeze
+
 Gem::Specification.new do |s|
   s.version = Decidim::Erc::CrmAuthenticable.version
   s.authors = ["Isaac Massot"]
@@ -16,10 +18,10 @@ Gem::Specification.new do |s|
   s.summary = "A decidim Erc::CrmAuthenticable module"
   s.description = "Integration with CiviCrm for ERC."
 
-  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
-  s.add_dependency "decidim-core", ">=#{Decidim::Erc::CrmAuthenticable.decidim_version}"
-  s.add_dependency "decidim-verifications", ">=#{Decidim::Erc::CrmAuthenticable.decidim_version}"
+  s.add_dependency "decidim-core", DECIDIM_VERSION
+  s.add_dependency "decidim-verifications", DECIDIM_VERSION
   # concurrent-ruby v1.3.5 has removed the dependency on logger
   s.add_dependency "concurrent-ruby", "1.3.4"
 
