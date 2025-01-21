@@ -10,17 +10,17 @@ module Decidim::CreateRegistrationDecorator
       # Log to crm_authenticable.log if Active Record Validations fail.
       def call
         return broadcast(:invalid) if form.invalid?
-  
+
         create_user
-  
+
         broadcast(:ok, @user)
       rescue ActiveRecord::RecordInvalid => e
         Erc::CrmAuthenticable::Log.log.error("[#{self.class.name}] #{e.message}\n#{form.extended_data}")
         broadcast(:invalid)
       end
-  
+
       private
-  
+
       # Method overrided.
       # Add :extended_data and :scope to the attributes Hash.
       def create_user
@@ -38,15 +38,15 @@ module Decidim::CreateRegistrationDecorator
           scope: find_scope_by_code
         )
       end
-  
+
       # Method added.
       # Find a scope by a code stored in extended_data.
       def find_scope_by_code
         code = Erc::CrmAuthenticable::SCOPE_CODES[form.extended_data[:member_of_code]]
-        form.current_organization.scopes.find_by(code: code)
+        form.current_organization.scopes.find_by(code:)
       end
     end
   end
 end
 
-::Decidim::CreateRegistrationDecorator.decorate
+Decidim::CreateRegistrationDecorator.decorate

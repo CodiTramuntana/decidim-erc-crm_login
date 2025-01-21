@@ -33,4 +33,4 @@ module Decidim::UserDecorator
   end
 end
 
-::Decidim::UserDecorator.decorate
+Decidim::UserDecorator.decorate

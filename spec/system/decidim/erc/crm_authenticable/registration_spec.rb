@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Registration", type: :system do
   let(:organization) { create(:organization, force_users_to_authenticate_before_access_organization: true) }
-  let!(:scope) { create(:scope, organization: organization, code: "custom_21") }
+  let!(:scope) { create(:scope, organization:, code: "custom_21") }
 
   before do
     switch_to_host(organization.host)

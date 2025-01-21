@@ -23,5 +23,5 @@ Gem::Specification.new do |s|
   # concurrent-ruby v1.3.5 has removed the dependency on logger
   s.add_dependency "concurrent-ruby", "1.3.4"
 
-  s.add_development_dependency "decidim-dev", ">=#{Decidim::Erc::CrmAuthenticable.decidim_version}"
+  s.metadata["rubygems_mfa_required"] = "true"
 end

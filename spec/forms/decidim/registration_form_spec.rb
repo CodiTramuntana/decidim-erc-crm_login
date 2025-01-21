@@ -17,7 +17,7 @@ module Decidim
         password: "S4CGQ9AM4ttJdPKS",
         password_confirmation: "S4CGQ9AM4ttJdPKS",
         tos_agreement: "1",
-        phone_number: phone_number,
+        phone_number:,
         document_number: Base64.strict_encode64("123456789A"),
         member_of_code: "custom_21"
       }

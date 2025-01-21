@@ -7,7 +7,7 @@ module Decidim
     describe CreateRegistration do
       describe "call" do
         let(:organization) { create(:organization) }
-        let!(:scope) { create(:scope, organization: organization, code: "custom_21") }
+        let!(:scope) { create(:scope, organization:, code: "custom_21") }
 
         let(:form) do
           RegistrationForm.from_params(params).with_context(current_organization: organization)
@@ -27,7 +27,7 @@ module Decidim
         end
         let(:extended_data) do
           {
-            phone_number: phone_number,
+            phone_number:,
             document_number: Base64.strict_encode64("123456789A"),
             member_of_code: scope.code
           }
@@ -50,10 +50,10 @@ module Decidim
               tos_agreement: form.tos_agreement,
               newsletter_notifications_at: form.newsletter_at,
               email_on_notification: true,
-              organization: organization,
+              organization:,
               accepted_tos_version: organization.tos_version,
               extended_data: extended_data.merge(phone_number: Base64.strict_encode64(phone_number)),
-              scope: scope
+              scope:
             ).and_call_original
 
             expect { command.call }.to change(User, :count).by(1)
