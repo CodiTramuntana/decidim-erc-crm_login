@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "decidim-core", DECIDIM_VERSION
   s.add_dependency "decidim-verifications", DECIDIM_VERSION
+  s.add_dependency "rest-client"
+
   # concurrent-ruby v1.3.5 has removed the dependency on logger
   s.add_dependency "concurrent-ruby", "1.3.4"
 
