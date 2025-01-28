@@ -15,7 +15,6 @@ module Decidim
           :confirmed,
           email: "john.doe@example.org",
           password: "ppasswordd",
-          password_confirmation: "ppasswordd",
           organization:,
           scope:,
           extended_data: { document_number: Base64.strict_encode64("123456789A") }

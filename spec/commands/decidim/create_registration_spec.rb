@@ -19,9 +19,9 @@ module Decidim
               nickname: "nickname",
               email: "user@example.org",
               password: "Y1fERVzL2F",
-              password_confirmation: "Y1fERVzL2F",
               tos_agreement: "1",
-              newsletter_at: "1"
+              current_locale: "ca",
+              newsletter: "1"
             }.merge(extended_data)
           }
         end
@@ -46,7 +46,6 @@ module Decidim
               nickname: form.nickname,
               email: form.email,
               password: form.password,
-              password_confirmation: form.password_confirmation,
               tos_agreement: form.tos_agreement,
               newsletter_notifications_at: form.newsletter_at,
               email_on_notification: true,

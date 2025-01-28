@@ -52,7 +52,6 @@ module Decidim
             nickname: "nickname",
             email:,
             password: "rPYWYKQJrXm97b4ytswc",
-            password_confirmation: "rPYWYKQJrXm97b4ytswc",
             tos_agreement: "1",
             newsletter: "0",
             phone_number: Base64.strict_encode64("666-666-666"),

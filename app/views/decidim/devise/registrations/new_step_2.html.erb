@@ -49,8 +49,6 @@
     </div>
 
     <div id="card__tos" class="form__wrapper-block">
-      <h2 class="h4"><%= t("decidim.devise.registrations.new.tos_title") %></h2>
-
       <div>
         <% terms_of_service_summary_content_blocks.each do |content_block| %>
           <%= cell content_block.manifest.cell, content_block %>
@@ -100,8 +98,7 @@
           <div class="field">
             <%= f.check_box :tos_agreement, label: t("decidim.devise.registrations.new.tos_agreement", link: link_to(t(".terms"), "https://www.esquerra.cat/ca/politicaprotecciodades")) %>
           </div>
-
-          <p>Rebràs un correu electrònic de confirmació un cop premis el botó de Registra’t</p>
+          <p>Rebràs un correu electrònic de confirmació un cop creïs el teu compte.</p>
         </div>
       </div>
     </div>

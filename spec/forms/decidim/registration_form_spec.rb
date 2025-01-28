@@ -15,7 +15,6 @@ module Decidim
         nickname: "justme",
         email: "user@example.org",
         password: "S4CGQ9AM4ttJdPKS",
-        password_confirmation: "S4CGQ9AM4ttJdPKS",
         tos_agreement: "1",
         phone_number:,
         document_number: Base64.strict_encode64("123456789A"),
