@@ -24,7 +24,7 @@ module Decidim::CreateRegistrationDecorator
       # Method overrided.
       # Add :extended_data and :scope to the attributes Hash.
       def create_user
-        @user = User.create!(
+        @user = Decidim::User.create!(
           email: form.email,
           name: form.name,
           nickname: form.nickname,

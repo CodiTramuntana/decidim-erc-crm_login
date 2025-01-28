@@ -39,7 +39,7 @@
 
       <!-- New fields -->
       <div class="field">
-        <%= f.text_field :phone_number, help_text: t(".phone_number_help"), readonly: true %>
+        <%= f.text_field :phone_number, help_text: t("decidim.devise.registrations.new.phone_number_help"), readonly: true %>
       </div>
       <%= f.hidden_field :document_number %>
       <%= f.hidden_field :member_of_code %>
@@ -57,11 +57,9 @@
         <% end %>
       </div>
 
-      <%= f.check_box :tos_agreement, label: t("decidim.devise.registrations.new.tos_agreement", link: link_to(t("decidim.devise.registrations.new.terms"), page_path("terms-of-service"))), label_options: { class: "form__wrapper-checkbox-label" } %>
-
-      <div class="card" id="card__tos">
+        <div class="card" id="card__tos">
         <div class="card__content">
-          <legend><%= t(".tos_title") %></legend>
+          <legend><%= t("decidim.devise.registrations.new.tos_title") %></legend>
 
           <table class="tos-text" style="width:100%">
             <tbody>
@@ -100,7 +98,7 @@
           </table>
 
           <div class="field">
-            <%= f.check_box :tos_agreement, label: t(".tos_agreement", link: link_to(t(".terms"), "https://www.esquerra.cat/ca/politicaprotecciodades")) %>
+            <%= f.check_box :tos_agreement, label: t("decidim.devise.registrations.new.tos_agreement", link: link_to(t(".terms"), "https://www.esquerra.cat/ca/politicaprotecciodades")) %>
           </div>
 
           <p>Rebràs un correu electrònic de confirmació un cop premis el botó de Registra’t</p>
