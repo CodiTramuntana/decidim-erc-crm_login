@@ -43,11 +43,11 @@ module Decidim::CreateRegistrationDecorator
       # Method added.
       # Find a scope by a code stored in extended_data.
       def find_scope_by_code
-        code = Erc::CrmAuthenticable::SCOPE_CODES[form.extended_data[:member_of_code]]
+        code = Decidim::Erc::CrmAuthenticable::SCOPE_CODES[form.extended_data[:member_of_code]]
         form.current_organization.scopes.find_by(code:)
       end
     end
   end
 end
 
-Decidim::CreateRegistrationDecorator.decorate
+::Decidim::CreateRegistrationDecorator.decorate
