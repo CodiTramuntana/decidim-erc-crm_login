@@ -20,17 +20,18 @@ module Decidim::UserDecorator
       # Authorizes the user after validating the extended_data with CrmAuthenticableAuthorizationHandler.
       # Returns a Hash with the response.
       def crm_authorize!
-        Erc::CrmAuthenticable::UserAuthorizer.new(self).authorize!
+        ::Decidim::Erc::CrmAuthenticable::UserAuthorizer.new(self).authorize!
       end
 
       # Method added.
       # Checks if the user is authorized against CiviCRM.
       # Returns a boolean.
       def crm_authorized?
-        Authorization.exists?(user: self, name: "crm_authenticable_authorization_handler")
+        byebug
+        Decidim::Authorization.exists?(user: self, name: "crm_authenticable_authorization_handler")
       end
     end
   end
 end
 
-Decidim::UserDecorator.decorate
+::Decidim::UserDecorator.decorate

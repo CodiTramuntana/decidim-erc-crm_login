@@ -39,7 +39,7 @@
 
       <!-- New fields -->
       <div class="field">
-        <%= f.text_field :phone_number, help_text: t("decidim.devise.registrations.new.phone_number_help"), readonly: true %>
+        <%= f.text_field :phone_number, label: t("decidim.devise.registrations.new_step_2.phone_number"), help_text: t("decidim.devise.registrations.new_step_2.phone_number_help"), readonly: true %>
       </div>
       <%= f.hidden_field :document_number %>
       <%= f.hidden_field :member_of_code %>
@@ -96,7 +96,7 @@
           </table>
 
           <div class="field">
-            <%= f.check_box :tos_agreement, label: t("decidim.devise.registrations.new.tos_agreement", link: link_to(t(".terms"), "https://www.esquerra.cat/ca/politicaprotecciodades")) %>
+            <%= f.check_box :tos_agreement, label: t("decidim.devise.registrations.new.tos_agreement", link: link_to(t("decidim.devise.registrations.new_step_2.terms"), "https://www.esquerra.cat/ca/politicaprotecciodades")) %>
           </div>
           <p>Rebràs un correu electrònic de confirmació un cop creïs el teu compte.</p>
         </div>
