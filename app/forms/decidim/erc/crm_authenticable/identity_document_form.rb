@@ -22,7 +22,6 @@ module Decidim
 
           {
             name: user_data["display_name"],
-            nickname:,
             email: user_data["email"],
             phone_number: user_data["phone"],
             document_number: encoded_document_number,
@@ -70,13 +69,6 @@ module Decidim
         # Returns a Hash with specific user data from CiviCRM.
         def user_data
           @user_data ||= authorization_handler.response[:body][0].slice(*CiviCrmClient::USER_DATA)
-        end
-
-        # Returns a unique nickname scoped to the organization. Removes accents.
-        def nickname
-          initials = user_data["display_name"].split.map { |w| w.chars.first }.join
-          initials_wo_accents = I18n.transliterate(initials)
-          User.nicknamize(initials_wo_accents, organization: current_organization)
         end
 
         def encoded_document_number

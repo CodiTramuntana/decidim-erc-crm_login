@@ -18,8 +18,15 @@ module Decidim::RegistrationFormDecorator
         {
           phone_number: Base64.strict_encode64(phone_number || ""),
           document_number:,
-          member_of_code:
+          member_of_code:,
         }
+      end
+
+      # Returns a unique nickname scoped to the organization. Removes accents.
+      def nickname
+        initials = name.split.map { |w| w.chars.first }.join
+        initials_wo_accents = I18n.transliterate(initials)
+        Decidim::User.nicknamize(initials_wo_accents, organization: current_organization)
       end
     end
   end
