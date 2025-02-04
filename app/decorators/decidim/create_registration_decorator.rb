@@ -15,7 +15,7 @@ module Decidim::CreateRegistrationDecorator
 
         broadcast(:ok, @user)
       rescue ActiveRecord::RecordInvalid => e
-        Erc::CrmAuthenticable::Log.log.error("[#{self.class.name}] #{e.message}\n#{form.extended_data}")
+        Decidim::Erc::CrmAuthenticable::Log.log.error("[#{self.class.name}] #{e.message}\n#{form.extended_data}")
         broadcast(:invalid)
       end
 
